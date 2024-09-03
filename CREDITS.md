@@ -13,4 +13,4 @@
 - Image attribution:
   
 **Team Icon Image**
-- Image attribution:
+- Image attribution: Author Dennys Credit: Getty Images [Link](https://www.istockphoto.com/vector/vintage-ghost-logo-icon-ghost-isolated-on-white-background-vector-illustration-gm1409632365-460108543)
