@@ -18,10 +18,14 @@ Further, the author and all editors will be noted. Work within files is formatte
 # Author
 This game is maintained by Project-Ghost, which is made up of the tireless efforts of 4 exhausted students.
 
-[Nate Campbell]() - I am Nate Campbell and I'm 24 years old. I will be graduating in the spring and I am a computer science major. I love learning new things and seeking out the latest in technology. I'm great at adapting to change and I'm looking forward to a great semester!
+[Nate Campbell](https://www.linkedin.com/in/nathaniel-campbell-22a334208/) - I am Nate Campbell and I'm 24 years old. I will be graduating in the spring and I am a computer science major. I love learning new things and seeking out the latest in technology. I'm great at adapting to change and I'm looking forward to a great semester!
 
 [Joy Poling](www.linkedin.com/in/joy-poling) - Hello, I’m a wife, mom, nurse, and student. I am very slowly working toward a bachelor's degree in computer science at EMU. I enjoy astronomy, electronics, DIY (or _tinkering_, as my husband calls it), knife throwing, sewing, lock sport, metal detecting, reading fiction, science, technology, and creativity in any medium. More and more these days, I find I prefer a nap over doing any of my hobbies.
 
-A comprehensive list of all contributions can be found [here](). 
+[Connor Spears](https://connorxspears.wixsite.com/connorspears) - This is my last semester at EMU, I am a Computer Science Applied major and a Simulation, Animation, and Gaming minor. I have always wanted to be a game developer, but as I finish up schooling and the job market approaches I am being pushed more into normal software development, my specialization is in backend as well as UI programming. My preferred languages are C#, Java, and C++, but I am open to working in just about any language given the task. Outside of staring at a computer all day I like to travel and listen to music, I am always looking for new places and new music!
+
+[Mitchell Winkelman](https://github.com/heliguy4599) - I am 22 years old and am majoring in Computer Science at Eastern Michigan University, graduating in December of 2024. I like programming and learning all there is to know about it, especially in regards to open source, as well as most things with tech. I also like computer gaming and advancing my knowledge in larger program development.
+
+A comprehensive list of all contributions can be found [here](https://github.com/COSC481W-2024Fall/Project-Ghost/blob/main/CREDITS.md). 
 
 Also, a special thanks to our instructor, [Siyuan Jiang](https://emunix.emich.edu/~sjiang1/).
