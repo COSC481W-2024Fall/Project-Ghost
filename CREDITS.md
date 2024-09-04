@@ -4,7 +4,7 @@
 - Image attribution: Author Jay Frisch https://commons.wikimedia.org/wiki/File:Eric_J._Nestler,_MD,_PhD.jpg
  
 **Persona Image**
-- Image attribution: Shutterstock https://www.shutterstock.com/search/bored-man-computer
+- Image attribution: https://this-person-does-not-exist.com/en
    
 **Persona Image**
 - Image attribution:
