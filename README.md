@@ -1,5 +1,5 @@
 # Project-Ghost
-A game about networking and web-based development.
+Inspired by [The Chrome Dinosaur Game](https://chromedino.com/) Project-Ghost is an online, real-time, multiplayer endless runner game.
 
 # Team Policies
 - If a Project-Ghost member cannot attend class or a scheduled meeting due to illness or emergency, the team will receive a message on the group Discord server as soon as the member realizes that they will be unable to attend. A team member will be considered absent if they arrive after more than half the duration of the meeting/class.
