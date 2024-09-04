@@ -10,7 +10,6 @@ If a teammate is unavailable or unresponsive, the code can be changed as needed,
 Further, the author and all editors will be noted. Work within files is formatted, and methods/classes are commented on at the top, including who wrote/edited the method and a date to say when. The top of each file contains a comment block with info such as authors, dates, and a file description.
 
   Example: 
-
   `//Created by Name A 9/1, Edited by Name B 9/4`
 - Project-Ghost members agree that English is the chosen language for our group and will be used at least 99% of the time.
 - Project-Ghost members may wear a face mask if they wish to at any time, for any reason. Members must wear masks if the government/EMU mandates them to do so. Members are expected to wear a mask if they are experiencing something that may become an illness. 
