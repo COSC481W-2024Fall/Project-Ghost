@@ -164,7 +164,6 @@ document.addEventListener('keydown', (e) => {
 	if (e.code === 'Space' && !gameOver) {
 		dino.jump();
 	} else if (e.code === 'KeyC' && !gameOver) {
-		console.log("hello")
 		dino.crouch(true);
 	} else if (e.code === 'KeyT' && !gameStarted) {
 		isPaused = false;
@@ -177,7 +176,6 @@ document.addEventListener('keydown', (e) => {
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 	} else if (e.code == 'KeyH' && !gameOver) {
-		console.log("hello")
 		const serverUrl = 'http://0.0.0.0:5000/project_ghost/hello_world';
 		fetch(serverUrl)
 		.then(response => response.json())
