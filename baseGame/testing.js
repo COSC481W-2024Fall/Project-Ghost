@@ -12,7 +12,7 @@ let gameOver = false; // Tracks if the game is over
 const dino = {
 	x: 50,
 	y: canvas.height - 50, // Start on the ground
-	width: 50,
+	width: 30,
 	height: 50,
 	dy: 0,
 	jumping: false,
