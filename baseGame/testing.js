@@ -176,7 +176,7 @@ document.addEventListener('keydown', (e) => {
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 	} else if (e.code == 'KeyH' && !gameOver) {
-		const serverUrl = 'http://0.0.0.0:5000/project_ghost/hello_world';
+		const serverUrl = 'http://localhost:5000/project_ghost/hello_world';
 		fetch(serverUrl)
 		.then(response => response.json())
 		.then(data => {
