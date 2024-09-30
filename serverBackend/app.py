@@ -22,7 +22,6 @@ CORS(app)
 def get_data():
     hello_message = HelloWorld.get_or_none()
     response = jsonify({"message": hello_message.message})
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
     
-app.run(host='localhost', port=5000)
+app.run(host='0.0.0.0', port=5000)
