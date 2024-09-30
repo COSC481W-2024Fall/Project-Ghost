@@ -8,6 +8,8 @@ let isPaused = true; // Game starts paused (until "T" is pressed)
 let gameStarted = false; // Tracks whether the game has started
 let gameOver = false; // Tracks if the game is over
 
+let gameScore = 0;
+
 // Dino player
 const dino = {
 	x: 50,
@@ -125,7 +127,7 @@ function displayText(text, fontSize, color, x, y) {
 // Game loop
 let frame = 0;
 function gameLoop() {
-	if (!isPaused) {
+	if (!gameOver && !isPaused) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		
 		// Dino logic
@@ -139,23 +141,12 @@ function gameLoop() {
 		updateObstacles();
 		detectCollision();
 		
+		if(frame % 10 === 0) gameScore++;
+		displayText("Score: " + gameScore, 24, 'black', 20, 20);
 		frame++;
-	} else {
-		if (!gameStarted) {
-			// Display controls on the start screen
-			displayText("Press 'T' to Start", 30, 'black', canvas.width / 4, canvas.height / 2 - 40);
-			displayText("Controls:", 24, 'black', canvas.width / 4, canvas.height / 2);
-			displayText("Space: Jump", 20, 'black', canvas.width / 4, canvas.height / 2 + 30);
-			displayText("C: Crouch", 20, 'black', canvas.width / 4, canvas.height / 2 + 60);
-			displayText("P: Pause", 20, 'black', canvas.width / 4, canvas.height / 2 + 90);
-			displayText("R: Restart after Game Over", 20, 'black', canvas.width / 4, canvas.height / 2 + 120);
-			displayText("H: Get Hello message from server", 20, 'black', canvas.width / 4, canvas.height / 2 + 150)
-		}
-		if (gameOver) {
-			displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
-		}
+	} else if(gameOver){
+		displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
 	}
-	
 	requestAnimationFrame(gameLoop);
 }
 
@@ -168,6 +159,7 @@ document.addEventListener('keydown', (e) => {
 	} else if (e.code === 'KeyT' && !gameStarted) {
 		isPaused = false;
 		gameStarted = true;
+		gameLoop();
 	} else if (e.code === 'KeyR' && gameOver) {
 		// Restart the game
 		isPaused = false;
@@ -175,6 +167,7 @@ document.addEventListener('keydown', (e) => {
 		obstacles = [];
 		dino.y = canvas.height - dino.height;
 		frame = 0;
+		gameScore = 0;
 	} else if (e.code == 'KeyH' && !gameOver) {
 		const serverUrl = 'http://45.83.107.132:5000/project_ghost/hello_world';
 		fetch(serverUrl)
@@ -192,5 +185,15 @@ document.addEventListener('keyup', (e) => {
 	}
 });
 
-// Start the game loop
-gameLoop();
+// Open the title screen
+titleScreen();
+
+function titleScreen(){
+	displayText("Press 'T' to Start", 30, 'black', canvas.width / 4, canvas.height / 2 - 40);
+	displayText("Controls:", 24, 'black', canvas.width / 4, canvas.height / 2);
+	displayText("Space: Jump", 20, 'black', canvas.width / 4, canvas.height / 2 + 30);
+	displayText("C: Crouch", 20, 'black', canvas.width / 4, canvas.height / 2 + 60);
+	displayText("P: Pause", 20, 'black', canvas.width / 4, canvas.height / 2 + 90);
+	displayText("R: Restart after Game Over", 20, 'black', canvas.width / 4, canvas.height / 2 + 120);
+	displayText("H: Get Hello message from server", 20, 'black', canvas.width / 4, canvas.height / 2 + 150)
+}
