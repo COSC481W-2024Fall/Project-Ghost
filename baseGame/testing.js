@@ -9,7 +9,7 @@ let gameSpeed = 5;
 let gravity = 0.4;
 let isPaused = true; // Game starts paused (until "T" is pressed)
 let gameStarted = false; // Tracks whether the game has started
-let gameOver = false; // Tracks if the game is over
+let isGameOver = false; // Tracks if the game is over
 
 let gameScore = 0;
 
@@ -115,8 +115,9 @@ function detectCollision() {
 				dino.y + dino.height > obs.y
 			) {
 			// Collision detected
-			gameOver = true;
+			isGameOver = true;
 			isPaused = true;
+			gameOver()
 		}
 	}
 }
@@ -130,7 +131,7 @@ function displayText(text, fontSize, color, x, y) {
 // Game loop
 let frame = 0;
 function gameLoop() {
-	if (!gameOver && !isPaused) {
+	if (!isGameOver && !isPaused) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		
 		// Dino logic
@@ -147,10 +148,24 @@ function gameLoop() {
 		if(frame % 10 === 0) gameScore++;
 		displayText("Score: " + gameScore, 24, 'black', 20, 20);
 		frame++;
-	} else if(gameOver){
-		displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
 	}
 	requestAnimationFrame(gameLoop);
+}
+
+function gameOver(){
+	let textNode = document.createElement("p");
+	textNode.textContent = "Enter your name: ";
+	textNode.id = "scoreInput";
+	
+	let inputElement = document.createElement("input");
+	
+	inputElement.setAttribute("type", "text");
+	inputElement.setAttribute("name", "playerName");
+	inputElement.setAttribute("maxlength", "3");
+	
+	textNode.appendChild(inputElement);
+	document.body.appendChild(textNode);
+	displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
 }
 
 // Adding a score to the database
@@ -214,25 +229,27 @@ async function resetScores(in_category) {
 
 // Event listeners
 document.addEventListener('keydown', async (e) => {
-	if (e.code === 'Space' && !gameOver) {
+	if (e.code === 'Space' && !isGameOver) {
 		dino.jump();
-	} else if (e.code === 'KeyC' && !gameOver) {
+	} else if (e.code === 'KeyC' && !isGameOver) {
 		dino.crouch(true);
 	} else if (e.code === 'KeyT' && !gameStarted) {
 		isPaused = false;
 		gameStarted = true;
 		gameLoop();
-	} else if (e.code === 'KeyR' && gameOver) {
+	} else if (e.code === 'KeyR' && isGameOver) {
 		// Restart the game
 		isPaused = false;
-		gameOver = false;
+		isGameOver = false;
 		obstacles = [];
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 		gameScore = 0;
-	} else if (e.code == 'KeyA' && !gameOver) {
+		let scoreInput = document.getElementById("scoreInput")
+		scoreInput.remove();
+	} else if (e.code == 'KeyA' && !isGameOver) {
 		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
-	} else if (e.code == 'KeyG' && !gameOver) {
+	} else if (e.code == 'KeyG' && !isGameOver) {
 		// getScores("weekly").then(data => console.log(data));
 		console.log(await getScores("weekly"))
 	}
