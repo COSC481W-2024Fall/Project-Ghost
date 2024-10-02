@@ -1,7 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-// const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
-const serverUrl = 'http://localhost:5000/project_ghost/';
+const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
+// const serverUrl = 'http://localhost:5000/project_ghost/';
 const level_seed = Math.floor(Date.now() / 1000)
 
 // Game settings
