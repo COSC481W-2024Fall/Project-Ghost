@@ -1,5 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+// const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
+const serverUrl = 'http://localhost:5000/project_ghost/';
+const level_seed = Math.floor(Date.now() / 1000)
 
 // Game settings
 let gameSpeed = 5;
@@ -150,8 +153,67 @@ function gameLoop() {
 	requestAnimationFrame(gameLoop);
 }
 
+// Adding a score to the database
+function addScore(in_user_name, in_score, in_category) {
+	const data = {
+		user_name: in_user_name,
+		score: in_score,
+		timestamp: level_seed,
+		category: in_category,
+	}
+	const url = `${serverUrl}scores/add?category=${in_category}`
+	return fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	})
+	.then(response => response.json());
+}
+
+// Get scores from the database
+function getScores(category, limit=null) {
+	let url = `${serverUrl}scores/get?category=${category}`
+	if (limit !== null) {
+		url += "&max=" + limit
+	}
+	return fetch(url)
+	.then(response => response.json());
+}
+
+// Remove score from the database
+function removeScore(in_category, in_score_id) {
+	let url = `${serverUrl}scores/delete?category=${in_category}&score_id=${in_score_id}`;
+	return fetch(url, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+	.then(response => response.json());
+}
+
+// Reset a table completely (DEV USE ONLY!!! ONLY RUN FROM CONSOLE!!!)
+async function resetScores(in_category) {
+	const input = prompt(`Really reset ${in_category} scores?\nEnter Y to continue:`)
+	if (input != "y") {
+		console.log("cancelled");
+		return;
+	};
+	const scores = await getScores(in_category)
+	if (scores['error']) {
+		console.log(scores);
+		return;
+	}
+	for (const score of scores) {
+		removeScore(in_category, score['id']);
+	}
+	console.log(`Reset ${in_category} scores`);
+}
+
 // Event listeners
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', async (e) => {
 	if (e.code === 'Space' && !gameOver) {
 		dino.jump();
 	} else if (e.code === 'KeyC' && !gameOver) {
@@ -168,14 +230,11 @@ document.addEventListener('keydown', (e) => {
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 		gameScore = 0;
-	} else if (e.code == 'KeyH' && !gameOver) {
-		const serverUrl = 'http://45.83.107.132:5000/project_ghost/hello_world';
-		fetch(serverUrl)
-		.then(response => response.json())
-		.then(data => {
-			displayText(data["message"], 24, 'red', canvas.width / 4, canvas.height / 2 - 80);
-		})
-		.catch(error => console.error('Error:', error));
+	} else if (e.code == 'KeyA' && !gameOver) {
+		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
+	} else if (e.code == 'KeyG' && !gameOver) {
+		// getScores("weekly").then(data => console.log(data));
+		console.log(await getScores("weekly"))
 	}
 });
 
@@ -195,5 +254,6 @@ function titleScreen(){
 	displayText("C: Crouch", 20, 'black', canvas.width / 4, canvas.height / 2 + 60);
 	displayText("P: Pause", 20, 'black', canvas.width / 4, canvas.height / 2 + 90);
 	displayText("R: Restart after Game Over", 20, 'black', canvas.width / 4, canvas.height / 2 + 120);
-	displayText("H: Get Hello message from server", 20, 'black', canvas.width / 4, canvas.height / 2 + 150)
+	displayText("A: Add test data to database", 20, 'black', canvas.width / 4, canvas.height / 2 + 150);
+	displayText("G: Get data from database", 20, 'black', canvas.width / 4, canvas.height / 2 + 180);
 }
