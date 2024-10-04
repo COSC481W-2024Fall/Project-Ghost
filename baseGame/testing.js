@@ -299,6 +299,10 @@ document.addEventListener('keydown', async (e) => {
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 		gameScore = 0;
+	  else if (e.code == 'KeyP' && !gameOver && gameStarted) {
+		isPaused = !isPaused;
+	}
+
 	} else if (e.code == 'KeyA' && !gameOver) {
 		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
 	} else if (e.code == 'KeyG' && !gameOver) {
