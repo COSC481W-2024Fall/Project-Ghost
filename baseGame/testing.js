@@ -1,7 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
-// const serverUrl = 'http://localhost:5000/project_ghost/';
+// const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
+const serverUrl = 'http://localhost:5000/project_ghost/';
 const level_seed = Math.floor(Date.now() / 1000)
 
 // Game settings
@@ -223,14 +223,14 @@ function gameLoop() {
 }
 
 // Adding a score to the database
-function addScore(in_user_name, in_score, in_category) {
+function addScore(in_user_name, in_score, in_categories) {
 	const data = {
 		user_name: in_user_name,
 		score: in_score,
 		timestamp: level_seed,
-		category: in_category,
+		categories: in_categories,
 	}
-	const url = `${serverUrl}scores/add?category=${in_category}`
+	const url = `${serverUrl}scores/add`
 	return fetch(url, {
 		method: 'POST',
 		headers: {
@@ -300,7 +300,7 @@ document.addEventListener('keydown', async (e) => {
 		frame = 0;
 		gameScore = 0;
 	} else if (e.code == 'KeyA' && !gameOver) {
-		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
+		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), ["daily", "weekly"]));
 	} else if (e.code == 'KeyG' && !gameOver) {
 		// getScores("weekly").then(data => console.log(data));
 		console.log(await getScores("weekly"))
