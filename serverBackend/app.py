@@ -80,12 +80,6 @@ def get_scores():
 @app.route('/project_ghost/scores/add', methods=['POST'])
 @cross_origin()
 def add_score():
-	category = request.args.get('category', type=str)
-	
-	# Return an error if no category has been provided
-	if not category:
-		return jsonify({"error": "category is required"}), 400
-		
 	# Get the data from the POST request (must be JSON)
 	data = request.get_json()
 	
@@ -93,7 +87,7 @@ def add_score():
 		return jsonify({"error": "Missing data. Please provide JSON data"}), 400
 		
 	# Ensure that all the data is present
-	fields = ["user_name", "score", "timestamp"]
+	fields = ["user_name", "score", "timestamp", "categories"]
 	missing_fields = []
 	for field in fields:
 		if not field in data:
@@ -103,22 +97,23 @@ def add_score():
 	if len(missing_fields) > 0:
 		return jsonify({"error": f"Missing required fields: {', '.join(missing_fields)}"}), 400
 		
-	# Insert the new score into the database
+	# Insert the new score into the databases
 	try:
-		# Determine the table to add to
-		table = tables[category]
-		
-		# Add to that table
-		entry = table.create(
-			user_name=data["user_name"],
-			score=data["score"],
-			timestamp=data["timestamp"],
-		)
-		
+		for category in data['categories']:
+			# Determine the table to add to
+			table = tables[category]
+			
+			# Add to that table
+			entry = table.create(
+				user_name=data["user_name"],
+				score=data["score"],
+				timestamp=data["timestamp"],
+			)
+			
 		# Return a success message containing the data that was added
 		return jsonify({
 			"message": f"Score added to successfully",
-			"category": category,
+			"categories": data['categories'],
 			"user_name": entry.user_name,
 			"score": entry.score,
 			"timestamp": entry.timestamp,
