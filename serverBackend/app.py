@@ -21,17 +21,17 @@ class DailyScores(Scores):
 class WeeklyScores(Scores):
 	pass
 	
-class TopTenScores(Scores):
+class AllTime(Scores):
 	pass
 	
 db.connect()
-db.create_tables([DailyScores, WeeklyScores, TopTenScores]) # only creates tables when they don't exist
+db.create_tables([DailyScores, WeeklyScores, AllTime]) # only creates tables when they don't exist
 
 # Map the string name of the table to the table. This will be used in the HTTP requests
 tables = {
 	"daily": DailyScores,
 	"weekly": WeeklyScores,
-	"top_ten": TopTenScores,
+	"allTime": AllTime,
 }
 
 # ex:	/project_ghost/scores/get?category=daily			?:	Not limited, get all scores
