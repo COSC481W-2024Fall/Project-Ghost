@@ -22,7 +22,7 @@ const dino = {
 	dy: 0,
 	jumping: false,
 	crouching: false,
-
+	
 	draw() {
 		// Keep the top fixed, and adjust height from the bottom
 		const height = this.crouching ? this.height / 2 : this.height;
@@ -30,13 +30,13 @@ const dino = {
 		ctx.fillStyle = this.crouching ? 'blue' : 'green'; // Change color if crouching
 		ctx.fillRect(this.x, adjustedY, this.width, height);
 	},
-
+	
 	update() {
 		// Apply gravity when jumping
 		if (this.jumping) {
 			this.dy += gravity;
 			this.y += this.dy;
-
+			
 			// Stop at ground level
 			if (this.y + this.height >= canvas.height) {
 				this.y = canvas.height - this.height;
@@ -44,7 +44,7 @@ const dino = {
 				this.jumping = false;
 			}
 		}
-
+		
 		// Adjust height based on crouching status
 		if (!this.jumping) {
 			if (this.crouching) {
@@ -58,14 +58,14 @@ const dino = {
 			}
 		}
 	},
-
+	
 	jump() {
 		if (!this.jumping && !this.crouching) { // Prevent jumping mid-air and when crouching
 			this.jumping = true;
 			this.dy = -12; // Jump velocity
 		}
 	},
-
+	
 	crouch(state) {
 		// Only allow crouching when on the ground
 		if (!this.jumping) {
@@ -108,81 +108,81 @@ function updateObstacles() {
 // Create randomized level chunks with structured variation
 function generateLevelChunks() {
 	let levelChunks = [];
-  
+	
 	for (let i = 0; i < 10; i++) {
-	  let chunk = [];
-  
-	  // Determine if the chunk will have an elevated floor (40% chance)
-	  let elevated = Math.random() < 0.4;
-	  let elevationHeight = elevated ? Math.random() * 50 + 30 : 0; // Random elevation between 50-80
-  
-	  // Each chunk will have between 2-5 obstacles
-	  let numberOfObstacles = Math.floor(Math.random() * 4) + 2;
-  
-	  for (let j = 0; j < numberOfObstacles; j++) {
-		let size = Math.random() * 30 + 20; // Random obstacle size
-		let gap = Math.random() * 50 + 300; // Random distance between obstacles
-		let x = j * 400 + gap + canvas.width; // Randomized obstacle placement in the chunk
-  
-		// Randomly determine if the obstacle is in the air or on the ground (50% chance)
-		let isAirObstacle = Math.random() > 0.5;
+		let chunk = [];
 		
-		let y;
-		if (isAirObstacle) {
-		  // Set obstacle height in the air, randomizing the Y position within a defined range
-		  const AIR_MIN_Y = 350;  // Minimum Y position for air obstacles
-		  const AIR_MAX_Y = 375;  // Maximum Y position for air obstacles
-		  y = AIR_MIN_Y + Math.random() * (AIR_MAX_Y - AIR_MIN_Y);
-		} else {
-		  // Set obstacle height on the ground or elevated floor
-		  y = elevated ? canvas.height - size - elevationHeight : canvas.height - size;
+		// Determine if the chunk will have an elevated floor (40% chance)
+		let elevated = Math.random() < 0.4;
+		let elevationHeight = elevated ? Math.random() * 50 + 30 : 0; // Random elevation between 50-80
+		
+		// Each chunk will have between 2-5 obstacles
+		let numberOfObstacles = Math.floor(Math.random() * 4) + 2;
+		
+		for (let j = 0; j < numberOfObstacles; j++) {
+			let size = Math.random() * 30 + 20; // Random obstacle size
+			let gap = Math.random() * 50 + 300; // Random distance between obstacles
+			let x = j * 400 + gap + canvas.width; // Randomized obstacle placement in the chunk
+			
+			// Randomly determine if the obstacle is in the air or on the ground (50% chance)
+			let isAirObstacle = Math.random() > 0.5;
+			
+			let y;
+			if (isAirObstacle) {
+				// Set obstacle height in the air, randomizing the Y position within a defined range
+				const AIR_MIN_Y = 350;  // Minimum Y position for air obstacles
+				const AIR_MAX_Y = 375;  // Maximum Y position for air obstacles
+				y = AIR_MIN_Y + Math.random() * (AIR_MAX_Y - AIR_MIN_Y);
+			} else {
+				// Set obstacle height on the ground or elevated floor
+				y = elevated ? canvas.height - size - elevationHeight : canvas.height - size;
+			}
+			
+			// Create obstacle and add it to the chunk
+			chunk.push({
+				x: x,
+				y: y,
+				width: size,
+				height: size,
+				speed: gameSpeed
+			});
 		}
-  
-		// Create obstacle and add it to the chunk
-		chunk.push({
-		  x: x,
-		  y: y,
-		  width: size,
-		  height: size,
-		  speed: gameSpeed
-		});
-	  }
-  
-	  levelChunks.push(chunk);
+		
+		levelChunks.push(chunk);
 	}
-  
+	
 	return levelChunks;
-  }
-  
-  // Example usage of level chunks
-  let levelChunks = generateLevelChunks();
-  let currentChunkIndex = 0;
-  
-  function updateLevelChunks() {
+}
+
+// Example usage of level chunks
+let levelChunks = generateLevelChunks();
+let currentChunkIndex = 0;
+
+function updateLevelChunks() {
 	// If the current chunk's obstacles are all gone, load the next chunk
 	if (obstacles.length === 0) {
-	  // Reset to first chunk if we've cycled through all
-	  if (currentChunkIndex >= levelChunks.length) {
-		currentChunkIndex = 0; 
-		levelChunks = generateLevelChunks(); // Optionally generate new random chunks
-	  }
-	  
-	  obstacles = levelChunks[currentChunkIndex];
-	  currentChunkIndex++;
+		// Reset to first chunk if we've cycled through all
+		if (currentChunkIndex >= levelChunks.length) {
+			currentChunkIndex = 0;
+			levelChunks = generateLevelChunks(); // Optionally generate new random chunks
+		}
+		
+		obstacles = levelChunks[currentChunkIndex];
+		currentChunkIndex++;
 	}
-  
+	
 	updateObstacles();
-  }
+}
 
 function detectCollision() {
 	for (let i = 0; i < obstacles.length; i++) {
 		let obs = obstacles[i];
-		
+
 		if (dino.x < obs.x + obs.width &&
-				dino.x + dino.width > obs.x &&
-				dino.y < obs.y + obs.height &&
-				dino.y + dino.height > obs.y
-			) {
+			dino.x + dino.width > obs.x &&
+			dino.y < obs.y + obs.height &&
+			dino.y + dino.height > obs.y
+		) {
 			// Collision detected
 			gameOver = true;
 			isPaused = true;
@@ -201,22 +201,22 @@ let frame = 0;
 function gameLoop() {
 	if (!gameOver && !isPaused) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		
+
 		// Dino logic
 		dino.update();
 		dino.draw();
-		
+
 		// Obstacle logic
 		if (frame % 100 === 0) {
 			spawnObstacle();
 		}
 		updateObstacles();
 		detectCollision();
-		
-		if(frame % 10 === 0) gameScore++;
+
+		if (frame % 10 === 0) gameScore++;
 		displayText("Score: " + gameScore, 24, 'black', 20, 20);
 		frame++;
-	} else if(gameOver){
+	} else if (gameOver) {
 		displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
 	}
 	requestAnimationFrame(gameLoop);
@@ -242,7 +242,7 @@ function addScore(in_user_name, in_score, in_categories) {
 }
 
 // Get scores from the database
-function getScores(category, limit=null) {
+function getScores(category, limit = null) {
 	let url = `${serverUrl}scores/get?category=${category}`
 	if (limit !== null) {
 		url += "&max=" + limit
@@ -316,7 +316,7 @@ document.addEventListener('keyup', (e) => {
 // Open the title screen
 titleScreen();
 
-function titleScreen(){
+function titleScreen() {
 	displayText("Press 'T' to Start", 30, 'black', canvas.width / 4, canvas.height / 2 - 40);
 	displayText("Controls:", 24, 'black', canvas.width / 4, canvas.height / 2);
 	displayText("Space: Jump", 20, 'black', canvas.width / 4, canvas.height / 2 + 30);
