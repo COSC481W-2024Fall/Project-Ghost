@@ -314,11 +314,13 @@ document.addEventListener('keydown', async (e) => {
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 		gameScore = 0;
-		let scoreInput = document.getElementById("scoreInput")
+    let scoreInput = document.getElementById("scoreInput")
 		scoreInput.remove();
+  } else if (e.code == 'KeyP' && !isGameOver && gameStarted) {
+		isPaused = !isPaused;
 	} else if (e.code == 'KeyA' && !isGameOver) {
 		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
-	} else if (e.code == 'KeyG' && !isGameOver) {
+	} else if (e.code == 'KeyG' && !isGameOver) { //This !isGameOver might want to be isGameOver? - CS
 		// getScores("weekly").then(data => console.log(data));
 		console.log(await getScores("weekly"))
 	}
