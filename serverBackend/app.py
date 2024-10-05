@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from peewee import *
+import time, os
 
 app = Flask(__name__)
 CORS(app)
@@ -144,5 +145,103 @@ def remove_score():
 		
 	except Exception as e:
 		return jsonify({"error": str(e)}), 500
+		
+def test_database():
+	print("\nRunning database test...")
+	print("Current tables:", tables)
 	
+	score = {
+		"user_name": "database_test_user",
+		"score": 42,
+		"timestamp": int(time.time())
+	}
+	
+	added_entries = {}
+	
+	print("Adding test data to tables...")
+	try:
+		for name, table in tables.items():
+			entry = table.create(
+				user_name=score["user_name"],
+				score=score["score"],
+				timestamp=score["timestamp"],
+			)
+			added_entries[name] = entry
+			print("Successfully added test data to", name)
+			
+	except Exception as e:
+		print("FATAL: Failed to add test data to database:")
+		print(e)
+		print("\nAborting Startup...")
+		exit(1)
+			
+	if len(added_entries) != len(tables):
+		print("FATAL: A table did not receive a score")
+		print("Tables that did receive a score:", added_entries)
+		print("\nAborting Startup...")
+		exit(1)
+		
+	retrieved_entries = {}
+	
+	print("Retrieving test data from tables...")
+	try:
+		for name, table in tables.items():
+			# get the score object here, and determine if the values are equal to the score dictionary's data
+			scores_query = table.select().where(
+				(table.user_name == score['user_name']) &
+				(table.score == score['score']) &
+				(table.timestamp == score['timestamp'])
+			)
+			retrieved_entries[name] = scores_query
+			print("Successfully retrieved score from", name)
+			print("Checking data integrity of retrieved data from", f"{name}...")
+			error = False
+			for score_entry in scores_query:
+				if(score_entry.user_name != score['user_name']):
+					print("user_name mismatch in", name)
+					error = True
+					
+				if(score_entry.score != score['score']):
+					print("score mismatch in", name)
+					error = True
+					
+				if(score_entry.timestamp != score['timestamp']):
+					print("timestamp mismatch in", name)
+					error = True
+					
+			if error:
+				print("FATAL: Data failed integrity check")
+				print("\nAborting Startup...")
+				exit(1)
+				
+			print("Data passed integrity check for", name)
+			
+	except Exception as e:
+		print("FATAL: Failed to get test data from database:")
+		print(e)
+		print("\nAborting Startup...")
+		exit(1)
+		
+	if len(retrieved_entries) != len(tables):
+		print("FATAL: A table could not fetch a score")
+		print("Tables that did fetch a score:", retrieved_entries)
+		print("\nAborting Startup...")
+		exit(1)
+		
+	print("Cleaning up testing data...")
+	try:
+		for name, entries in retrieved_entries.items():
+			for entry in entries:
+				entry.delete_instance()
+				print("Successfully removed test data from", name)
+			
+	except Exception as e:
+		print("FATAL: Failed to cleanup test data from database:")
+		print(e)
+		print("\nAborting Startup...")
+		exit(1)
+		
+	print("Startup tests were successful!\n")
+
+test_database()
 app.run(host='0.0.0.0', port=5000)
