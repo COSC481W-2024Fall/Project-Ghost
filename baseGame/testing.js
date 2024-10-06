@@ -1,7 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-// const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
-const serverUrl = 'http://localhost:5000/project_ghost/';
+const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
+//const serverUrl = 'http://localhost:5000/project_ghost/';
 const level_seed = Math.floor(Date.now() / 1000)
 
 // Screens
@@ -24,6 +24,8 @@ let gameStarted = false; // Tracks whether the game has started
 let isGameOver = false; // Tracks if the game is over
 
 let gameScore = 0;
+let nameEnter = false;
+const scoreCategories = ["daily", "weekly", "allTime"]
 
 // Dino player
 const dino = {
@@ -198,7 +200,7 @@ function detectCollision() {
 			// Collision detected
 			isGameOver = true;
 			isPaused = true;
-			gameOver()
+			checkHighScore();
 		}
 	}
 }
@@ -226,6 +228,7 @@ function gameLoop() {
 		updateObstacles();
 		detectCollision();
 
+		//Increase the players score every ten frames - CS
 		if (frame % 10 === 0) gameScore++;
 		displayText("Score: " + gameScore, 24, 'black', 20, 20);
 		frame++;
@@ -233,20 +236,70 @@ function gameLoop() {
 	requestAnimationFrame(gameLoop);
 }
 
-function gameOver() {
-	let textNode = document.createElement("p");
-	textNode.textContent = "Enter your name: ";
-	textNode.id = "scoreInput";
-
-	let inputElement = document.createElement("input");
-
-	inputElement.setAttribute("type", "text");
-	inputElement.setAttribute("name", "playerName");
-	inputElement.setAttribute("maxlength", "3");
-
-	textNode.appendChild(inputElement);
-	document.body.appendChild(textNode);
+/**
+ * Author: Connor Spears
+ * Date: 10/6/2024
+ * Description: Evaluates the player's score to see if they should be placed on any leaderboard, then enters it to the database
+ * Function: checkHighScore
+ */
+async function checkHighScore(){
+	let highString = [];
+	//Check every category for the leaderboards, if the score can be entered then put it in and continue, otherwise break
+	//Const can be used because it is destroyed and recreated at the beginning of the next loop
+	for(const category of scoreCategories){
+		currentCategory = await getScores(category);
+		//Are there less than 10 entries in the current leaderboard? Or is the score higher than the 10th entry?
+		if(currentCategory.length < 10 || gameScore > currentCategory[currentCategory.length - 1].score){
+			highString.push(category);
+			nameEnter = true;
+			if(currentCategory.length >= 10) removeScore(category, currentCategory[currentCategory.length - 1].id);
+		}else{ break; }
+	}
+	
+	if(nameEnter){
+		displayText("New High Score! Enter a 3-character name!")
+		const playerName = await nameEntry();
+		addScore(playerName, gameScore, highString);
+		nameEnter = false;
+	}
 	displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
+}
+
+/**
+ * Author: Connor Spears
+ * Date: 10/4/2024
+ * Function: nameEntry
+ * Description: Creates an HTML element for the user to input a 3 character name if their score is on the leaderboard
+ * @returns {Promise<String>} 3 character limited String for the username}
+ */
+function nameEntry(){
+	return new Promise((resolve) => {
+		let textNode = document.createElement("p");
+		textNode.textContent = "Enter your name: ";
+		textNode.id = "scoreInput";
+		
+		let inputElement = document.createElement("input");
+		inputElement.setAttribute("type", "text");
+		inputElement.setAttribute("name", "playerName");
+		inputElement.setAttribute("maxlength", "3");
+	
+		let submitButton = document.createElement("button");
+		submitButton.textContent = "Submit";
+		
+		textNode.appendChild(inputElement);
+		textNode.appendChild(submitButton);
+		document.body.appendChild(textNode);
+	
+		submitButton.addEventListener("click", function(){
+			const playerName = inputElement.value;
+			if(playerName.trim().length == 3){
+				resolve(playerName);
+				document.body.removeChild(textNode);
+			}else{
+				alert("Please enter a valid name.");
+			}
+		});
+	});
 }
 
 // Adding a score to the database
@@ -318,7 +371,7 @@ document.addEventListener('keydown', async (e) => {
 		isPaused = false;
 		gameStarted = true;
 		gameLoop();
-	} else if (e.code === 'KeyR' && isGameOver) {
+	} else if (e.code === 'KeyR' && isGameOver && !nameEnter) {
 		// Restart the game
 		isPaused = false;
 		isGameOver = false;
