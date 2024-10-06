@@ -1,0 +1,31 @@
+/* Canvas styling */
+canvas {
+    background-color: #f7f7f7;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Style for the game controls */
+#controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Screens styling */
+#titleScreen,
+#highScoresScreen,
+#tutorialScreen {
+    display: none;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}

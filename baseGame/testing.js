@@ -4,6 +4,18 @@ const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
 //const serverUrl = 'http://localhost:5000/project_ghost/';
 const level_seed = Math.floor(Date.now() / 1000)
 
+// Screens
+const titleScreen = document.getElementById('titleScreen');
+const highScoresScreen = document.getElementById('highScoresScreen');
+const tutorialScreen = document.getElementById('tutorialScreen');
+
+// Buttons
+const playButton = document.getElementById('playButton');
+const highScoresButton = document.getElementById('highScoresButton');
+const tutorialButton = document.getElementById('tutorialButton');
+const backFromScoresButton = document.getElementById('backFromScoresButton');
+const backFromTutorialButton = document.getElementById('backFromTutorialButton');
+
 // Game settings
 let gameSpeed = 5;
 let gravity = 0.4;
@@ -24,7 +36,7 @@ const dino = {
 	dy: 0,
 	jumping: false,
 	crouching: false,
-	
+
 	draw() {
 		// Keep the top fixed, and adjust height from the bottom
 		const height = this.crouching ? this.height / 2 : this.height;
@@ -32,13 +44,13 @@ const dino = {
 		ctx.fillStyle = this.crouching ? 'blue' : 'green'; // Change color if crouching
 		ctx.fillRect(this.x, adjustedY, this.width, height);
 	},
-	
+
 	update() {
 		// Apply gravity when jumping
 		if (this.jumping) {
 			this.dy += gravity;
 			this.y += this.dy;
-			
+
 			// Stop at ground level
 			if (this.y + this.height >= canvas.height) {
 				this.y = canvas.height - this.height;
@@ -46,7 +58,7 @@ const dino = {
 				this.jumping = false;
 			}
 		}
-		
+
 		// Adjust height based on crouching status
 		if (!this.jumping) {
 			if (this.crouching) {
@@ -60,14 +72,14 @@ const dino = {
 			}
 		}
 	},
-	
+
 	jump() {
 		if (!this.jumping && !this.crouching) { // Prevent jumping mid-air and when crouching
 			this.jumping = true;
 			this.dy = -12; // Jump velocity
 		}
 	},
-	
+
 	crouch(state) {
 		// Only allow crouching when on the ground
 		if (!this.jumping) {
@@ -94,13 +106,13 @@ function updateObstacles() {
 	for (let i = 0; i < obstacles.length; i++) {
 		let obs = obstacles[i];
 		obs.x -= obs.speed;
-		
+
 		// Remove off-screen obstacles
 		if (obs.x + obs.width < 0) {
 			obstacles.splice(i, 1);
 			i--;
 		}
-		
+
 		// Draw obstacle
 		ctx.fillStyle = 'red';
 		ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
@@ -110,25 +122,25 @@ function updateObstacles() {
 // Create randomized level chunks with structured variation
 function generateLevelChunks() {
 	let levelChunks = [];
-	
+
 	for (let i = 0; i < 10; i++) {
 		let chunk = [];
-		
+
 		// Determine if the chunk will have an elevated floor (40% chance)
 		let elevated = Math.random() < 0.4;
 		let elevationHeight = elevated ? Math.random() * 50 + 30 : 0; // Random elevation between 50-80
-		
+
 		// Each chunk will have between 2-5 obstacles
 		let numberOfObstacles = Math.floor(Math.random() * 4) + 2;
-		
+
 		for (let j = 0; j < numberOfObstacles; j++) {
 			let size = Math.random() * 30 + 20; // Random obstacle size
 			let gap = Math.random() * 50 + 300; // Random distance between obstacles
 			let x = j * 400 + gap + canvas.width; // Randomized obstacle placement in the chunk
-			
+
 			// Randomly determine if the obstacle is in the air or on the ground (50% chance)
 			let isAirObstacle = Math.random() > 0.5;
-			
+
 			let y;
 			if (isAirObstacle) {
 				// Set obstacle height in the air, randomizing the Y position within a defined range
@@ -139,7 +151,7 @@ function generateLevelChunks() {
 				// Set obstacle height on the ground or elevated floor
 				y = elevated ? canvas.height - size - elevationHeight : canvas.height - size;
 			}
-			
+
 			// Create obstacle and add it to the chunk
 			chunk.push({
 				x: x,
@@ -149,10 +161,10 @@ function generateLevelChunks() {
 				speed: gameSpeed
 			});
 		}
-		
+
 		levelChunks.push(chunk);
 	}
-	
+
 	return levelChunks;
 }
 
@@ -168,11 +180,11 @@ function updateLevelChunks() {
 			currentChunkIndex = 0;
 			levelChunks = generateLevelChunks(); // Optionally generate new random chunks
 		}
-		
+
 		obstacles = levelChunks[currentChunkIndex];
 		currentChunkIndex++;
 	}
-	
+
 	updateObstacles();
 }
 
@@ -306,7 +318,7 @@ function addScore(in_user_name, in_score, in_categories) {
 		},
 		body: JSON.stringify(data)
 	})
-	.then(response => response.json());
+		.then(response => response.json());
 }
 
 // Get scores from the database
@@ -316,7 +328,7 @@ function getScores(category, limit = null) {
 		url += "&max=" + limit
 	}
 	return fetch(url)
-	.then(response => response.json());
+		.then(response => response.json());
 }
 
 // Remove score from the database
@@ -328,7 +340,7 @@ function removeScore(in_category, in_score_id) {
 			'Content-Type': 'application/json'
 		}
 	})
-	.then(response => response.json());
+		.then(response => response.json());
 }
 
 // Reset a table completely (DEV USE ONLY!!! ONLY RUN FROM CONSOLE!!!)
@@ -367,9 +379,9 @@ document.addEventListener('keydown', async (e) => {
 		dino.y = canvas.height - dino.height;
 		frame = 0;
 		gameScore = 0;
-    let scoreInput = document.getElementById("scoreInput")
+		let scoreInput = document.getElementById("scoreInput")
 		scoreInput.remove();
-  } else if (e.code == 'KeyP' && !isGameOver && gameStarted) {
+	} else if (e.code == 'KeyP' && !isGameOver && gameStarted) {
 		isPaused = !isPaused;
 	} else if (e.code == 'KeyA' && !isGameOver) {
 		console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
@@ -385,10 +397,113 @@ document.addEventListener('keyup', (e) => {
 	}
 });
 
-// Open the title screen
-titleScreen();
+// Button event listeners for Play screen
+document.getElementById('jumpButton').addEventListener('click', () => {
+	if (!isGameOver) {
+		dino.jump();
+	}
+});
 
-function titleScreen() {
+document.getElementById('crouchButton').addEventListener('mousedown', () => {
+	if (!isGameOver) {
+		dino.crouch(true);
+	}
+});
+
+document.getElementById('crouchButton').addEventListener('mouseup', () => {
+	dino.crouch(false);
+});
+
+document.getElementById('startButton').addEventListener('click', () => {
+	if (!gameStarted) {
+		isPaused = false;
+		gameStarted = true;
+		gameLoop();
+	}
+});
+
+document.getElementById('restartButton').addEventListener('click', () => {
+	if (isGameOver) {
+		isPaused = false;
+		isGameOver = false;
+		obstacles = [];
+		dino.y = canvas.height - dino.height;
+		frame = 0;
+		gameScore = 0;
+		let scoreInput = document.getElementById("scoreInput");
+		if (scoreInput) {
+			scoreInput.remove();
+		}
+	}
+});
+
+document.getElementById('pauseButton').addEventListener('click', () => {
+	if (!isGameOver && gameStarted) {
+		isPaused = !isPaused;
+	}
+});
+
+document.getElementById('helloButton').addEventListener('click', () => {
+	alert('Hello!');
+});
+
+// Event listeners for title screen buttons
+playButton.addEventListener('click', () => {
+	// Start the game
+	hideAllScreens();
+	isPaused = false;
+	gameStarted = true;
+	gameLoop(); // Start the game loop
+});
+
+highScoresButton.addEventListener('click', () => {
+	// Show High Scores screen
+	hideAllScreens();
+	highScoresScreen.classList.remove('hidden');
+	// Optionally, fetch and display high scores
+	getScores('weekly').then(data => {
+		let scoresText = data.map(score => `${score.user_name}: ${score.score}`).join('<br>');
+		document.getElementById('highScoresList').innerHTML = scoresText;
+	});
+});
+
+tutorialButton.addEventListener('click', () => {
+	// Show Tutorial screen
+	hideAllScreens();
+	tutorialScreen.classList.remove('hidden');
+});
+
+backFromScoresButton.addEventListener('click', () => {
+	// Go back to title screen from High Scores
+	showTitleScreen();
+});
+
+backFromTutorialButton.addEventListener('click', () => {
+	// Go back to title screen from Tutorial
+	showTitleScreen();
+});
+
+// Open the title screen initially
+showTitleScreen();
+
+
+// Function to hide all screens
+function hideAllScreens() {
+	titleScreen.classList.add('hidden');
+	highScoresScreen.classList.add('hidden');
+	tutorialScreen.classList.add('hidden');
+}
+
+// Function to display the title screen
+function showTitleScreen() {
+	hideAllScreens();
+	titleScreen.classList.remove('hidden');
+}
+
+// Open the title screen
+displayTitleScreen();
+
+function displayTitleScreen() {
 	displayText("Press 'T' to Start", 30, 'black', canvas.width / 4, canvas.height / 2 - 40);
 	displayText("Controls:", 24, 'black', canvas.width / 4, canvas.height / 2);
 	displayText("Space: Jump", 20, 'black', canvas.width / 4, canvas.height / 2 + 30);
