@@ -1,3 +1,3 @@
 # Components
 
-![Title Screen](assets/mockups/Title Screen.png)
+![Title Screen](assets/mockups/TitleScreen.png)
