@@ -1,9 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
 from peewee import *
 import time, os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../baseGame', template_folder='../baseGame')
 CORS(app)
 
 db = SqliteDatabase('game_data.db')
@@ -34,6 +34,11 @@ tables = {
 	"weekly": WeeklyScores,
 	"allTime": AllTime,
 }
+
+# Load our HTML file for the game. This right here is what does the serving and hosting
+@app.route('/project_ghost')
+def server_uri():
+	return render_template('UI.html')
 
 # ex:	/project_ghost/scores/get?category=daily			?:	Not limited, get all scores
 # ex:	/project_ghost/scores/get?category=weekly&max=10	?:	Limited, just get 10 scores
