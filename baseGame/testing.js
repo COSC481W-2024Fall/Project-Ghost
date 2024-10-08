@@ -247,7 +247,7 @@ async function checkHighScore(){
 	//Check every category for the leaderboards, if the score can be entered then put it in and continue, otherwise break
 	//Const can be used because it is destroyed and recreated at the beginning of the next loop
 	for(const category of scoreCategories){
-		currentCategory = await getScores(category);
+		const currentCategory = await getScores(category);
 		//Are there less than 10 entries in the current leaderboard? Or is the score higher than the 10th entry?
 		if(currentCategory.length < 10 || gameScore > currentCategory[currentCategory.length - 1].score){
 			highString.push(category);
