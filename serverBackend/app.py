@@ -6,7 +6,9 @@ import time, os
 app = Flask(__name__, static_folder='../baseGame', template_folder='../baseGame')
 CORS(app)
 
-db = SqliteDatabase('game_data.db')
+# Get the absolute path to the database file using the absolute path to this Python file's parent directory
+database_path = f'{os.path.dirname(os.path.abspath(__file__))}/game_data.db'
+db = SqliteDatabase(database_path)
 class Scores(Model):
 	user_name = CharField()
 	score = IntegerField()
@@ -39,9 +41,8 @@ tables = {
 @app.route('/project_ghost')
 def server_uri():
 	return render_template('UI.html')
-
-# ex:	/project_ghost/scores/get?category=daily			?:	Not limited, get all scores
-# ex:	/project_ghost/scores/get?category=weekly&max=10	?:	Limited, just get 10 scores
+	
+# ex:	/project_ghost/scores/get
 @app.route('/project_ghost/scores/get', methods=['GET'])
 @cross_origin()
 def get_scores():
@@ -82,7 +83,7 @@ def get_scores():
 	except Exception as e:
 		return jsonify({"error": str(e)}), 500
 		
-# ex:	/project_ghost/scores/add?category=weekly
+# ex:	/project_ghost/scores/add
 @app.route('/project_ghost/scores/add', methods=['POST'])
 @cross_origin()
 def add_score():
