@@ -257,7 +257,7 @@ async function checkHighScore(){
 	}
 	
 	if(nameEnter){
-		displayText("New High Score! Enter a 3-character name!")
+		displayText("Made it on the leaderboard! Enter a 3-character name:")
 		const playerName = await nameEntry();
 		addScore(playerName, gameScore, highString);
 		nameEnter = false;
@@ -268,6 +268,7 @@ async function checkHighScore(){
 /**
  * Author: Connor Spears
  * Date: 10/4/2024
+ * Edited: 10/8/2024
  * Function: nameEntry
  * Description: Creates an HTML element for the user to input a 3 character name if their score is on the leaderboard
  * @returns {Promise<String>} 3 character limited String for the username}
@@ -282,6 +283,9 @@ function nameEntry(){
 		inputElement.setAttribute("type", "text");
 		inputElement.setAttribute("name", "playerName");
 		inputElement.setAttribute("maxlength", "3");
+		inputElement.style.textTransform = "uppercase";
+
+		const regex = /^[A-Za-z0-9]*$/;
 	
 		let submitButton = document.createElement("button");
 		submitButton.textContent = "Submit";
@@ -290,7 +294,25 @@ function nameEntry(){
 		textNode.appendChild(submitButton);
 		document.body.appendChild(textNode);
 	
-		submitButton.addEventListener("click", function(){
+		textNode.addEventListener("keypress", function(event){
+			if(event.key === "Enter"){
+				event.preventDefault();
+				submitButton.dispatchEvent(new Event("click"));
+			}
+		});
+
+		inputElement.addEventListener("input", function() {
+            const inputValue = this.value;
+
+            // Validate against regex and length
+            if (!regex.test(inputValue)) {
+                // If input doesn't match the regex, remove the last character
+                this.value = inputValue.slice(0, -1);
+            }
+        });
+
+		submitButton.addEventListener("click", function(event){
+			event.preventDefault();
 			const playerName = inputElement.value;
 			if(playerName.trim().length == 3){
 				resolve(playerName);
