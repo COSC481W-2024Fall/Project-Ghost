@@ -1,3 +1,8 @@
+import {dino} from '/baseGame/dino.js';
+import { setGameOver, setPaused, setGameStarted, canvas, ctx,gameSpeed,} from '/baseGame/game.js';
+
+import {checkHighScore} from '/baseGame/score.js';
+
 let obstacles = [];
 
 function spawnObstacle() {
@@ -27,18 +32,20 @@ function updateObstacles() {
     }
 }
 function detectCollision() {
-	for (let i = 0; i < obstacles.length; i++) {
-		let obs = obstacles[i];
+    for (let i = 0; i < obstacles.length; i++) {
+        let obs = obstacles[i];
 
-		if (dino.x < obs.x + obs.width &&
-			dino.x + dino.width > obs.x &&
-			dino.y < obs.y + obs.height &&
-			dino.y + dino.height > obs.y
-		) {
-			// Collision detected
-			isGameOver = true;
-			isPaused = true;
-			checkHighScore();
-		}
-	}
+        if (dino.x < obs.x + obs.width &&
+            dino.x + dino.width > obs.x &&
+            dino.y < obs.y + obs.height &&
+            dino.y + dino.height > obs.y
+        ) {
+            console.log("Collision detected");
+            setGameOver(true);  // Use setter function to change isGameOver
+            setPaused(true);  // Pause the game
+            setGameStarted(false);  // Mark the game as not started
+            checkHighScore();  // Check high score after the game ends
+        }
+    }
 }
+export{spawnObstacle,updateObstacles,detectCollision, obstacles};

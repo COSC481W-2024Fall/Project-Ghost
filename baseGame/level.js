@@ -1,5 +1,7 @@
+import { gameSpeed} from '/baseGame/gameSettings.js';
+
 // Create randomized level chunks with structured variation
-function generateLevelChunks() {
+export function generateLevelChunks() {
 	let levelChunks = [];
 
 	for (let i = 0; i < 10; i++) {
@@ -51,7 +53,7 @@ function generateLevelChunks() {
 let levelChunks = generateLevelChunks();
 let currentChunkIndex = 0;
 
-function updateLevelChunks() {
+export function updateLevelChunks() {
 	// If the current chunk's obstacles are all gone, load the next chunk
 	if (obstacles.length === 0) {
 		// Reset to first chunk if we've cycled through all
@@ -66,3 +68,4 @@ function updateLevelChunks() {
 
 	updateObstacles();
 }
+export{ levelChunks, currentChunkIndex};

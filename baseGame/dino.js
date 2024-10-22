@@ -1,3 +1,5 @@
+import {canvas, ctx, gravity} from '/baseGame/game.js';
+
 const dino = {
     x: 50,
     y: canvas.height - 50, // Start on the ground
@@ -53,3 +55,4 @@ const dino = {
         }
     }
 };
+export {dino};
