@@ -198,8 +198,11 @@ function detectCollision() {
 			dino.y + dino.height > obs.y
 		) {
 			// Collision detected
+			if (isGameOver) { console.log("true"); } else { console.log("false");}
 			isGameOver = true;
+			if (isGameOver) { console.log("true"); } else { console.log("false");}
 			isPaused = true;
+			if (isGameOver) { console.log("true"); } else { console.log("false");}
 			checkHighScore();
 		}
 	}
