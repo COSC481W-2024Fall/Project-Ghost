@@ -128,7 +128,7 @@ document.getElementById('pauseButton').addEventListener('click', () => {
             console.log("Game Paused");
         } else {
             console.log("Game Resumed");
-            startGameLoop();  // Continue the game loop if unpaused
+            gameLoop();  // Continue the game loop if unpaused
         }
     }
 });

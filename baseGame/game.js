@@ -13,6 +13,7 @@ const level_seed = Math.floor(Date.now() / 1000);
 
 
 // Game settings
+let lastTime = performance.now();
 let gameSpeed = 5;
 let gravity = 0.4;
 let isPaused = false; // Game starts paused (until "T" is pressed)
@@ -31,8 +32,17 @@ let isLoopRunning = false;
 let lastObstacleSpawnTime = 0;
 const obstacleSpawnInterval = 1500; // Adjust this to control the spawn frequency in milliseconds
 
-function gameLoop() {
-    const currentTime = performance.now(); // Get the current time
+function gameLoop(currentTime) {
+    currentTime = performance.now(); // Get the current time
+    // Calculate delta time in seconds
+    const deltaTime = (currentTime - lastTime) / 1000;
+
+    // Update game logic based on delta time
+    update(deltaTime * gameSpeed);
+
+    render();
+   // console.log("Delta Time:", deltaTime);
+    lastTime=currentTime;
     if (!isGameOver && !isPaused) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -56,6 +66,12 @@ function gameLoop() {
         frame++;
     }
 
+    function update(deltaTime){
+        dino.dx +=dino.speed *deltaTime;
+    }
+    function render() {
+        
+    }
     // Only continue the loop if the game is running
     if (!isGameOver && !isPaused) {
         requestAnimationFrame(gameLoop);
@@ -63,6 +79,7 @@ function gameLoop() {
         isLoopRunning = false; // Reset the loop running flag if the game stops
     }
 }
+
 
 export function startGameLoop() {
     if (!isLoopRunning) {
