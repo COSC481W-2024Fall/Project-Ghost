@@ -97,7 +97,7 @@ document.getElementById('crouchButton').addEventListener('mouseup', () => {
 
 document.getElementById('startButton').addEventListener('click', () => {
     if (!getGameStarted()) {
-        resetGame(); // Reset before starting
+        //resetGame(); // Reset before starting
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
         startGameLoop();  // Start the game loop
@@ -187,6 +187,29 @@ function hideAllScreens() {
 function showTitleScreen() {
     hideAllScreens();
     titleScreen.classList.remove('hidden');
+}
+
+/**
+ * Author: Connor Spears
+ * Date: 10/23/2024
+ * Description: Activate or deactivate the leaderboard, and build the leaderboard based on which leaderboard you placed in to
+ * @param {boolean} active should the leaderboard be turned on or off? 
+ * @param {string} type which leaderboard should be displayed
+ */
+export async function displayLeaderboard(active, type){
+    if(active){
+        let leaderboard = document.createElement("table");
+        leaderboard.id = "leaderboard";
+        leaderboard.innerHTML += `<h2>${type}</h2>`;
+        let scoreList = await getScores(type);
+        scoreList.forEach((score, index) => {
+            //TODO: New high score does not show up when loading the leaderboard (sync issue?)
+            leaderboard.innerHTML += `<tr><td>${index + 1}</td><td>${score.user_name}</td><td>${score.score}</td></tr>`;
+        });
+        document.body.appendChild(leaderboard);
+    }else{
+        document.querySelector("#leaderboard").remove();
+    }
 }
 
 // Open the title screen
