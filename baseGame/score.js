@@ -29,8 +29,8 @@ async function checkHighScore() {
         setNameEnter(false); // Reset nameEnter to false
         displayLeaderboard(true, highString.pop());
     }
-
-    displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
+    
+    document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
 }
 
 /**

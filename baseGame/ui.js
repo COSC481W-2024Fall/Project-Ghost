@@ -46,8 +46,10 @@ document.addEventListener('keydown', async (e) => {
         let pausedState = getPaused();
         setPaused(!pausedState);  
         if (!pausedState) {
+            document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
         } else {          
-           gameLoop();
+            gameLoop();
+            document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
 	 }  else if (e.code === 'KeyA' && !getGameOver()) {
         console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
@@ -126,7 +128,7 @@ function displayScreen(screenType) {
     const container = document.getElementById('screenContainer');
 
     // Clear all existing screen classes
-    container.classList.remove('titleScreen', 'pauseScreen', 'diedScreen', 'diedGloriouslyScreen', 'highScoreScreen');
+    container.classList.remove('titleScreen', 'diedGloriouslyScreen', 'highScoreScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
@@ -134,22 +136,43 @@ function displayScreen(screenType) {
             container.classList.add('titleScreen');
             displayTitleScreen();
             break;
-        case 'died':
-            container.classList.add('diedScreen');
-            displayDiedScreen();
-            break;
         case 'diedGloriously':
             container.classList.add('diedGloriouslyScreen');
             displayDiedGloriouslyScreen();
             break;
         case 'highScore':
             container.classList.add('highScoreScreen');
-            displayHighScoresScreen();
+            displayHighScoreScreen();
             break;
         default:
             console.log("Unknown screen type");
     }
 }
+
+// Title screen content
+function displayTitleScreen() {
+    displayText("Project Ghost!", 68, 'black', canvas.width / 4.5, canvas.height / 2 - 100);
+    displayText("Controls:", 24, 'black', canvas.width / 2.5, canvas.height / 2 - 10);
+    displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 30);
+    displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 60);
+    displayText("Press Crouch Button or C to Crouch", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 90);
+    displayText("Press Pause Button or 'P' to Pause", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 120);
+    displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 150);
+}
+
+// Died gloriously screen content
+function displayDiedGloriouslyScreen() {
+
+}
+
+// High score screen content
+function displayHighScoreScreen() {
+
+}
+
+// On start use title screen
+displayScreen('title');
+// You can call displayScreen('whatever') depending on the game state
 
 /**
  * Author: Connor Spears
@@ -173,36 +196,5 @@ export async function displayLeaderboard(active, type){
         document.querySelector("#leaderboard").remove();
     }
 }
-
-// Title screen content
-function displayTitleScreen() {
-    displayText("Project Ghost!", 68, 'black', canvas.width / 4.5, canvas.height / 2 - 100);
-    displayText("Controls:", 24, 'black', canvas.width / 3, canvas.height / 2);
-    displayText("Press 'T' to Start", 20, 'black', canvas.width / 3, canvas.height / 2 + 30);
-    displayText("Space: Jump", 20, 'black', canvas.width / 3, canvas.height / 2 + 60);
-    displayText("C: Crouch", 20, 'black', canvas.width / 3, canvas.height / 2 + 90);
-    displayText("P: Pause", 20, 'black', canvas.width / 3, canvas.height / 2 + 120);
-    displayText("R: Restart after Game Over", 20, 'black', canvas.width / 3, canvas.height / 2 + 150);
-}
-
-// Died screen content
-function displayDiedScreen() {
-    displayText("Game Over!", 40, 'white', canvas.width / 3, canvas.height / 2);
-    displayText("Press 'R' to Restart", 24, 'white', canvas.width / 3, canvas.height / 2 + 50);
-}
-
-// Died gloriously screen content
-function displayDiedGloriouslyScreen() {
-
-}
-
-// High score screen content
-function displayHighScoresScreen() {
-
-}
-
-// On start use title screen
-displayScreen('title');
-// You can call displayScreen('whatever') depending on the game state
 
 export { displayText };
