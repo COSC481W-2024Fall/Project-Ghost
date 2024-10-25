@@ -38,7 +38,7 @@ def auto_reset():
 	today = datetime.datetime.today()
 	while retry_count < max_retries:
 		try:
-			if today.weekday() == 4: # Monday
+			if today.weekday() == 0: # Monday
 				WeeklyScores.delete().execute()
 				
 			DailyScores.delete().execute()
