@@ -1,6 +1,6 @@
 
 import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
-import { displayText } from '/baseGame/ui.js';
+import { displayText, displayLeaderboard} from '/baseGame/ui.js';
 
 /**
  * Author: Connor Spears
@@ -27,6 +27,7 @@ async function checkHighScore() {
         const playerName = await nameEntry();
         addScore(playerName, gameScore, highString);
         setNameEnter(false); // Reset nameEnter to false
+        displayLeaderboard(true, highString.pop());
     }
 
     displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
@@ -38,7 +39,7 @@ async function checkHighScore() {
  * Edited: 10/8/2024
  * Function: nameEntry
  * Description: Creates an HTML element for the user to input a 3 character name if their score is on the leaderboard
- * @returns {Promise<String>} 3 character limited String for the username}
+ * @returns {Promise<String>} 3 character limited String for the username
  */
 function nameEntry(){
     return new Promise((resolve) => {
