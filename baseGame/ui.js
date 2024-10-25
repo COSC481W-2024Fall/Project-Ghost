@@ -111,10 +111,13 @@ document.getElementById('pauseButton').addEventListener('click', () => {
 		console.log("Paused State: ", getPaused());
         console.log("Game Over State: ", getGameOver());
         if (!pausedState) {
+            stopGameLoop();  // Stop the game loop if paused
+            document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
             console.log("Game Paused");
         } else {
             console.log("Game Resumed");
             startGameLoop();  // Continue the game loop if unpaused
+            document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
     }
 });
@@ -130,10 +133,6 @@ function displayScreen(screenType) {
         case 'title':
             container.classList.add('titleScreen');
             displayTitleScreen();
-            break;
-        case 'pause':
-            container.classList.add('pauseScreen');
-            displayPauseScreen();
             break;
         case 'died':
             container.classList.add('diedScreen');
@@ -184,12 +183,6 @@ function displayTitleScreen() {
     displayText("C: Crouch", 20, 'black', canvas.width / 3, canvas.height / 2 + 90);
     displayText("P: Pause", 20, 'black', canvas.width / 3, canvas.height / 2 + 120);
     displayText("R: Restart after Game Over", 20, 'black', canvas.width / 3, canvas.height / 2 + 150);
-}
-
-// Pause screen content
-function displayPauseScreen() {
-    displayText("Game Paused", 40, 'white', canvas.width / 3, canvas.height / 2);
-    displayText("Press 'P' to Resume", 24, 'white', canvas.width / 3, canvas.height / 2 + 50);
 }
 
 // Died screen content

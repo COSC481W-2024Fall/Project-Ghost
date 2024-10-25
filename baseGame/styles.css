@@ -34,9 +34,21 @@ canvas {
 }
 
 /* Pause Screen */
-.pauseScreen {
+#pauseScreen {
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 800px;
+    height: 410px;
     background-color: #24272C;
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it's above the game canvas */
+    color: white;
+    font-size: 40px;
 }
+
 
 /* Died Screen */
 .diedScreen {
