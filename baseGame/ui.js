@@ -12,19 +12,6 @@ import {
 
 import { addScore, getScores } from '/baseGame/score.js';
 
-
-// Screens
-const titleScreen = document.getElementById('titleScreen');
-const highScoresScreen = document.getElementById('highScoresScreen');
-const tutorialScreen = document.getElementById('tutorialScreen');
-
-// Buttons
-const playButton = document.getElementById('playButton');
-const highScoresButton = document.getElementById('highScoresButton');
-const tutorialButton = document.getElementById('tutorialButton');
-const backFromScoresButton = document.getElementById('backFromScoresButton');
-const backFromTutorialButton = document.getElementById('backFromTutorialButton');
-
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.font = `${fontSize}px Arial`;
     ctx.fillStyle = color;
@@ -94,7 +81,6 @@ document.getElementById('crouchButton').addEventListener('mouseup', () => {
     dino.crouch(false);
 });
 
-
 document.getElementById('startButton').addEventListener('click', () => {
     if (!getGameStarted()) {
         //resetGame(); // Reset before starting
@@ -133,60 +119,37 @@ document.getElementById('pauseButton').addEventListener('click', () => {
     }
 });
 
-document.getElementById('helloButton').addEventListener('click', () => {
-    alert('Hello!');
-});
+function displayScreen(screenType) {
+    const container = document.getElementById('screenContainer');
 
-// Event listeners for title screen buttons
-playButton.addEventListener('click', () => {
-    // Start the game
-    hideAllScreens();
-    setPaused(false);  // Unpause the game
-    setGameStarted(true);  // Mark the game as started
-    gameLoop();  // Start the game loop
-});
+    // Clear all existing screen classes
+    container.classList.remove('titleScreen', 'pauseScreen', 'diedScreen', 'diedGloriouslyScreen', 'highScoreScreen');
 
-highScoresButton.addEventListener('click', () => {
-    // Show High Scores screen
-    hideAllScreens();
-    highScoresScreen.classList.remove('hidden');
-    // Optionally, fetch and display high scores
-    getScores('weekly').then(data => {
-        let scoresText = data.map(score => `${score.user_name}: ${score.score}`).join('<br>');
-        document.getElementById('highScoresList').innerHTML = scoresText;
-    });
-});
-
-tutorialButton.addEventListener('click', () => {
-    // Show Tutorial screen
-    hideAllScreens();
-    tutorialScreen.classList.remove('hidden');
-});
-
-backFromScoresButton.addEventListener('click', () => {
-    // Go back to title screen from High Scores
-    showTitleScreen();
-});
-
-backFromTutorialButton.addEventListener('click', () => {
-    // Go back to title screen from Tutorial
-    showTitleScreen();
-});
-
-// Open the title screen initially
-showTitleScreen();
-
-// Function to hide all screens
-function hideAllScreens() {
-    titleScreen.classList.add('hidden');
-    highScoresScreen.classList.add('hidden');
-    tutorialScreen.classList.add('hidden');
-}
-
-// Function to display the title screen
-function showTitleScreen() {
-    hideAllScreens();
-    titleScreen.classList.remove('hidden');
+    // Add the appropriate screen class based on screenType
+    switch(screenType) {
+        case 'title':
+            container.classList.add('titleScreen');
+            displayTitleScreen();
+            break;
+        case 'pause':
+            container.classList.add('pauseScreen');
+            displayPauseScreen();
+            break;
+        case 'died':
+            container.classList.add('diedScreen');
+            displayDiedScreen();
+            break;
+        case 'diedGloriously':
+            container.classList.add('diedGloriouslyScreen');
+            displayDiedGloriouslyScreen();
+            break;
+        case 'highScore':
+            container.classList.add('highScoreScreen');
+            displayHighScoresScreen();
+            break;
+        default:
+            console.log("Unknown screen type");
+    }
 }
 
 /**
@@ -212,18 +175,41 @@ export async function displayLeaderboard(active, type){
     }
 }
 
-// Open the title screen
-displayTitleScreen();
-
+// Title screen content
 function displayTitleScreen() {
-    displayText("Press 'T' to Start", 30, 'black', canvas.width / 4, canvas.height / 2 - 40);
-    displayText("Controls:", 24, 'black', canvas.width / 4, canvas.height / 2);
-    displayText("Space: Jump", 20, 'black', canvas.width / 4, canvas.height / 2 + 30);
-    displayText("C: Crouch", 20, 'black', canvas.width / 4, canvas.height / 2 + 60);
-    displayText("P: Pause", 20, 'black', canvas.width / 4, canvas.height / 2 + 90);
-    displayText("R: Restart after Game Over", 20, 'black', canvas.width / 4, canvas.height / 2 + 120);
-    displayText("A: Add test data to database", 20, 'black', canvas.width / 4, canvas.height / 2 + 150);
-    displayText("G: Get data from database", 20, 'black', canvas.width / 4, canvas.height / 2 + 180);
+    displayText("Project Ghost!", 68, 'black', canvas.width / 4.5, canvas.height / 2 - 100);
+    displayText("Controls:", 24, 'black', canvas.width / 3, canvas.height / 2);
+    displayText("Press 'T' to Start", 20, 'black', canvas.width / 3, canvas.height / 2 + 30);
+    displayText("Space: Jump", 20, 'black', canvas.width / 3, canvas.height / 2 + 60);
+    displayText("C: Crouch", 20, 'black', canvas.width / 3, canvas.height / 2 + 90);
+    displayText("P: Pause", 20, 'black', canvas.width / 3, canvas.height / 2 + 120);
+    displayText("R: Restart after Game Over", 20, 'black', canvas.width / 3, canvas.height / 2 + 150);
 }
+
+// Pause screen content
+function displayPauseScreen() {
+    displayText("Game Paused", 40, 'white', canvas.width / 3, canvas.height / 2);
+    displayText("Press 'P' to Resume", 24, 'white', canvas.width / 3, canvas.height / 2 + 50);
+}
+
+// Died screen content
+function displayDiedScreen() {
+    displayText("Game Over!", 40, 'white', canvas.width / 3, canvas.height / 2);
+    displayText("Press 'R' to Restart", 24, 'white', canvas.width / 3, canvas.height / 2 + 50);
+}
+
+// Died gloriously screen content
+function displayDiedGloriouslyScreen() {
+
+}
+
+// High score screen content
+function displayHighScoresScreen() {
+
+}
+
+// On start use title screen
+displayScreen('title');
+// You can call displayScreen('whatever') depending on the game state
 
 export { displayText };

@@ -1,60 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dino Game</title>
-	<link rel="stylesheet" href="/baseGame/styles.css"> <!-- External CSS file -->
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dino Game</title>
+		<link rel="stylesheet" href="/baseGame/styles.css"> <!-- External CSS file -->
+	</head>
 
-<body>
-	<canvas id="gameCanvas" width="800" height="400"></canvas>
+	<body>
+		<div id="screenContainer">
+			<canvas id="gameCanvas" width="800" height="400"></canvas>
+		</div>
 
-	<!-- Title screen -->
-	<div id="titleScreen">
-		<h1>Dino Game</h1>
-		<p>Press 'T' to Start</p>
-		<button id="playButton">Play</button>
-		<button id="highScoresButton">High Scores</button>
-		<button id="tutorialButton">Tutorial</button>
-	</div>
+		<!-- Game controls (buttons) -->
+		<div id="controls">
+			<button id="jumpButton">Jump</button>
+			<button id="crouchButton">Crouch</button>
+			<button id="startButton">Start</button>
+			<button id="restartButton">Restart</button>
+			<button id="pauseButton">Pause</button>
+		</div>
 
-	<!-- High Scores Screen -->
-	<div id="highScoresScreen" class="hidden">
-		<h2>High Scores</h2>
-		<p id="highScoresList">Fetching high scores...</p>
-		<button id="backFromScoresButton">Back</button>
-	</div>
-
-	<!-- Tutorial Screen -->
-	<div id="tutorialScreen" class="hidden">
-		<h2>Tutorial</h2>
-		<p>Use the following keys to play:</p>
-		<p>Space: Jump</p>
-		<p>C: Crouch</p>
-		<p>P: Pause</p>
-		<p>R: Restart after Game Over</p>
-		<button id="backFromTutorialButton">Back</button>
-	</div>
-
-	<!-- Game controls (buttons) -->
-	<div id="controls">
-		<button id="jumpButton">Jump</button>
-		<button id="crouchButton">Crouch</button>
-		<button id="startButton">Start</button>
-		<button id="restartButton">Restart</button>
-		<button id="pauseButton">Pause</button>
-		<button id="helloButton">Say Hello</button>
-	</div>
-
-	<!-- <script src="/baseGame/testing.js"></script> 
-	<script src="game.js"></script>
-    <script src="dino.js"></script>
-    <script src="obstacle.js"></script>
-    <script src="level.js"></script>
-    <script src="score.js"></script>-->
-    <script src="/baseGame/ui.js" type = "module"></script>
-</body>
+		<!-- <script src="/baseGame/testing.js"></script> 
+		<script src="game.js"></script>
+		<script src="dino.js"></script>
+		<script src="obstacle.js"></script>
+		<script src="level.js"></script>
+		<script src="score.js"></script>-->
+		<script src="/baseGame/ui.js" type = "module"></script>
+	</body>
 
 </html>

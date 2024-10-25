@@ -1,6 +1,5 @@
 /* Canvas styling */
 canvas {
-    background-color: #f7f7f7;
     display: block;
     margin: 0 auto;
 }
@@ -18,14 +17,38 @@ canvas {
     cursor: pointer;
 }
 
-/* Screens styling */
-#titleScreen,
-#highScoresScreen,
-#tutorialScreen {
-    display: none;
-    text-align: center;
-}
-
 .hidden {
     display: none;
+}
+
+/* General container styles */
+#screenContainer {
+    width: 800px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+/* Title Screen */
+.titleScreen {
+    background-color: #87CEEB;
+}
+
+/* Pause Screen */
+.pauseScreen {
+    background-color: #24272C;
+}
+
+/* Died Screen */
+.diedScreen {
+    background-color: #41588B;
+}
+
+/* Died Gloriously Screen */
+.diedGloriouslyScreen {
+    background-color: #41588B;
+}
+
+/* High Score Screen */
+.highScoreScreen {
+    background-color: #6C84A0;
 }
