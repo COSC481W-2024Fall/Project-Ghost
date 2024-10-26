@@ -1,7 +1,7 @@
 import {spawnObstacle,updateObstacles,detectCollision, obstacles} from '/baseGame/obstacle.js';
 import {dino} from '/baseGame/dino.js';
 
-import { displayText, displayLeaderboard } from '/baseGame/ui.js';
+import { displayText, initializeLeaderboard } from '/baseGame/ui.js';
 
 
 

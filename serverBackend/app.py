@@ -1,41 +1,10 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
-from peewee import *
+from database import tables # import our database handling code
 import time, os
 
 app = Flask(__name__, static_folder='../baseGame', template_folder='../baseGame')
 CORS(app)
-
-# Get the absolute path to the database file using the absolute path to this Python file's parent directory
-database_path = f'{os.path.dirname(os.path.abspath(__file__))}/game_data.db'
-db = SqliteDatabase(database_path)
-class Scores(Model):
-	user_name = CharField()
-	score = IntegerField()
-	timestamp = IntegerField()
-	
-	class Meta:
-		database = db
-		abstract = True
-		
-class DailyScores(Scores):
-	pass
-	
-class WeeklyScores(Scores):
-	pass
-	
-class AllTime(Scores):
-	pass
-	
-db.connect()
-db.create_tables([DailyScores, WeeklyScores, AllTime]) # only creates tables when they don't exist
-
-# Map the string name of the table to the table. This will be used in the HTTP requests
-tables = {
-	"daily": DailyScores,
-	"weekly": WeeklyScores,
-	"allTime": AllTime,
-}
 
 # Load our HTML file for the game. This right here is what does the serving and hosting
 @app.route('/project_ghost')

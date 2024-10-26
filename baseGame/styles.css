@@ -86,3 +86,17 @@ canvas {
 .highScoreScreen {
     background-color: #6C84A0;
 }
+
+#leaderboard th, td{
+    border-style: solid;
+    padding: 10px;
+    text-align: center;
+}
+#leaderboard h2{
+    width: 400px;
+}
+
+#leaderboard {
+    width: 20%;
+    table-layout: fixed;
+}

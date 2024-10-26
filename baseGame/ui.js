@@ -165,25 +165,68 @@ displayScreen('title');             // You can call displayScreen('whatever') de
 
 /**
  * Author: Connor Spears
- * Date: 10/23/2024
- * Description: Activate or deactivate the leaderboard, and build the leaderboard based on which leaderboard you placed in to
- * @param {boolean} active should the leaderboard be turned on or off? 
- * @param {string} type which leaderboard should be displayed
+ * Date: 10/26/2024
+ * Description: Create the leaderboard which will be dynamically filled later
  */
-export async function displayLeaderboard(active, type){
-    if(active){
-        let leaderboard = document.createElement("table");
-        leaderboard.id = "leaderboard";
-        leaderboard.innerHTML += `<h2>${type}</h2>`;
-        let scoreList = await getScores(type);
-        scoreList.forEach((score, index) => {
-            //TODO: New high score does not show up when loading the leaderboard (sync issue?)
-            leaderboard.innerHTML += `<tr><td>${index + 1}</td><td>${score.user_name}</td><td>${score.score}</td></tr>`;
-        });
-        document.body.appendChild(leaderboard);
-    }else{
-        document.querySelector("#leaderboard").remove();
-    }
+export async function initializeLeaderboard(){
+    const container = document.createElement("div");
+    container.id = "leaderboardContainer";
+
+    const buttonsContainer = document.createElement("div");
+
+    //Buttons must be created this way so they can access the updateLeaderboard function
+    const dailyButton = document.createElement("button");
+    dailyButton.textContent = "Daily";
+    dailyButton.addEventListener("click", async () => await updateLeaderboard("daily"));
+
+    const weeklyButton = document.createElement("button");
+    weeklyButton.textContent = "Weekly";
+    weeklyButton.addEventListener("click", async () => await updateLeaderboard("weekly"));
+
+    const allTimeButton = document.createElement("button");
+    allTimeButton.textContent = "All Time";
+    allTimeButton.addEventListener("click", async () => await updateLeaderboard("allTime"));
+
+    buttonsContainer.append(dailyButton, weeklyButton, allTimeButton);
+    container.appendChild(buttonsContainer);
+
+    const leaderboard = document.createElement("table");
+    leaderboard.id = "leaderboard";
+    container.appendChild(leaderboard);
+
+    document.body.appendChild(container);
+
+    await updateLeaderboard("daily");
+}
+
+/**
+ * Author: Connor Spears
+ * Date: 10/26/2024
+ * Description: Fill dynamically created table with scores of the desired type
+ * @param {string} type 
+ */
+export async function updateLeaderboard(type){
+    const leaderboard = document.getElementById("leaderboard");
+    leaderboard.innerHTML=`<h2>${type.charAt(0).toUpperCase() + type.slice(1)} Leaderboard</h2>`;
+
+    const scoreList = await getScores(type);
+
+    leaderboard.innerHTML += `
+        <tr>
+            <th class="rank-column">Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+    `;
+    scoreList.forEach((score, index) =>{
+        leaderboard.innerHTML += `
+            <tr>
+                <td class="rank-column">${index + 1}</td>
+                <td>${score.user_name}</td>
+                <td>${score.score}</td>
+            </tr>
+        `;
+    });
 }
 
 export { displayText };
