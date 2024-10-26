@@ -88,6 +88,9 @@ export function resetGame() {
     obstacles.length = 0; // Clear existing obstacles
     dino.y = canvas.height - dino.height; // Reset dino's position
     stopGameLoop(); // Stop the game loop if it’s running
+    displayLeaderboard(false, null);
+    document.getElementById('diedScreen').style.display = 'none';  // Hide overlay
+    document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay
 }
 
 

@@ -26,14 +26,15 @@ async function checkHighScore() {
     }
 
     if (getNameEnter()) { // Check if nameEnter is true
+        document.getElementById('diedWellScreen').style.display = 'flex';  // Show overlay
         displayText("Made it on the leaderboard! Enter a 3-character name:");
         const playerName = await nameEntry();
         await addScore(playerName, gameScore, highString);
         setNameEnter(false); // Reset nameEnter to false
         await initializeLeaderboard();
     }
-
-    displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
+    
+    document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
 }
 
 /**
