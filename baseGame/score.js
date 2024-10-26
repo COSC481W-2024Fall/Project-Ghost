@@ -1,6 +1,6 @@
 
 import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
-import { displayText, displayLeaderboard} from '/baseGame/ui.js';
+import { displayText, initializeLeaderboard} from '/baseGame/ui.js';
 
 /**
  * Author: Connor Spears
@@ -30,7 +30,7 @@ async function checkHighScore() {
         const playerName = await nameEntry();
         await addScore(playerName, gameScore, highString);
         setNameEnter(false); // Reset nameEnter to false
-        displayLeaderboard(true, highString.pop());
+        await initializeLeaderboard();
     }
 
     displayText("Game Over! Press 'R' to Restart", 30, 'red', canvas.width / 4, canvas.height / 2);
@@ -130,6 +130,7 @@ function getScores(category, limit = null) {
 	return fetch(url)
 		.then(response => response.json());
 }
+window.getScores = getScores;
 
 // Remove score from the database
 function removeScore(in_category, in_score_id) {
