@@ -128,17 +128,13 @@ function displayScreen(screenType) {
     const container = document.getElementById('screenContainer');
 
     // Clear all existing screen classes
-    container.classList.remove('titleScreen', 'diedGloriouslyScreen', 'highScoreScreen');
+    container.classList.remove('titleScreen', 'highScoreScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
         case 'title':
             container.classList.add('titleScreen');
             displayTitleScreen();
-            break;
-        case 'diedGloriously':
-            container.classList.add('diedGloriouslyScreen');
-            displayDiedGloriouslyScreen();
             break;
         case 'highScore':
             container.classList.add('highScoreScreen');
@@ -160,19 +156,12 @@ function displayTitleScreen() {
     displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 150);
 }
 
-// Died gloriously screen content
-function displayDiedGloriouslyScreen() {
-
-}
-
 // High score screen content
 function displayHighScoreScreen() {
-
 }
 
 // On start use title screen
-displayScreen('title');
-// You can call displayScreen('whatever') depending on the game state
+displayScreen('title');             // You can call displayScreen('whatever') depending on the game state
 
 /**
  * Author: Connor Spears

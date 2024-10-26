@@ -23,6 +23,7 @@ async function checkHighScore() {
     }
 
     if (getNameEnter()) { // Check if nameEnter is true
+        document.getElementById('diedWellScreen').style.display = 'flex';  // Show overlay
         displayText("Made it on the leaderboard! Enter a 3-character name:");
         const playerName = await nameEntry();
         addScore(playerName, gameScore, highString);
