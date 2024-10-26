@@ -158,7 +158,7 @@ function displayScreen(screenType) {
  * @param {boolean} active should the leaderboard be turned on or off? 
  * @param {string} type which leaderboard should be displayed
  */
-export async function displayLeaderboard(active, type){
+export async function displayLeaderboard(active, type = null){
     if(active){
         let leaderboard = document.createElement("table");
         leaderboard.id = "leaderboard";
