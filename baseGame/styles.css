@@ -2,6 +2,14 @@
 canvas {
     display: block;
     margin: 0 auto;
+    border: 5px solid black;
+    top:+2px;
+    bottom: +10px;
+    left: -6px;
+    right: -6px;
+    width: calc(100% - 5px);
+    height: calc(100% - 5px);
+    font-family: "Single Day", cursive;
 }
 
 /* Style for the game controls */
@@ -11,10 +19,12 @@ canvas {
 }
 
 #controls button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 15px 15px 10px 15px;
+    font-size: 20px;
     margin: 5px;
     cursor: pointer;
+    font-family: "Single Day", cursive;
+    color: #393c3e;
 }
 
 .hidden {
@@ -26,11 +36,28 @@ canvas {
     width: 800px;
     height: 400px;
     margin: 0 auto;
+    font-family: "Single Day", cursive;
 }
+
+.single-day-regular {
+    font-family: "Single Day", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+  
 
 /* Title Screen */
 .titleScreen {
     background-color: #87CEEB;
+}
+
+.ellipse{
+    margin-left: 165px;
+    margin-top: -385px;
+    width: 450px; 
+    height: 140px; 
+    background-color: #5b3d9c;
+    border-radius: 45%;
 }
 
 /* Pause Screen */
@@ -48,7 +75,6 @@ canvas {
     color: white;
     font-size: 40px;
 }
-
 
 /* Died Screen */
 #diedScreen {
@@ -80,11 +106,6 @@ canvas {
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
     font-size: 40px;
-}
-
-/* High Score Screen */
-.highScoreScreen {
-    background-color: #6C84A0;
 }
 
 #leaderboard th, td{

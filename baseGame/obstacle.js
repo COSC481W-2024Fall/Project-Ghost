@@ -1,7 +1,6 @@
-import {dino} from '/baseGame/dino.js';
-import { setGameOver, setPaused, setGameStarted, canvas, ctx,gameSpeed,} from '/baseGame/game.js';
-
-import {checkHighScore} from '/baseGame/score.js';
+import { dino } from './dino.js';
+import { setGameOver, setPaused, setGameStarted, canvas, ctx, gameSpeed } from './game.js';
+import { checkHighScore } from './score.js';
 
 let obstacles = [];
 
@@ -31,6 +30,7 @@ function updateObstacles() {
         ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
     }
 }
+
 function detectCollision() {
     for (let i = 0; i < obstacles.length; i++) {
         let obs = obstacles[i];
@@ -48,4 +48,5 @@ function detectCollision() {
         }
     }
 }
-export{spawnObstacle,updateObstacles,detectCollision, obstacles};
+
+export { spawnObstacle, updateObstacles, detectCollision, obstacles };

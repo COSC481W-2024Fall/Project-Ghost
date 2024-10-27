@@ -13,7 +13,7 @@ import {
 import { addScore, getScores } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
-    ctx.font = `${fontSize}px Arial`;
+    ctx.font = `${fontSize}px "Single Day"`;
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 }
@@ -128,17 +128,13 @@ function displayScreen(screenType) {
     const container = document.getElementById('screenContainer');
 
     // Clear all existing screen classes
-    container.classList.remove('titleScreen', 'highScoreScreen');
+    container.classList.remove('titleScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
         case 'title':
             container.classList.add('titleScreen');
             displayTitleScreen();
-            break;
-        case 'highScore':
-            container.classList.add('highScoreScreen');
-            displayHighScoreScreen();
             break;
         default:
             console.log("Unknown screen type");
@@ -147,7 +143,7 @@ function displayScreen(screenType) {
 
 // Title screen content
 function displayTitleScreen() {
-    displayText("Project Ghost!", 68, 'black', canvas.width / 4.5, canvas.height / 2 - 100);
+    displayText("Project Ghost!", 68, '#EAE2E2', canvas.width / 4.1, canvas.height / 2 - 100);
     displayText("Controls:", 24, 'black', canvas.width / 2.5, canvas.height / 2 - 10);
     displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 30);
     displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 60);
@@ -156,12 +152,8 @@ function displayTitleScreen() {
     displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 150);
 }
 
-// High score screen content
-function displayHighScoreScreen() {
-}
-
 // On start use title screen
-displayScreen('title');             // You can call displayScreen('whatever') depending on the game state
+displayScreen('title');
 
 /**
  * Author: Connor Spears
