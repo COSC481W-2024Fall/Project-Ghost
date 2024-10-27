@@ -9,7 +9,7 @@ canvas {
     right: -6px;
     width: calc(100% - 5px);
     height: calc(100% - 5px);
-    font-family: "Single Day", cursive;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Style for the game controls */
@@ -19,12 +19,16 @@ canvas {
 }
 
 #controls button {
-    padding: 15px 15px 10px 15px;
-    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    font-size: 22px;
     margin: 5px;
     cursor: pointer;
     font-family: "Single Day";
-    color: #393c3e;
+    color: white;
+    background-color: #3369c6;
+    border-radius: 10%;
+    border: 2px solid #3369c6;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 }
 
 .hidden {
