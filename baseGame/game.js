@@ -13,9 +13,9 @@ const level_seed = Math.floor(Date.now() / 1000);
 
 
 // Game settings
-let lastTime = performance.now();
+let lastTime = 0;
 let gameSpeed = 5;
-let gravity = 0.4;
+let gravity = .4;
 let isPaused = false; // Game starts paused (until "T" is pressed)
 let gameStarted = false; // Tracks whether the game has started
 let isGameOver = false; // Tracks if the game is over
@@ -33,21 +33,16 @@ let lastObstacleSpawnTime = 0;
 const obstacleSpawnInterval = 1500; // Adjust this to control the spawn frequency in milliseconds
 
 function gameLoop(currentTime) {
-    currentTime = performance.now(); // Get the current time
     // Calculate delta time in seconds
     const deltaTime = (currentTime - lastTime) / 1000;
-
-    // Update game logic based on delta time
-    update(deltaTime * gameSpeed);
-
-    render();
-   // console.log("Delta Time:", deltaTime);
     lastTime=currentTime;
+   // console.log("Delta Time:", deltaTime);
+    
     if (!isGameOver && !isPaused) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Dino logic
-        dino.update();
+        dino.update(deltaTime);
         dino.draw();
 
         // Obstacle logic
@@ -55,7 +50,7 @@ function gameLoop(currentTime) {
             spawnObstacle();
             lastObstacleSpawnTime = currentTime; // Update the last spawn time
         }
-        updateObstacles();
+        updateObstacles(deltaTime);
         detectCollision();
 
         // Increase the player's score every ten frames
@@ -65,13 +60,7 @@ function gameLoop(currentTime) {
         displayText("Score: " + gameScore, 24, 'black', 20, 20);
         frame++;
     }
-
-    function update(deltaTime){
-        dino.dx +=dino.speed *deltaTime;
-    }
-    function render() {
-        
-    }
+    
     // Only continue the loop if the game is running
     if (!isGameOver && !isPaused) {
         requestAnimationFrame(gameLoop);
@@ -97,13 +86,13 @@ export function stopGameLoop() {
 
 export function resetGame() {
     setGameOver(false);
-   
     setPaused(false); // Ensure game is unpaused on reset
     setFrame(0);
     setGameScore(0);
     setGameSpeed(5);
     obstacles.length = 0; // Clear existing obstacles
     dino.y = canvas.height - dino.height; // Reset dino's position
+    lastObstacleSpawnTime = 0;
     stopGameLoop(); // Stop the game loop if it’s running
     
 }
