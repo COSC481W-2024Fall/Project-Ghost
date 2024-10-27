@@ -1,4 +1,5 @@
 // jest.setup.js
+console.log("Jest setup file is loaded");
 global.canvas = {
   width: 800,
   height: 400,
