@@ -13,7 +13,7 @@ import {
 import { addScore, getScores } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
-    ctx.font = `${fontSize}px Arial`;
+    ctx.font = `${fontSize}px "Single Day"`;
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 }
@@ -28,6 +28,7 @@ document.addEventListener('keydown', async (e) => {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
       //  resetGame();  // Reset the game before starting
+        document.getElementById('ellipse').style.display = 'none';
         startGameLoop();  // Start the game loop
     }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
 		resetGame(); // Reset before starting
@@ -88,6 +89,7 @@ document.getElementById('startButton').addEventListener('click', () => {
         //resetGame(); // Reset before starting
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
+        document.getElementById('ellipse').style.display = 'none'; 
         startGameLoop();  // Start the game loop
     }
 });
@@ -124,8 +126,22 @@ document.getElementById('pauseButton').addEventListener('click', () => {
     }
 });
 
+function displayTitleScreen() {
+    const ellipse = document.getElementById('ellipse');
+    ellipse.style.display = 'block'; // Show the ellipse
+
+    displayText("Project Ghost!", 68, 'white', canvas.width / 4.0, canvas.height / 2 - 100);
+    displayText("Controls:", 24, 'black', canvas.width / 2.4, canvas.height / 2 - 10);
+    displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 30);
+    displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 60);
+    displayText("Press Crouch Button or C to Crouch", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 90);
+    displayText("Press Pause Button or 'P' to Pause", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 120);
+    displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 150);
+}
+
 function displayScreen(screenType) {
     const container = document.getElementById('screenContainer');
+    const ellipse = document.getElementById('ellipse');
 
     // Clear all existing screen classes
     container.classList.remove('titleScreen', 'highScoreScreen');
@@ -135,33 +151,21 @@ function displayScreen(screenType) {
         case 'title':
             container.classList.add('titleScreen');
             displayTitleScreen();
+            ellipse.style.display = 'block';  // Show the ellipse
             break;
         case 'highScore':
             container.classList.add('highScoreScreen');
             displayHighScoreScreen();
+            ellipse.style.display = 'none';  // Hide the ellipse
             break;
         default:
             console.log("Unknown screen type");
+            ellipse.style.display = 'none';  // Hide the ellipse
     }
 }
 
-// Title screen content
-function displayTitleScreen() {
-    displayText("Project Ghost!", 68, 'black', canvas.width / 4.5, canvas.height / 2 - 100);
-    displayText("Controls:", 24, 'black', canvas.width / 2.5, canvas.height / 2 - 10);
-    displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 30);
-    displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 60);
-    displayText("Press Crouch Button or C to Crouch", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 90);
-    displayText("Press Pause Button or 'P' to Pause", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 120);
-    displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 150);
-}
-
-// High score screen content
-function displayHighScoreScreen() {
-}
-
 // On start use title screen
-displayScreen('title');             // You can call displayScreen('whatever') depending on the game state
+displayScreen('title');
 
 /**
  * Author: Connor Spears

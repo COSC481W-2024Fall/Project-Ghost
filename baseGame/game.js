@@ -1,8 +1,6 @@
-import {spawnObstacle,updateObstacles,detectCollision, obstacles} from '/baseGame/obstacle.js';
-import {dino} from '/baseGame/dino.js';
-
-import { displayText, initializeLeaderboard } from '/baseGame/ui.js';
-
+import { spawnObstacle, updateObstacles, detectCollision, obstacles } from './obstacle.js';
+import { dino } from './dino.js';
+import { displayText, initializeLeaderboard } from './ui.js';
 
 
 const canvas = document.getElementById('gameCanvas');
