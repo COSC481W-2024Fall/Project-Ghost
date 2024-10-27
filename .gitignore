@@ -2,3 +2,5 @@
 serverBackend/ghost_venv/
 # Ignore database
 serverBackend/game_data.db
+# Ignore PyCache
+serverBackend/__pycache__

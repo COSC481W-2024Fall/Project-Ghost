@@ -1,8 +1,15 @@
 /* Canvas styling */
 canvas {
-    background-color: #f7f7f7;
     display: block;
     margin: 0 auto;
+    border: 5px solid black;
+    top:+2px;
+    bottom: +10px;
+    left: -6px;
+    right: -6px;
+    width: calc(100% - 5px);
+    height: calc(100% - 5px);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Style for the game controls */
@@ -12,20 +19,112 @@ canvas {
 }
 
 #controls button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px 20px 10px 20px;
+    font-size: 22px;
     margin: 5px;
     cursor: pointer;
-}
-
-/* Screens styling */
-#titleScreen,
-#highScoresScreen,
-#tutorialScreen {
-    display: none;
-    text-align: center;
+    font-family: "Single Day";
+    color: white;
+    background-color: #3369c6;
+    border-radius: 10%;
+    border: 2px solid #3369c6;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 }
 
 .hidden {
     display: none;
+}
+
+/* General container styles */
+#screenContainer {
+    width: 800px;
+    height: 400px;
+    margin: 0 auto;
+    font-family: "Single Day", cursive;
+}
+
+.single-day-regular {
+    font-family: "Single Day", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+
+/* Title Screen */
+.titleScreen {
+    background-color: #87CEEB;
+}
+
+.ellipse{
+    margin-left: 165px;
+    margin-top: -385px;
+    width: 450px; 
+    height: 140px; 
+    background-color: #5b3d9c;
+    border-radius: 45%;
+}
+
+/* Pause Screen */
+#pauseScreen {
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 800px;
+    height: 410px;
+    background-color: #24272C;
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it's above the game canvas */
+    color: white;
+    font-size: 40px;
+    border: 5px solid black;
+}
+
+/* Died Screen */
+#diedScreen {
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 800px;
+    height: 410px;
+    background-color: #41588B;
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it's above the game canvas */
+    color: white;
+    font-size: 40px;
+    border: 5px solid black;
+}
+
+/* Died Well Screen */
+#diedWellScreen {
+    position: absolute;
+    top: 0;
+    left: 50;
+    width: 800px;
+    height: 410px;
+    background-color: #41588B;
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 10; /* Ensure it's above the game canvas */
+    color: white;
+    font-size: 40px;
+    border: 5px solid black;
+}
+
+#leaderboard th, td{
+    border-style: solid;
+    padding: 10px;
+    text-align: center;
+}
+#leaderboard h2{
+    width: 400px;
+}
+
+#leaderboard {
+    width: 20%;
+    table-layout: fixed;
 }

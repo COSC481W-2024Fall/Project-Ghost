@@ -1,0 +1,30 @@
+{
+  "name": "project-ghost",
+  "version": "1.0.0",
+  "description": "Inspired by [The Chrome Dinosaur Game](https://chromedino.com/) Project-Ghost is an online, real-time, multiplayer endless runner game.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/COSC481W-2024Fall/Project-Ghost.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/COSC481W-2024Fall/Project-Ghost/issues"
+  },
+  "homepage": "https://github.com/COSC481W-2024Fall/Project-Ghost#readme",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

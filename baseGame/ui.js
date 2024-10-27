@@ -12,21 +12,8 @@ import {
 
 import { addScore, getScores } from '/baseGame/score.js';
 
-
-// Screens
-const titleScreen = document.getElementById('titleScreen');
-const highScoresScreen = document.getElementById('highScoresScreen');
-const tutorialScreen = document.getElementById('tutorialScreen');
-
-// Buttons
-const playButton = document.getElementById('playButton');
-const highScoresButton = document.getElementById('highScoresButton');
-const tutorialButton = document.getElementById('tutorialButton');
-const backFromScoresButton = document.getElementById('backFromScoresButton');
-const backFromTutorialButton = document.getElementById('backFromTutorialButton');
-
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
-    ctx.font = `${fontSize}px Arial`;
+    ctx.font = `${fontSize}px "Single Day"`;
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 }
@@ -41,6 +28,7 @@ document.addEventListener('keydown', async (e) => {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
       //  resetGame();  // Reset the game before starting
+        document.getElementById('ellipse').style.display = 'none';
         startGameLoop();  // Start the game loop
     }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
 		resetGame(); // Reset before starting
@@ -59,8 +47,10 @@ document.addEventListener('keydown', async (e) => {
         let pausedState = getPaused();
         setPaused(!pausedState);  
         if (!pausedState) {
+            document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
         } else {          
-           gameLoop();
+            gameLoop();
+            document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
 	 }  else if (e.code === 'KeyA' && !getGameOver()) {
         console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
@@ -94,12 +84,12 @@ document.getElementById('crouchButton').addEventListener('mouseup', () => {
     dino.crouch(false);
 });
 
-
 document.getElementById('startButton').addEventListener('click', () => {
     if (!getGameStarted()) {
-        resetGame(); // Reset before starting
+        //resetGame(); // Reset before starting
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
+        document.getElementById('ellipse').style.display = 'none'; 
         startGameLoop();  // Start the game loop
     }
 });
@@ -125,82 +115,122 @@ document.getElementById('pauseButton').addEventListener('click', () => {
 		console.log("Paused State: ", getPaused());
         console.log("Game Over State: ", getGameOver());
         if (!pausedState) {
+            stopGameLoop();  // Stop the game loop if paused
+            document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
             console.log("Game Paused");
         } else {
             console.log("Game Resumed");
-            gameLoop();  // Continue the game loop if unpaused
+            startGameLoop();  // Continue the game loop if unpaused
+            document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
     }
 });
 
-document.getElementById('helloButton').addEventListener('click', () => {
-    alert('Hello!');
-});
-
-// Event listeners for title screen buttons
-playButton.addEventListener('click', () => {
-    // Start the game
-    hideAllScreens();
-    setPaused(false);  // Unpause the game
-    setGameStarted(true);  // Mark the game as started
-    gameLoop();  // Start the game loop
-});
-
-highScoresButton.addEventListener('click', () => {
-    // Show High Scores screen
-    hideAllScreens();
-    highScoresScreen.classList.remove('hidden');
-    // Optionally, fetch and display high scores
-    getScores('weekly').then(data => {
-        let scoresText = data.map(score => `${score.user_name}: ${score.score}`).join('<br>');
-        document.getElementById('highScoresList').innerHTML = scoresText;
-    });
-});
-
-tutorialButton.addEventListener('click', () => {
-    // Show Tutorial screen
-    hideAllScreens();
-    tutorialScreen.classList.remove('hidden');
-});
-
-backFromScoresButton.addEventListener('click', () => {
-    // Go back to title screen from High Scores
-    showTitleScreen();
-});
-
-backFromTutorialButton.addEventListener('click', () => {
-    // Go back to title screen from Tutorial
-    showTitleScreen();
-});
-
-// Open the title screen initially
-showTitleScreen();
-
-// Function to hide all screens
-function hideAllScreens() {
-    titleScreen.classList.add('hidden');
-    highScoresScreen.classList.add('hidden');
-    tutorialScreen.classList.add('hidden');
-}
-
-// Function to display the title screen
-function showTitleScreen() {
-    hideAllScreens();
-    titleScreen.classList.remove('hidden');
-}
-
-// Open the title screen
-displayTitleScreen();
-
 function displayTitleScreen() {
-    displayText("Press 'T' to Start", 30, 'black', canvas.width / 4, canvas.height / 2 - 40);
-    displayText("Controls:", 24, 'black', canvas.width / 4, canvas.height / 2);
-    displayText("Space: Jump", 20, 'black', canvas.width / 4, canvas.height / 2 + 30);
-    displayText("C: Crouch", 20, 'black', canvas.width / 4, canvas.height / 2 + 60);
-    displayText("P: Pause", 20, 'black', canvas.width / 4, canvas.height / 2 + 90);
-    displayText("R: Restart after Game Over", 20, 'black', canvas.width / 4, canvas.height / 2 + 120);
-    displayText("A: Add test data to database", 20, 'black', canvas.width / 4, canvas.height / 2 + 150);
-    displayText("G: Get data from database", 20, 'black', canvas.width / 4, canvas.height / 2 + 180);
+    const ellipse = document.getElementById('ellipse');
+    ellipse.style.display = 'block'; // Show the ellipse
+
+    displayText("Project Ghost!", 68, 'white', canvas.width / 4.0, canvas.height / 2 - 100);
+    displayText("Controls:", 24, 'black', canvas.width / 2.4, canvas.height / 2 - 10);
+    displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 30);
+    displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 60);
+    displayText("Press Crouch Button or C to Crouch", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 90);
+    displayText("Press Pause Button or 'P' to Pause", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 120);
+    displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 150);
+}
+
+function displayScreen(screenType) {
+    const container = document.getElementById('screenContainer');
+    const ellipse = document.getElementById('ellipse');
+
+    // Clear all existing screen classes
+    container.classList.remove('titleScreen', 'highScoreScreen');
+
+    // Add the appropriate screen class based on screenType
+    switch(screenType) {
+        case 'title':
+            container.classList.add('titleScreen');
+            displayTitleScreen();
+            ellipse.style.display = 'block';  // Show the ellipse
+            break;
+        case 'highScore':
+            container.classList.add('highScoreScreen');
+            displayHighScoreScreen();
+            ellipse.style.display = 'none';  // Hide the ellipse
+            break;
+        default:
+            console.log("Unknown screen type");
+            ellipse.style.display = 'none';  // Hide the ellipse
+    }
+}
+
+// On start use title screen
+displayScreen('title');
+
+/**
+ * Author: Connor Spears
+ * Date: 10/26/2024
+ * Description: Create the leaderboard which will be dynamically filled later
+ */
+export async function initializeLeaderboard(){
+    const container = document.createElement("div");
+    container.id = "leaderboardContainer";
+
+    const buttonsContainer = document.createElement("div");
+
+    //Buttons must be created this way so they can access the updateLeaderboard function
+    const dailyButton = document.createElement("button");
+    dailyButton.textContent = "Daily";
+    dailyButton.addEventListener("click", async () => await updateLeaderboard("daily"));
+
+    const weeklyButton = document.createElement("button");
+    weeklyButton.textContent = "Weekly";
+    weeklyButton.addEventListener("click", async () => await updateLeaderboard("weekly"));
+
+    const allTimeButton = document.createElement("button");
+    allTimeButton.textContent = "All Time";
+    allTimeButton.addEventListener("click", async () => await updateLeaderboard("allTime"));
+
+    buttonsContainer.append(dailyButton, weeklyButton, allTimeButton);
+    container.appendChild(buttonsContainer);
+
+    const leaderboard = document.createElement("table");
+    leaderboard.id = "leaderboard";
+    container.appendChild(leaderboard);
+
+    document.body.appendChild(container);
+
+    await updateLeaderboard("daily");
+}
+
+/**
+ * Author: Connor Spears
+ * Date: 10/26/2024
+ * Description: Fill dynamically created table with scores of the desired type
+ * @param {string} type 
+ */
+export async function updateLeaderboard(type){
+    const leaderboard = document.getElementById("leaderboard");
+    leaderboard.innerHTML=`<h2>${type.charAt(0).toUpperCase() + type.slice(1)} Leaderboard</h2>`;
+
+    const scoreList = await getScores(type);
+
+    leaderboard.innerHTML += `
+        <tr>
+            <th class="rank-column">Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+    `;
+    scoreList.forEach((score, index) =>{
+        leaderboard.innerHTML += `
+            <tr>
+                <td class="rank-column">${index + 1}</td>
+                <td>${score.user_name}</td>
+                <td>${score.score}</td>
+            </tr>
+        `;
+    });
 }
 
 export { displayText };

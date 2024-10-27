@@ -1,8 +1,6 @@
-import {spawnObstacle,updateObstacles,detectCollision, obstacles} from '/baseGame/obstacle.js';
-import {dino} from '/baseGame/dino.js';
-
-import { displayText } from '/baseGame/ui.js';
-
+import { spawnObstacle, updateObstacles, detectCollision, obstacles } from './obstacle.js';
+import { dino } from './dino.js';
+import { displayText, initializeLeaderboard } from './ui.js';
 
 
 const canvas = document.getElementById('gameCanvas');
@@ -94,7 +92,9 @@ export function resetGame() {
     dino.y = canvas.height - dino.height; // Reset dino's position
     lastObstacleSpawnTime = 0;
     stopGameLoop(); // Stop the game loop if it’s running
-    
+    displayLeaderboard(false, null);
+    document.getElementById('diedScreen').style.display = 'none';  // Hide overlay
+    document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay
 }
 
 

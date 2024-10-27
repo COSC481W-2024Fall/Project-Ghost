@@ -1,4 +1,4 @@
-import {canvas, ctx, gravity} from '/baseGame/game.js';
+import { canvas, ctx, gravity } from './game.js';
 
 const dino = {
     x: 50,
@@ -55,4 +55,5 @@ const dino = {
         }
     }
 };
-export {dino};
+
+export { dino };
