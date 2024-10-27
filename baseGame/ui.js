@@ -124,32 +124,41 @@ document.getElementById('pauseButton').addEventListener('click', () => {
     }
 });
 
-function displayScreen(screenType) {
-    const container = document.getElementById('screenContainer');
-
-    // Clear all existing screen classes
-    container.classList.remove('titleScreen');
-
-    // Add the appropriate screen class based on screenType
-    switch(screenType) {
-        case 'title':
-            container.classList.add('titleScreen');
-            displayTitleScreen();
-            break;
-        default:
-            console.log("Unknown screen type");
-    }
-}
-
-// Title screen content
 function displayTitleScreen() {
-    displayText("Project Ghost!", 68, '#EAE2E2', canvas.width / 4.1, canvas.height / 2 - 100);
+    const ellipse = document.getElementById('ellipse');
+    ellipse.style.display = 'block'; // Show the ellipse
+
+    displayText("Project Ghost!", 68, 'black', canvas.width / 4.5, canvas.height / 2 - 100);
     displayText("Controls:", 24, 'black', canvas.width / 2.5, canvas.height / 2 - 10);
     displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 30);
     displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 60);
     displayText("Press Crouch Button or C to Crouch", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 90);
     displayText("Press Pause Button or 'P' to Pause", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 120);
     displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.5, canvas.height / 2 + 150);
+}
+
+function displayScreen(screenType) {
+    const container = document.getElementById('screenContainer');
+    const ellipse = document.getElementById('ellipse');
+
+    // Clear all existing screen classes
+    container.classList.remove('titleScreen', 'highScoreScreen');
+
+    // Add the appropriate screen class based on screenType
+    switch(screenType) {
+        case 'title':
+            container.classList.add('titleScreen');
+            ellipse.style.display = 'block'; // Show the ellipse
+            displayTitleScreen();
+            break;
+        case 'highScore':
+            container.classList.add('highScoreScreen');
+            ellipse.style.display = 'none'; // Hide the ellipse
+            displayHighScoreScreen();
+            break;
+        default:
+            console.log("Unknown screen type");
+    }
 }
 
 // On start use title screen
