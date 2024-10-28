@@ -92,7 +92,8 @@ export function resetGame() {
     dino.y = canvas.height - dino.height; // Reset dino's position
     lastObstacleSpawnTime = 0;
     stopGameLoop(); // Stop the game loop if it’s running
-    displayLeaderboard(false, null);
+    const leaderboard = document.querySelector("#leaderboardContainer");
+    if(leaderboard) leaderboard.remove();
     document.getElementById('diedScreen').style.display = 'none';  // Hide overlay
     document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay
 }
