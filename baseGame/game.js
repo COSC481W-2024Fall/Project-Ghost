@@ -17,7 +17,7 @@ let gravity = .4;
 let isPaused = false; // Game starts paused (until "T" is pressed)
 let gameStarted = false; // Tracks whether the game has started
 let isGameOver = false; // Tracks if the game is over
-
+let deltaTime = 15;
 let gameScore = 0;
 let nameEnter = false;
 const scoreCategories = ["daily", "weekly", "allTime"];
@@ -28,14 +28,14 @@ const scoreCategories = ["daily", "weekly", "allTime"];
 let frame = 0;
 let isLoopRunning = false;
 let lastObstacleSpawnTime = 0;
-const obstacleSpawnInterval = 1500; // Adjust this to control the spawn frequency in milliseconds
+const obstacleSpawnInterval = 5000; // Adjust this to control the spawn frequency in milliseconds
 
+// Adjusted gameLoop function
 function gameLoop(currentTime) {
     // Calculate delta time in seconds
-    const deltaTime = (currentTime - lastTime) / 1000;
-    lastTime=currentTime;
-   // console.log("Delta Time:", deltaTime);
-    
+     deltaTime = (currentTime - lastTime) / 1000;
+    lastTime = currentTime;
+    console.log("Delta Time:", deltaTime); // Log delta time
     if (!isGameOver && !isPaused) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -43,29 +43,35 @@ function gameLoop(currentTime) {
         dino.update(deltaTime);
         dino.draw();
 
-        // Obstacle logic
-        if (currentTime - lastObstacleSpawnTime >= obstacleSpawnInterval) {
+        // Obstacle spawn logic using delta time
+        if ((currentTime - lastObstacleSpawnTime) >= (obstacleSpawnInterval / gameSpeed)) {
             spawnObstacle();
-            lastObstacleSpawnTime = currentTime; // Update the last spawn time
+            lastObstacleSpawnTime = currentTime; 
         }
-        updateObstacles(deltaTime);
+
+        // Update obstacles with deltaTime and gameSpeed
+        updateObstacles(deltaTime * gameSpeed);
+
+        // Collision detection
         detectCollision();
 
-        // Increase the player's score every ten frames
-        if (frame % 10 === 0) {
+        // Increase score at a controlled rate
+        if (frame % Math.round(20 / gameSpeed) === 0) { // Adjust frequency with game speed
             gameScore++;
         }
+
         displayText("Score: " + gameScore, 24, 'black', 20, 20);
         frame++;
     }
     
-    // Only continue the loop if the game is running
+    // Continue game loop if the game isn't over or paused
     if (!isGameOver && !isPaused) {
         requestAnimationFrame(gameLoop);
     } else {
-        isLoopRunning = false; // Reset the loop running flag if the game stops
+        isLoopRunning = false;
     }
 }
+
 
 
 export function startGameLoop() {
@@ -153,4 +159,4 @@ export function setGameSpeed(speed) {
 }
 
 
-export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, level_seed, gameSpeed, gameLoop, nameEnter, scoreCategories};
+export{ deltaTime, gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, level_seed, gameSpeed, gameLoop, nameEnter, scoreCategories};

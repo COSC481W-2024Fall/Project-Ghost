@@ -1,5 +1,5 @@
 import { dino } from './dino.js';
-import { setGameOver, setPaused, setGameStarted, canvas, ctx, gameSpeed } from './game.js';
+import { setGameOver, setPaused, setGameStarted, canvas, ctx, gameSpeed, deltaTime } from './game.js';
 import { checkHighScore } from './score.js';
 
 let obstacles = [];
@@ -12,14 +12,14 @@ function spawnObstacle() {
         y: airOrGround,
         width: size,
         height: size,
-        speed: gameSpeed
+        speed: gameSpeed * 75
     });
 }
 
 function updateObstacles() {
     for (let i = 0; i < obstacles.length; i++) {
         let obs = obstacles[i];
-        obs.x -= obs.speed;
+        obs.x -= obs.speed * deltaTime;
 
         if (obs.x + obs.width < 0) {
             obstacles.splice(i, 1);
