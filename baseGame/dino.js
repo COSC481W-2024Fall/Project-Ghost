@@ -16,7 +16,7 @@ const dino = {
         ctx.fillRect(this.x, adjustedY, this.width, height);
     },
 
-    update() {
+    update(deltaTime) {
         // Apply gravity when jumping
         if (this.jumping) {
             this.dy += gravity;
