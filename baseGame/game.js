@@ -11,7 +11,7 @@ const level_seed = Math.floor(Date.now() / 1000);
 
 
 // Game settings
-let lastTime = 0;
+let lastTime = Date.now();
 let gameSpeed = 5;
 let gravity = .4;
 let isPaused = false; // Game starts paused (until "T" is pressed)
@@ -30,9 +30,10 @@ let isLoopRunning = false;
 let lastObstacleSpawnTime = 0;
 const obstacleSpawnInterval = 1500; // Adjust this to control the spawn frequency in milliseconds
 
-function gameLoop(currentTime) {
+function gameLoop() {
     // Calculate delta time in seconds
-    const deltaTime = (currentTime - lastTime) / 1000;
+    const currentTime = Date.now();
+    const deltaTime = (currentTime - lastTime) / 10;
     lastTime=currentTime;
    // console.log("Delta Time:", deltaTime);
     

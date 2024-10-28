@@ -19,8 +19,8 @@ const dino = {
     update(deltaTime) {
         // Apply gravity when jumping
         if (this.jumping) {
-            this.dy += gravity;
-            this.y += this.dy;
+            this.dy += gravity * deltaTime;
+            this.y += this.dy * deltaTime;
 
             // Stop at ground level
             if (this.y + this.height >= canvas.height) {

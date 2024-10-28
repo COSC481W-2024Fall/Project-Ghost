@@ -16,10 +16,10 @@ function spawnObstacle() {
     });
 }
 
-function updateObstacles() {
+function updateObstacles(deltaTime) {
     for (let i = 0; i < obstacles.length; i++) {
         let obs = obstacles[i];
-        obs.x -= obs.speed;
+        obs.x -= obs.speed * deltaTime;
 
         if (obs.x + obs.width < 0) {
             obstacles.splice(i, 1);
