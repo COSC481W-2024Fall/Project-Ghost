@@ -98,14 +98,18 @@ document.getElementById('startButton').addEventListener('click', () => {
 
 document.getElementById('restartButton').addEventListener('click', () => {
     if (getGameOver()) {
-        resetGame(); // Reset before starting
-        setPaused(false);  // Unpause the game
-        setGameStarted(true);  // Mark the game as started
-        startGameLoop();  // Start the game loop
+        if (!getNameEnter()) {
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            startGameLoop();  // Start the game loop
 
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-            scoreInput.remove();
+            let scoreInput = document.getElementById("scoreInput");
+            if (scoreInput) {
+                scoreInput.remove();
+            }
+        } else {
+            alert("You cannot reset the game while entering your name for the leaderboard.");
         }
     }
 });
