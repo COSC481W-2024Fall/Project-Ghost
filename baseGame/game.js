@@ -83,6 +83,10 @@ export function stopGameLoop() {
 }
 
 export function resetGame() {
+    if (getNameEnter()) {
+        alert("You cannot reset the game while entering your name for the leaderboard.");
+        return;
+    }
     setGameOver(false);
     setPaused(false); // Ensure game is unpaused on reset
     setFrame(0);

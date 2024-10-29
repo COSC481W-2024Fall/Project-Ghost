@@ -24,37 +24,39 @@ document.addEventListener('keydown', async (e) => {
         dino.jump();
     } else if (e.code === 'KeyC' && !getGameOver()) {
         dino.crouch(true);
-    } else  if (e.code === 'KeyT' && !getGameStarted()) {
+    } else if (e.code === 'KeyT' && !getGameStarted()) {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
-      //  resetGame();  // Reset the game before starting
         document.getElementById('ellipse').style.display = 'none';
         startGameLoop();  // Start the game loop
-    }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
-		resetGame(); // Reset before starting
-        setPaused(false);  // Unpause the game
-        setGameStarted(true);  // Mark the game as started
-        startGameLoop();  // Start the game loop
-        // Remove the score input if it exists
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-            scoreInput.remove();
+    } else if (e.code === 'KeyR' && getGameOver()) {
+        if (!getNameEnter()) {
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            startGameLoop();  // Start the game loop
+            let scoreInput = document.getElementById("scoreInput");
+            if (scoreInput) {
+                scoreInput.remove();
+            }
+        } else {
+            alert("You cannot reset the game while entering your name for the leaderboard.");
         }
     } else if (e.code === 'KeyP' && !getGameOver() && getGameStarted()) {
         // Toggle pause
-		console.log("Paused State: ", getPaused());
+        console.log("Paused State: ", getPaused());
         console.log("Game Over State: ", getGameOver());
         let pausedState = getPaused();
-        setPaused(!pausedState);  
+        setPaused(!pausedState);
         if (!pausedState) {
             document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
-        } else {          
+        } else {
             gameLoop();
             document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
-	 }  else if (e.code === 'KeyA' && !getGameOver()) {
+    } else if (e.code === 'KeyA' && !getGameOver()) {
         console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
-    }   else if (e.code === 'KeyG' && !getGameOver()) {
+    } else if (e.code === 'KeyG' && !getGameOver()) {
         console.log(await getScores("weekly"));
     }
 });
@@ -96,14 +98,18 @@ document.getElementById('startButton').addEventListener('click', () => {
 
 document.getElementById('restartButton').addEventListener('click', () => {
     if (getGameOver()) {
-        resetGame(); // Reset before starting
-        setPaused(false);  // Unpause the game
-        setGameStarted(true);  // Mark the game as started
-        startGameLoop();  // Start the game loop
+        if (!getNameEnter()) {
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            startGameLoop();  // Start the game loop
 
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-            scoreInput.remove();
+            let scoreInput = document.getElementById("scoreInput");
+            if (scoreInput) {
+                scoreInput.remove();
+            }
+        } else {
+            alert("You cannot reset the game while entering your name for the leaderboard.");
         }
     }
 });
