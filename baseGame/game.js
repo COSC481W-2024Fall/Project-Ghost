@@ -7,7 +7,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
 //const serverUrl = 'http://localhost:5000/project_ghost/';
-const level_seed = Math.floor(Date.now() / 1000);
+const levelSeed = Math.floor(Date.now() / 1000);
 
 
 // Game settings
@@ -19,6 +19,7 @@ let gameStarted = false; // Tracks whether the game has started
 let isGameOver = false; // Tracks if the game is over
 
 let gameScore = 0;
+let lastGameScoreTime = 0;
 let nameEnter = false;
 const scoreCategories = ["daily", "weekly", "allTime"];
 
@@ -28,8 +29,9 @@ const scoreCategories = ["daily", "weekly", "allTime"];
 let frame = 0;
 let isLoopRunning = false;
 let lastObstacleSpawnTime = 0;
-const obstacleSpawnInterval = 1500; // Adjust this to control the spawn frequency in milliseconds
+let obstacleSpawnInterval = 1.2 * 1000; // Adjust this to control the spawn frequency in milliseconds
 
+let thing = 0
 function gameLoop() {
     // Calculate delta time in seconds
     const currentTime = Date.now();
@@ -50,12 +52,20 @@ function gameLoop() {
             lastObstacleSpawnTime = currentTime; // Update the last spawn time
         }
         updateObstacles(deltaTime);
-        detectCollision();
+        // detectCollision();
 
-        // Increase the player's score every ten frames
-        if (frame % 10 === 0) {
+        // Add one to the score twice a second, independent of framerate
+        if (currentTime - lastGameScoreTime >= 500) {
             gameScore++;
+            lastGameScoreTime = currentTime;
+            if (gameSpeed < 11.9) {
+                gameSpeed += 0.03;
+                obstacleSpawnInterval -= (gameSpeed * 0.3);
+            }
+            console.log(gameSpeed, obstacleSpawnInterval);
         }
+        
+        
         displayText("Score: " + gameScore, 24, 'black', 20, 20);
         frame++;
     }
@@ -155,4 +165,4 @@ export function setGameSpeed(speed) {
 }
 
 
-export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, level_seed, gameSpeed, gameLoop, nameEnter, scoreCategories};
+export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, levelSeed as level_seed, gameSpeed, gameLoop, nameEnter, scoreCategories};
