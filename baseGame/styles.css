@@ -71,7 +71,8 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-color: #24272C;
+    background-image: url("/assets/pause.jpg");
+    background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
@@ -79,6 +80,7 @@ canvas {
     color: white;
     font-size: 40px;
     border: 5px solid black;
+    text-align: center;
 }
 
 /* Died Screen */
@@ -88,7 +90,8 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-color: #41588B;
+    background-image: url("/assets/z.jpg");
+    background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
@@ -96,6 +99,7 @@ canvas {
     color: white;
     font-size: 40px;
     border: 5px solid black;
+    text-align: center;
 }
 
 /* Died Well Screen */
@@ -105,14 +109,16 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-color: #41588B;
+    background-image: url("/assets/g.jpg");
+    background-size: cover;
+    border: 5px solid black;
     display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
     font-size: 40px;
-    border: 5px solid black;
+    text-align: center;
 }
 
 #leaderboard th, td{

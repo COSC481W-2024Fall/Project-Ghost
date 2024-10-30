@@ -132,11 +132,11 @@ function displayTitleScreen() {
 
     displayText("Project Ghost!", 68, 'white', canvas.width / 4.0, canvas.height / 2 - 100);
     displayText("Controls:", 24, 'black', canvas.width / 2.4, canvas.height / 2 - 10);
-    displayText("Press Start Button or 'T' to Start", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 30);
-    displayText("Press Jump Button or 'Space Bar' to Jump", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 60);
-    displayText("Press Crouch Button or C to Crouch", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 90);
-    displayText("Press Pause Button or 'P' to Pause", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 120);
-    displayText("Press Restart Button or 'R' after Game Over", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 150);
+    displayText("Press 'T' or Start Button to Start", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 30);
+    displayText("Press 'Space Bar' or Jump Button to Jump", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 60);
+    displayText("Press 'C' or Crouch Button to Crouch", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 90);
+    displayText("Press 'P' or Pause Button to Pause", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 120);
+    displayText("Press 'R' or Restart Button after Game Over", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 150);
 }
 
 function displayScreen(screenType) {
