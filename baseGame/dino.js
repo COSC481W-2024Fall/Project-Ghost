@@ -7,7 +7,9 @@ const dino = {
     height: 50,
     dy: 0,
     jumping: false,
+    jumpHeld: false,
     crouching: false,
+    crouchHeld: false,
 
     draw() {
         const height = this.crouching ? this.height / 2 : this.height;
@@ -17,6 +19,13 @@ const dino = {
     },
 
     update(deltaTime) {
+        
+        // Handle Jump input
+        if (this.jumpHeld && !this.jumping && !this.crouching) { 
+            this.jumping = true;
+            this.dy = -12; 
+        }
+        
         // Apply gravity when jumping
         if (this.jumping) {
             this.dy += gravity * deltaTime;
@@ -28,6 +37,12 @@ const dino = {
                 this.dy = 0;
                 this.jumping = false;
             }
+        }
+        
+        if (!this.jumping && this.crouchHeld) {
+            this.crouching = this.crouchHeld;
+        } else {
+            this.crouching = false;
         }
 
         // Adjust height based on crouching status
@@ -42,17 +57,12 @@ const dino = {
         }
     },
 
-    jump() {
-        if (!this.jumping && !this.crouching) { 
-            this.jumping = true;
-            this.dy = -12; 
-        }
+    jump(state) {
+        this.jumpHeld = state;
     },
 
     crouch(state) {
-        if (!this.jumping) {
-            this.crouching = state;
-        }
+        this.crouchHeld = state;
     }
 };
 
