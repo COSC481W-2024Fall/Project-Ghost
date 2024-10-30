@@ -21,42 +21,40 @@ function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
 // Event listeners
 document.addEventListener('keydown', async (e) => {
     if (e.code === 'Space' && !getGameOver()) {
-        dino.jump();
+        dino.jump(true);
     } else if (e.code === 'KeyC' && !getGameOver()) {
         dino.crouch(true);
-    } else if (e.code === 'KeyT' && !getGameStarted()) {
+    } else  if (e.code === 'KeyT' && !getGameStarted()) {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
+      //  resetGame();  // Reset the game before starting
         document.getElementById('ellipse').style.display = 'none';
         startGameLoop();  // Start the game loop
-    } else if (e.code === 'KeyR' && getGameOver()) {
-        if (!getNameEnter()) {
-            resetGame(); // Reset before starting
-            setPaused(false);  // Unpause the game
-            setGameStarted(true);  // Mark the game as started
-            startGameLoop();  // Start the game loop
-            let scoreInput = document.getElementById("scoreInput");
-            if (scoreInput) {
-                scoreInput.remove();
-            }
-        } else {
-            alert("You cannot reset the game while entering your name for the leaderboard.");
+    }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
+		resetGame(); // Reset before starting
+        setPaused(false);  // Unpause the game
+        setGameStarted(true);  // Mark the game as started
+        startGameLoop();  // Start the game loop
+        // Remove the score input if it exists
+        let scoreInput = document.getElementById("scoreInput");
+        if (scoreInput) {
+            scoreInput.remove();
         }
     } else if (e.code === 'KeyP' && !getGameOver() && getGameStarted()) {
         // Toggle pause
-        console.log("Paused State: ", getPaused());
+		console.log("Paused State: ", getPaused());
         console.log("Game Over State: ", getGameOver());
         let pausedState = getPaused();
-        setPaused(!pausedState);
+        setPaused(!pausedState);  
         if (!pausedState) {
             document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
-        } else {
+        } else {          
             gameLoop();
             document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
-    } else if (e.code === 'KeyA' && !getGameOver()) {
+	 }  else if (e.code === 'KeyA' && !getGameOver()) {
         console.log(await addScore("xX_Ghost_Xx", Math.floor(Math.random() * 1001), "weekly"));
-    } else if (e.code === 'KeyG' && !getGameOver()) {
+    }   else if (e.code === 'KeyG' && !getGameOver()) {
         console.log(await getScores("weekly"));
     }
 });
@@ -64,15 +62,21 @@ document.addEventListener('keydown', async (e) => {
 document.addEventListener('keyup', (e) => {
     if (e.code === 'KeyC') {
         dino.crouch(false);  // Stop crouching when 'C' is released
+    } else if (e.code === 'Space') {
+        dino.jump(false);
     }
 });
 
 // Button event listeners for Play screen
-document.getElementById('jumpButton').addEventListener('click', () => {
+document.getElementById('jumpButton').addEventListener('mousedown', () => {
     if (!getGameOver()) {
-        dino.jump();
-		
+        dino.jump(true);
+    }
+});
 
+document.getElementById('jumpButton').addEventListener('mouseup', () => {
+    if (!getGameOver()) {
+        dino.jump(false);
     }
 });
 
@@ -98,18 +102,14 @@ document.getElementById('startButton').addEventListener('click', () => {
 
 document.getElementById('restartButton').addEventListener('click', () => {
     if (getGameOver()) {
-        if (!getNameEnter()) {
-            resetGame(); // Reset before starting
-            setPaused(false);  // Unpause the game
-            setGameStarted(true);  // Mark the game as started
-            startGameLoop();  // Start the game loop
+        resetGame(); // Reset before starting
+        setPaused(false);  // Unpause the game
+        setGameStarted(true);  // Mark the game as started
+        startGameLoop();  // Start the game loop
 
-            let scoreInput = document.getElementById("scoreInput");
-            if (scoreInput) {
-                scoreInput.remove();
-            }
-        } else {
-            alert("You cannot reset the game while entering your name for the leaderboard.");
+        let scoreInput = document.getElementById("scoreInput");
+        if (scoreInput) {
+            scoreInput.remove();
         }
     }
 });
