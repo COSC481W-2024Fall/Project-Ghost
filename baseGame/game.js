@@ -52,7 +52,7 @@ function gameLoop() {
             lastObstacleSpawnTime = currentTime; // Update the last spawn time
         }
         updateObstacles(deltaTime);
-        // detectCollision();
+        detectCollision();
 
         // Add one to the score twice a second, independent of framerate
         if (currentTime - lastGameScoreTime >= 500) {
