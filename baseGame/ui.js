@@ -102,14 +102,18 @@ document.getElementById('startButton').addEventListener('click', () => {
 
 document.getElementById('restartButton').addEventListener('click', () => {
     if (getGameOver()) {
-        resetGame(); // Reset before starting
-        setPaused(false);  // Unpause the game
-        setGameStarted(true);  // Mark the game as started
-        startGameLoop();  // Start the game loop
+        if (!getNameEnter()) {
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            startGameLoop();  // Start the game loop
 
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-            scoreInput.remove();
+            let scoreInput = document.getElementById("scoreInput");
+            if (scoreInput) {
+                scoreInput.remove();
+            }
+        } else {
+            alert("You cannot reset the game while entering your name for the leaderboard.");
         }
     }
 });
@@ -136,13 +140,13 @@ function displayTitleScreen() {
     const ellipse = document.getElementById('ellipse');
     ellipse.style.display = 'block'; // Show the ellipse
 
-    displayText("Project Ghost!", 68, 'white', canvas.width / 4.0, canvas.height / 2 - 100);
-    displayText("Controls:", 24, 'black', canvas.width / 2.4, canvas.height / 2 - 10);
-    displayText("Press 'T' or Start Button to Start", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 30);
-    displayText("Press 'Space Bar' or Jump Button to Jump", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 60);
-    displayText("Press 'C' or Crouch Button to Crouch", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 90);
-    displayText("Press 'P' or Pause Button to Pause", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 120);
-    displayText("Press 'R' or Restart Button after Game Over", 20, 'black', canvas.width / 4.0, canvas.height / 2 + 150);
+    displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
+    displayText("Controls:", 24, 'white', canvas.width / 2.4, canvas.height / 2 - 10);
+    displayText("Press 'T' or Start Button to Start", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 30);
+    displayText("Press 'Space Bar' or Jump Button to Jump", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 60);
+    displayText("Press 'C' or Crouch Button to Crouch", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 90);
+    displayText("Press 'P' or Pause Button to Pause", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 120);
+    displayText("Press 'R' or Restart Button after Game Over", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 150);
 }
 
 function displayScreen(screenType) {

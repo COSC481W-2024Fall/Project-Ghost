@@ -53,10 +53,13 @@ canvas {
 /* Title Screen */
 .titleScreen {
     background-color: #87CEEB;
+    background-image: url("/assets/game.jpg");
+    background-size: cover;
+    color: white;
 }
 
 .ellipse{
-    margin-left: 165px;
+    margin-left: 175px;
     margin-top: -385px;
     width: 450px; 
     height: 140px; 
