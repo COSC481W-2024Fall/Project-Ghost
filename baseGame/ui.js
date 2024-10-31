@@ -139,7 +139,7 @@ document.getElementById('pauseButton').addEventListener('click', () => {
 function displayTitleScreen() {
     const ellipse = document.getElementById('ellipse');
     ellipse.style.display = 'block'; // Show the ellipse
-
+    document.getElementById('titleScreen').style.display = 'flex';  // Show Title overlay
     displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
     displayText("Controls:", 24, 'white', canvas.width / 2.4, canvas.height / 2 - 10);
     displayText("Press 'T' or Start Button to Start", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 30);
