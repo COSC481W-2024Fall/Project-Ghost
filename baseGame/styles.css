@@ -53,8 +53,6 @@ canvas {
 /* Title Screen */
 .titleScreen {
     background-color: #87CEEB;
-    background-image: url("/assets/game.jpg");
-    background-size: cover;
     color: white;
 }
 
