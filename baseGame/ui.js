@@ -28,6 +28,7 @@ document.addEventListener('keydown', async (e) => {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
       //  resetGame();  // Reset the game before starting
+        document.getElementById('titleScreen').style.display = 'none';  // Hide overlay
         document.getElementById('ellipse').style.display = 'none';
         startGameLoop();  // Start the game loop
     }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
@@ -96,6 +97,7 @@ document.getElementById('startButton').addEventListener('click', () => {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
         document.getElementById('ellipse').style.display = 'none'; 
+        document.getElementById('titleScreen').style.display = 'none';  // Hide overlay
         startGameLoop();  // Start the game loop
     }
 });
