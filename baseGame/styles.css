@@ -54,7 +54,7 @@ canvas {
 .titleScreen {
     background-color: #87CEEB;
     color: white;
-    background-image: url("/assets/game.jpg");
+    background-image: url("/assets/titleOverlay.jpg");
     background-size: cover;
 }
 
@@ -93,7 +93,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/z.jpg");
+    background-image: url("/assets/died.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
@@ -112,7 +112,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/g.jpg");
+    background-image: url("/assets/diedWell.jpg");
     background-size: cover;
     border: 5px solid black;
     display: none; /* Initially hidden */
