@@ -54,8 +54,6 @@ canvas {
 .titleScreen {
     background-color: #87CEEB;
     color: white;
-    background-image: url("-titleOverlay.jpg");
-    background-size: cover;
 }
 
 .ellipse{
