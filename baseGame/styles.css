@@ -54,8 +54,7 @@ canvas {
 .titleScreen {
     background-color: #87CEEB;
     color: white;
-    background-image: url("/assets/titleOverlay.jpg");
-    background-size: cover;
+
 }
 
 .ellipse{
@@ -74,7 +73,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/pause.jpg");
+    background-image: url("-pause.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
@@ -93,7 +92,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/died.jpg");
+    background-image: url("-died.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
@@ -112,7 +111,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/diedWell.jpg");
+    background-image: url("-diedWell.jpg");
     background-size: cover;
     border: 5px solid black;
     display: none; /* Initially hidden */
