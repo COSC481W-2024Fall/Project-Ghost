@@ -28,6 +28,7 @@ document.addEventListener('keydown', async (e) => {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
       //  resetGame();  // Reset the game before starting
+        document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
         document.getElementById('ellipse').style.display = 'none';
         startGameLoop();  // Start the game loop
     }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
@@ -96,6 +97,7 @@ document.getElementById('startButton').addEventListener('click', () => {
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
         document.getElementById('ellipse').style.display = 'none'; 
+        document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
         startGameLoop();  // Start the game loop
     }
 });
@@ -139,7 +141,7 @@ document.getElementById('pauseButton').addEventListener('click', () => {
 function displayTitleScreen() {
     const ellipse = document.getElementById('ellipse');
     ellipse.style.display = 'block'; // Show the ellipse
-
+    document.getElementById('titleOverlay').style.display = 'flex';  // Show Title overlay
     displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
     displayText("Controls:", 24, 'white', canvas.width / 2.4, canvas.height / 2 - 10);
     displayText("Press 'T' or Start Button to Start", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 30);

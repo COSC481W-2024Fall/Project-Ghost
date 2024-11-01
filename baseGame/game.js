@@ -111,6 +111,7 @@ export function resetGame() {
     if(leaderboard) leaderboard.remove();
     document.getElementById('diedScreen').style.display = 'none';  // Hide overlay
     document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay
+    document.getElementById('titleScreen').style.display = 'none';  // Hide overlay
 }
 
 

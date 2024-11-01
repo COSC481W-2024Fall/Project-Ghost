@@ -72,15 +72,19 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/pause.jpg");
+    border: 5px solid black;
+    background-image: url("-pause.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
     font-size: 40px;
-    border: 5px solid black;
     text-align: center;
 }
 
@@ -91,15 +95,19 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/z.jpg");
+    border: 5px solid black;
+    background-image: url("-died.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
     font-size: 40px;
-    border: 5px solid black;
     text-align: center;
 }
 
@@ -110,7 +118,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
-    background-image: url("/assets/g.jpg");
+    background-image: url("-diedWell.jpg");
     background-size: cover;
     border: 5px solid black;
     display: none; /* Initially hidden */
@@ -118,6 +126,10 @@ canvas {
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
     font-size: 40px;
     text-align: center;
 }
