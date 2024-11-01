@@ -54,7 +54,8 @@ canvas {
 .titleScreen {
     background-color: #87CEEB;
     color: white;
-
+    background-image: url("-titleOverlay.jpg");
+    background-size: cover;
 }
 
 .ellipse{
@@ -73,6 +74,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
+    border: 5px solid black;
     background-image: url("-pause.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
@@ -80,8 +82,11 @@ canvas {
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
     font-size: 40px;
-    border: 5px solid black;
     text-align: center;
 }
 
@@ -92,6 +97,7 @@ canvas {
     left: 50;
     width: 800px;
     height: 410px;
+    border: 5px solid black;
     background-image: url("-died.jpg");
     background-size: cover;
     display: none; /* Initially hidden */
@@ -99,8 +105,11 @@ canvas {
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
     font-size: 40px;
-    border: 5px solid black;
     text-align: center;
 }
 
@@ -119,6 +128,10 @@ canvas {
     align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
     font-size: 40px;
     text-align: center;
 }
