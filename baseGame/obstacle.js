@@ -33,6 +33,8 @@ function spawnObstacle() {
 }
 
 function updateObstacles(deltaTime) {
+    if (obstacles.length === 0) return; // Skip if no obstacles
+    
     for (let i = 0; i < obstacles.length; i++) {
         let obs = obstacles[i];
         obs.x -= obs.speed * deltaTime;

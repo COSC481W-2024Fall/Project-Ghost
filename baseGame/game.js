@@ -84,6 +84,7 @@ export function startGameLoop() {
         isLoopRunning = true;
         frame = 0;           // Reset frame counter when starting
         gameScore = 0; 
+        lastObstacleSpawnTime = Date.now(); // Delay first obstacle spawn
         gameLoop();
     }
 }
@@ -91,6 +92,9 @@ export function startGameLoop() {
 export function stopGameLoop() {
     isLoopRunning = false;
     setPaused(true);
+}
+function clearObstacles() {
+    obstacles.length = 0; // Clear existing obstacles
 }
 
 export function resetGame() {
@@ -103,15 +107,22 @@ export function resetGame() {
     setFrame(0);
     setGameScore(0);
     setGameSpeed(5);
-    obstacles.length = 0; // Clear existing obstacles
     dino.y = canvas.height - dino.height; // Reset dino's position
-    lastObstacleSpawnTime = 0;
     stopGameLoop(); // Stop the game loop if it’s running
+    clearObstacles(); // Clear all obstacles
+    lastObstacleSpawnTime = Date.now(); // Delay first obstacle from spawning on top of the player
     const leaderboard = document.querySelector("#leaderboardContainer");
     if(leaderboard) leaderboard.remove();
     document.getElementById('diedScreen').style.display = 'none';  // Hide overlay
     document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay
-    document.getElementById('titleScreen').style.display = 'none';  // Hide overlay
+   // document.getElementById('titleScreen').style.display = 'none';  // Hide overlay
+    let element = document.getElementById('titleScreen');  // Replace 'elementID' with the actual ID
+if (element) {
+    element.style.display = 'none';  // Or whatever style manipulation you need
+} else {
+    console.warn("Element with ID 'elementID' not found in resetGame().");
+}
+
 }
 
 
