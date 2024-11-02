@@ -9,7 +9,6 @@ beforeEach(() => {
         getContext: jest.fn(() => ({
             fillRect: jest.fn(),
             clearRect: jest.fn(),
-            // other context methods...
         })),
     };
     global.document = {
@@ -18,6 +17,9 @@ beforeEach(() => {
     global.ctx = canvas.getContext('2d');
     document.body.innerHTML = `
         <div id="screenContainer">
+            <div id="pauseScreen" style="display: none;">Game Paused!<br></div>
+            <div id="titleOverlay" style="display: none;"></div>
+            <div id="gameScreen" style="display: none;"></div>
             <div id="diedScreen" style="display: none;">Game Over!<br>Press Restart Button or 'R' to restart!</div>
             <div id="diedWellScreen" style="display: none;">You Died Gloriously!<br>Honor us with your initials!</div>
         </div>
@@ -30,6 +32,21 @@ beforeEach(() => {
         </div>
     `;
 });
+
+function simulatePause() {
+    const pauseScreen = document.getElementById('pauseScreen');
+    pauseScreen.style.display = 'flex';
+}
+
+function displayTitleOverlay() {
+    const titleOverlay = document.getElementById('titleOverlay');
+    titleOverlay.style.display = 'block';
+}
+
+function displayGameScreen() {
+    const gameScreen = document.getElementById('gameScreen');
+    gameScreen.style.display = 'flex';
+}
 
 function setGameOver(isGameOver) {
     const diedScreen = document.getElementById('diedScreen');
@@ -88,4 +105,42 @@ test('diedWellScreen should be hidden after game reset', () => {
     resetGame();
     const diedWellScreen = document.getElementById('diedWellScreen');
     expect(diedWellScreen.style.display).toBe('none');
+});
+
+
+
+
+
+test('pauseScreen should be hidden initially', () => {
+    const pauseScreen = document.getElementById('pauseScreen');
+    expect(pauseScreen.style.display).toBe('none');
+});
+
+test('titleOverlay should be hidden initially', () => {
+    const titleOverlay = document.getElementById('titleOverlay');
+    expect(titleOverlay.style.display).toBe('none');
+});
+
+test('gameScreen should be hidden initially', () => {
+    const gameScreen = document.getElementById('gameScreen');
+    expect(gameScreen.style.display).toBe('none');
+});
+
+test('pauseScreen should be displayed when paused', () => {
+    const pauseScreen = document.getElementById('pauseScreen');
+    simulatePause();
+    document.getElementById('pauseButton').click();
+    expect(pauseScreen.style.display).toBe('flex');
+});
+
+test('titleOverlay should be displayed when title screen is shown', () => {
+    displayTitleOverlay();
+    const titleOverlay = document.getElementById('titleOverlay');
+    expect(titleOverlay.style.display).toBe('block');
+});
+
+test('gameScreen should be displayed when game screen is shown', () => {
+    displayGameScreen();
+    const gameScreen = document.getElementById('gameScreen');
+    expect(gameScreen.style.display).toBe('flex');
 });
