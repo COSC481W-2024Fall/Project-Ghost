@@ -20,7 +20,7 @@ groundObstacleImage.onload = () => {
 };
 
 function spawnObstacle() {
-    let size = Math.random() * 50 + 20;
+    let size = Math.random() * 50 + 40;
     let airOrGround = Math.random() < 0.5 ? canvas.height - size : canvas.height - size - 40;
     obstacles.push({
         x: canvas.width,
