@@ -53,6 +53,10 @@ canvas {
 /* Title Screen */
 .titleScreen {
     background-color: #87CEEB;
+}
+
+#titleOverlay {
+    background-color: black;
     color: white;
     background-image: url("-titleOverlay.png");
     background-size: cover;
