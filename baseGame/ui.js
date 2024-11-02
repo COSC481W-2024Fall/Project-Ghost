@@ -96,6 +96,7 @@ document.getElementById('startButton').addEventListener('click', () => {
         //resetGame(); // Reset before starting
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
+        displayScreen('game');  // Display the game screen
         document.getElementById('ellipse').style.display = 'none'; 
         document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
         startGameLoop();  // Start the game loop
@@ -138,10 +139,15 @@ document.getElementById('pauseButton').addEventListener('click', () => {
     }
 });
 
-function displayTitleScreen() {
+function displayGameScreen() {
+    document.getElementById('gameScreen').style.display = 'flex';  // Show overlay
+    document.getElementById('titleOverlay').style.display = 'none';  // Hide Title overlay
+}
+
+function displayTitleOverlay() {
     const ellipse = document.getElementById('ellipse');
     ellipse.style.display = 'block'; // Show the ellipse
-    document.getElementById('titleOverlay').style.display = 'flex';  // Show Title overlay
+    document.getElementById('titleOverlay').style.display = 'block';  // Show Title overlay
     displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
     displayText("Controls:", 24, 'white', canvas.width / 2.4, canvas.height / 2 - 10);
     displayText("Press 'T' or Start Button to Start", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 30);
@@ -154,30 +160,41 @@ function displayTitleScreen() {
 function displayScreen(screenType) {
     const container = document.getElementById('screenContainer');
     const ellipse = document.getElementById('ellipse');
+    const titleOverlay = document.getElementById('titleOverlay');
+    const gameScreen = document.getElementById('gameScreen');
 
     // Clear all existing screen classes
-    container.classList.remove('titleScreen', 'highScoreScreen');
+    container.classList.remove('gameScreen', 'titleOverlay', 'highScoreScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
-        case 'title':
-            container.classList.add('titleScreen');
-            displayTitleScreen();
+        case 'titleOverlay':
+            container.classList.add('titleOverlay');
+            displayTitleOverlay();
             ellipse.style.display = 'block';  // Show the ellipse
+            titleOverlay.style.display = 'block';  // Show Title overlay
+            break;
+        case 'game':
+            container.classList.add('gameScreen');
+            displayGameScreen();
+            ellipse.style.display = 'none';  // Hide the ellipse
+            titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
         case 'highScore':
             container.classList.add('highScoreScreen');
             displayHighScoreScreen();
             ellipse.style.display = 'none';  // Hide the ellipse
+            titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
         default:
             console.log("Unknown screen type");
             ellipse.style.display = 'none';  // Hide the ellipse
+            titleOverlay.style.display = 'none';  // Hide Title overlay
     }
 }
 
-// On start use title screen
-displayScreen('title');
+// On start use this screen
+displayScreen('titleOverlay');
 
 /**
  * Author: Connor Spears
