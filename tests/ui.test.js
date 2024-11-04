@@ -48,6 +48,11 @@ function displayGameScreen() {
     gameScreen.style.display = 'flex';
 }
 
+function displayLeaderboard(){
+    const leaderboard = document.getElementById('leaderboard-container');
+    leaderboard.style.display = 'block';
+}
+
 function setGameOver(isGameOver) {
     const diedScreen = document.getElementById('diedScreen');
     if (isGameOver) {
@@ -107,9 +112,10 @@ test('diedWellScreen should be hidden after game reset', () => {
     expect(diedWellScreen.style.display).toBe('none');
 });
 
-
-
-
+test('leaderboard should be hidden initially', () => {
+    const leaderboard = document.getElementById('leaderboard-container');
+    expect(leaderboard.style.display).toBe('none');
+});
 
 test('pauseScreen should be hidden initially', () => {
     const pauseScreen = document.getElementById('pauseScreen');
@@ -143,4 +149,10 @@ test('gameScreen should be displayed when game screen is shown', () => {
     displayGameScreen();
     const gameScreen = document.getElementById('gameScreen');
     expect(gameScreen.style.display).toBe('flex');
+});
+
+test('leaderboard should be displayed when the player enters their name', () =>{
+    initializeLeaderboard();
+    const leaderboard = document.getElementById('leaderboard-container');
+    expect(leaderboard.style.display).toBe('block');
 });
