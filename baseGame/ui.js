@@ -205,8 +205,7 @@ displayScreen('titleOverlay');
  * Description: Create the leaderboard which will be dynamically filled later
  */
 export async function initializeLeaderboard(){
-    const container = document.createElement("div");
-    container.id = "leaderboardContainer";
+    const container = document.querySelector("#leaderboard-container");
 
     const buttonsContainer = document.createElement("div");
 
@@ -230,7 +229,7 @@ export async function initializeLeaderboard(){
     leaderboard.id = "leaderboard";
     container.appendChild(leaderboard);
 
-    document.body.appendChild(container);
+    container.setAttribute('style', 'display: block;');
 
     await updateLeaderboard("daily");
 }
