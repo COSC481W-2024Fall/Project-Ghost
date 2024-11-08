@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
         //  resetGame();  // Reset the game before starting
-            document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
-            document.getElementById('ellipse').style.display = 'none';
+            displayScreen('game');  // Display the game screen
             startGameLoop();  // Start the game loop
         }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
             resetGame(); // Reset before starting
@@ -98,8 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
             displayScreen('game');  // Display the game screen
-            document.getElementById('ellipse').style.display = 'none'; 
-            document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
             startGameLoop();  // Start the game loop
         }
     });
