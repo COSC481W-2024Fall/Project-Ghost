@@ -1,5 +1,9 @@
 import { canvas, ctx, gravity } from './game.js';
 
+// Load the dino image
+const dinoImage = new Image();
+dinoImage.src = '/assets/dino.png';  // Adjust the path if necessary
+
 const dino = {
     x: 50,
     y: canvas.height - 50, // Start on the ground
@@ -14,12 +18,18 @@ const dino = {
     draw() {
         const height = this.crouching ? this.height / 2 : this.height;
         const adjustedY = this.crouching ? this.y + this.height / 2 : this.y; 
-        ctx.fillStyle = this.crouching ? 'blue' : 'green'; 
-        ctx.fillRect(this.x, adjustedY, this.width, height);
+
+        if (dinoImage.complete) {
+            // Draw the dino image, scaling it if crouching
+            ctx.drawImage(dinoImage, this.x, adjustedY, this.width, height);
+        } else {
+            // If image hasn't loaded yet, use a temporary rectangle
+            ctx.fillStyle = this.crouching ? 'blue' : 'green';
+            ctx.fillRect(this.x, adjustedY, this.width, height);
+        }
     },
 
     update(deltaTime) {
-        
         // Handle Jump input
         if (this.jumpHeld && !this.jumping && !this.crouching) { 
             this.jumping = true;
