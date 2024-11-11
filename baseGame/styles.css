@@ -18,7 +18,7 @@ canvas {
     margin-top: 20px;
 }
 
-#controls button {
+#controls button, #restartButtonFromLeaderboard, #dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton {
     padding: 10px 20px 10px 20px;
     font-size: 22px;
     margin: 5px;
@@ -122,8 +122,6 @@ canvas {
     background-size: cover;
     border: 2.5px solid black;
     display: none; /* Initially hidden */
-    justify-content: center;
-    align-items: center;
     z-index: 10; /* Ensure it's above the game canvas */
     color: white;
     text-shadow: -1px 1px 0 #000,
@@ -134,16 +132,104 @@ canvas {
     text-align: center;
 }
 
+#diedWellScreen #firstLine {
+    margin-top: 10%;
+}
+
+#diedWellScreen #secondLine {
+    margin-top: 3%;
+}
+
+#diedWellScreen #thirdLine {
+    margin-top: 3%;
+}
+
+#diedWellScreen #initialsInput {
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+    width: 10%;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+}
+
+#diedWellScreen #submitInitialsButton {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #5b3d9c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+}
+
 /* Leaderboard */
+#leaderboardScreen {
+    position: absolute;
+    top: 10px;
+    width: 800px;
+    height: 400px;
+    background-color: #5b3d9c;
+    background-size: cover;
+    border: 2.5px solid black;
+    display: none; /* Initially hidden */
+    z-index: 10; /* Ensure it's above the game canvas */
+    color: white;
+    text-shadow: -1px 1px 0 #000,
+                         1px 1px 0 #000,
+                         1px -1px 0 #000,
+                         -1px -1px 0 #000;
+    font-size: 17px;
+}
+
 #leaderboard th, td{
-    border-style: solid;
-    padding: 10px;
+    padding: 3px;
     text-align: center;
 }
 #leaderboard h2{
     width: 400px;
+    text-align: center;
 }
 #leaderboard {
-    width: 20%;
+    width: 50%;
     table-layout: fixed;
+}
+
+#dailyLeaderboardButton {
+    margin: 0;
+    position: absolute;
+    top: 15%;
+    left: 75%;
+    -ms-transform: translate(+50%, +50%);
+    transform: translate(-50%, -50%);
+}
+
+#weeklyLeaderboardButton {
+    margin: 0;
+    position: absolute;
+    top: 38%;
+    left: 75%;
+    -ms-transform: translate(+50%, +50%);
+    transform: translate(-50%, -50%);
+}
+
+#allTimeLeaderboardButton {
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    left: 75%;
+    -ms-transform: translate(+50%, +50%);
+    transform: translate(-50%, -50%);
+}
+
+#restartButtonFromLeaderboard {
+    margin: 0;
+    position: absolute;
+    top: 83%;
+    left: 75%;
+    -ms-transform: translate(+50%, +50%);
+    transform: translate(-50%, -50%);
 }

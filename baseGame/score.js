@@ -1,6 +1,7 @@
 
 import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
 import { displayText, initializeLeaderboard} from '/baseGame/ui.js';
+import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
 
 /**
  * Author: Connor Spears
@@ -10,14 +11,13 @@ import { displayText, initializeLeaderboard} from '/baseGame/ui.js';
  */
 async function checkHighScore() {
     let highString = [];
-    // Check every category for the leaderboards, if the score can be entered then put it in and continue, otherwise break
-	//Const can be used because it is destroyed and recreated at the beginning of the next loop
+    document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
+
     for (const category of scoreCategories) {
         const currentCategory = await getScores(category);
-        // Are there less than 10 entries in the current leaderboard? Or is the score higher than the 10th entry?
         if (currentCategory.length < 10 || gameScore > currentCategory[currentCategory.length - 1].score) {
             highString.push(category);
-            setNameEnter(true); // Set nameEnter to true
+            setNameEnter(true);
             while(currentCategory.length >= 10){
                 await removeScore(category, currentCategory[currentCategory.length - 1].id);
                 currentCategory.pop();
@@ -25,17 +25,55 @@ async function checkHighScore() {
         } else { break; }
     }
 
-    if (getNameEnter()) { // Check if nameEnter is true
-        document.getElementById('diedWellScreen').style.display = 'flex';  // Show overlay
-        displayText("Made it on the leaderboard! Enter a 3-character name:");
-        const playerName = await nameEntry();
+    if (getNameEnter()) {
+        document.getElementById('diedWellScreen').style.display = 'block';  // Show overlay
+        const playerName = await nameEntry();  // Call nameEntry to get the player's name
         await addScore(playerName, gameScore, highString);
-        setNameEnter(false); // Reset nameEnter to false
+        setNameEnter(false);
         await initializeLeaderboard();
+        
+        // After adding the score, show the leaderboard
+        document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
     }
     
     document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
 }
+
+async function displayLeaderboard(category) {
+    console.log(`Displaying leaderboard for category: ${category}`); // Debug log
+    const leaderboardData = await getScores(category); // Fetch scores based on the selected category
+    const leaderboardList = document.getElementById('leaderboardList');
+    leaderboardList.innerHTML = ''; // Clear previous entries
+
+    leaderboardData.forEach(entry => {
+        const entryDiv = document.createElement('div');
+        entryDiv.textContent = `${entry.user_name}: ${entry.score}`;
+        leaderboardList.appendChild(entryDiv);
+    });
+
+    document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
+    document.getElementById('diedWellScreen').style.display = 'none'; // Hide the diedWellScreen
+    document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
+}
+
+// Add event listener for the back button
+document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
+    document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
+    if (!getNameEnter()) {
+        resetGame(); // Reset before starting
+        setPaused(false);  // Unpause the game
+        setGameStarted(true);  // Mark the game as started
+        startGameLoop();  // Start the game loop
+
+        let scoreInput = document.getElementById("scoreInput");
+        if (scoreInput) {
+                scoreInput.remove();
+        }
+    } else {
+        alert("You cannot reset the game while entering your name for the leaderboard.");
+    }
+    
+});
 
 /**
  * Author: Connor Spears
@@ -45,60 +83,34 @@ async function checkHighScore() {
  * Description: Creates an HTML element for the user to input a 3 character name if their score is on the leaderboard
  * @returns {Promise<String>} 3 character limited String for the username
  */
-function nameEntry(){
+function nameEntry() {
     return new Promise((resolve) => {
-        // Remove existing score input to avoid duplicates
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-            scoreInput.remove();
-        }
+        const inputElement = document.getElementById("initialsInput");
+        const submitButton = document.getElementById("submitInitialsButton");
 
-        let textNode = document.createElement("p");
-        textNode.textContent = "Enter your name: ";
-        textNode.id = "scoreInput";
-
-        let inputElement = document.createElement("input");
-        inputElement.setAttribute("type", "text");
-        inputElement.setAttribute("name", "playerName");
-        inputElement.setAttribute("maxlength", "3");
-        inputElement.style.textTransform = "uppercase";
+        // Clear previous input
+        inputElement.value = '';
 
         const regex = /^[A-Za-z0-9]*$/;
 
-        let submitButton = document.createElement("button");
-        submitButton.textContent = "Submit";
-
-        textNode.appendChild(inputElement);
-        textNode.appendChild(submitButton);
-        document.body.appendChild(textNode);
-
-        textNode.addEventListener("keypress", function(event){
-            if(event.key === "Enter"){
-                event.preventDefault();
-                submitButton.dispatchEvent(new Event("click"));
-            }
-        });
-
         inputElement.addEventListener("input", function() {
             const inputValue = this.value;
-
-            // Validate against regex and length
             if (!regex.test(inputValue)) {
-                // If input doesn't match the regex, remove the last character
                 this.value = inputValue.slice(0, -1);
             }
         });
 
-        submitButton.addEventListener("click", function(event){
+        submitButton.onclick = function(event) {
             event.preventDefault();
             const playerName = inputElement.value;
-            if (playerName.trim().length == 3){
-                resolve(playerName);
-                document.body.removeChild(textNode);  // Clean up form after submission
+            if (playerName.trim().length === 3) {
+                resolve(playerName.toUpperCase());  // Convert to uppercase before resolving
+                inputElement.value = ''; // Clear the input field after submission
+                document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay after submission
             } else {
                 alert("Please enter a valid name.");
             }
-        });
+        };
     });
 }
 

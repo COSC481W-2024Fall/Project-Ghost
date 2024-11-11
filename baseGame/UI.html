@@ -19,7 +19,18 @@
 			<div id="gameScreen" class="gameScreen" style="display: none;"></div>
 			<div id="pauseScreen">Game Paused!<br></div>
 			<div id="diedScreen">Game Over!<br>Press 'R' or Restart Button!</div>
-			<div id="diedWellScreen">You Died Gloriously!<br> <br><br> <br><br> <br>Honor us with your initials!</div>
+			<div id="diedWellScreen">
+				<div id="firstLine">You Died Gloriously!</div>
+				<div id="secondLine">Honor us by inscribing your initials!</div>
+				<div id="thirdLine">
+					<input type="text" id="initialsInput" maxlength="3">
+    				<button id="submitInitialsButton">Submit</button>
+				</div>
+			</div>
+			<div id="leaderboardScreen" class="leaderboardScreen" style="display: none;">
+				<div id="leaderboardList"></div>
+				<div><button id="restartButtonFromLeaderboard">Restart</button></div>
+			</div>
 		</div>
 
 		<!-- Game controls (buttons) -->
@@ -31,14 +42,6 @@
 			<button id="restartButton">Restart</button>
 		</div>
 
-		<div id="leaderboard-container" style="display: none;"></div>
-
-		<!-- <script src="/baseGame/testing.js"></script> 
-		<script src="game.js"></script>
-		<script src="dino.js"></script>
-		<script src="obstacle.js"></script>
-		<script src="level.js"></script>
-		<script src="score.js"></script>-->
 		<script src="/baseGame/ui.js" type = "module"></script>
 	</body>
 
