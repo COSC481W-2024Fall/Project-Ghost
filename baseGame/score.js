@@ -88,6 +88,9 @@ function nameEntry() {
         const inputElement = document.getElementById("initialsInput");
         const submitButton = document.getElementById("submitInitialsButton");
 
+        inputElement.focus();  // Focus on the input field
+        inputElement.select(); // Select the input field
+
         // Clear previous input
         inputElement.value = '';
 
