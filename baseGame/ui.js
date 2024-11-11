@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
         //  resetGame();  // Reset the game before starting
-            document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
-            document.getElementById('ellipse').style.display = 'none';
+            displayScreen('game');  // Display the game screen
             startGameLoop();  // Start the game loop
         }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
             resetGame(); // Reset before starting
@@ -98,8 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
             displayScreen('game');  // Display the game screen
-            document.getElementById('ellipse').style.display = 'none'; 
-            document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
             startGameLoop();  // Start the game loop
         }
     });
@@ -167,7 +164,7 @@ function displayScreen(screenType) {
     const gameScreen = document.getElementById('gameScreen');
 
     // Clear all existing screen classes
-    container.classList.remove('gameScreen', 'titleOverlay', 'highScoreScreen');
+    container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
@@ -183,9 +180,9 @@ function displayScreen(screenType) {
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
-        case 'highScore':
-            container.classList.add('highScoreScreen');
-            displayHighScoreScreen();
+        case 'leaderboard':
+            container.classList.add('leaderboardScreen');
+            displayLeaderboardScreen();
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
@@ -205,21 +202,25 @@ displayScreen('titleOverlay');
  * Description: Create the leaderboard which will be dynamically filled later
  */
 export async function initializeLeaderboard(){
-    const container = document.querySelector("#leaderboard-container");
+    const container = document.querySelector("#leaderboardScreen");
 
     const buttonsContainer = document.createElement("div");
+    buttonsContainer.id = "buttonsContainer"; // Assign an ID
 
     //Buttons must be created this way so they can access the updateLeaderboard function
     const dailyButton = document.createElement("button");
     dailyButton.textContent = "Daily";
+    dailyButton.id = "dailyLeaderboardButton"; // Assign an ID
     dailyButton.addEventListener("click", async () => await updateLeaderboard("daily"));
 
     const weeklyButton = document.createElement("button");
     weeklyButton.textContent = "Weekly";
+    weeklyButton.id = "weeklyLeaderboardButton"; // Assign an ID
     weeklyButton.addEventListener("click", async () => await updateLeaderboard("weekly"));
 
     const allTimeButton = document.createElement("button");
     allTimeButton.textContent = "All Time";
+    allTimeButton.id = "allTimeLeaderboardButton"; // Assign an ID
     allTimeButton.addEventListener("click", async () => await updateLeaderboard("allTime"));
 
     buttonsContainer.append(dailyButton, weeklyButton, allTimeButton);
