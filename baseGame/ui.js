@@ -10,7 +10,7 @@ import {
     canvas, ctx, startGameLoop,gameLoop, stopGameLoop, resetGame, getNameEnter, setNameEnter 
 } from '/baseGame/game.js';
 
-import { addScore, getScores } from '/baseGame/score.js';
+import { displayLeaderboard, addScore, getScores } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.font = `${fontSize}px "Single Day"`;
@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
         //  resetGame();  // Reset the game before starting
-            document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
-            document.getElementById('ellipse').style.display = 'none';
+            displayScreen('game');  // Display the game screen
             startGameLoop();  // Start the game loop
         }  else if (e.code === 'KeyR' && getGameOver() && !getNameEnter()) {
             resetGame(); // Reset before starting
@@ -98,8 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
             displayScreen('game');  // Display the game screen
-            document.getElementById('ellipse').style.display = 'none'; 
-            document.getElementById('titleOverlay').style.display = 'none';  // Hide overlay
             startGameLoop();  // Start the game loop
         }
     });
@@ -110,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 resetGame(); // Reset before starting
                 setPaused(false);  // Unpause the game
                 setGameStarted(true);  // Mark the game as started
+                displayScreen('game');  // Display the game screen
                 startGameLoop();  // Start the game loop
 
                 let scoreInput = document.getElementById("scoreInput");
@@ -134,10 +132,33 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log("Game Paused");
             } else {
                 console.log("Game Resumed");
-                startGameLoop();  // Continue the game loop if unpaused
+                gameLoop();  // Continue the game loop if unpaused
                 document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
             }
         }
+    });
+
+    document.getElementById('resumeButton').addEventListener('click', () => {
+        if (!getGameOver() && getGameStarted()) {
+            let pausedState = getPaused();
+            setPaused(!pausedState);
+            console.log("Paused State: ", getPaused());
+            console.log("Game Over State: ", getGameOver());
+            if (!pausedState) {
+                stopGameLoop();  // Stop the game loop if paused
+                document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
+                console.log("Game Paused");
+            } else {
+                console.log("Game Resumed");
+                gameLoop();  // Continue the game loop if unpaused
+                document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
+            }
+        }
+    });
+
+    document.getElementById('leaderboardButton').addEventListener('click', () => {
+        console.log('Leaderboard button clicked');
+        document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
     });
 
 });
@@ -167,7 +188,7 @@ function displayScreen(screenType) {
     const gameScreen = document.getElementById('gameScreen');
 
     // Clear all existing screen classes
-    container.classList.remove('gameScreen', 'titleOverlay', 'highScoreScreen');
+    container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
@@ -183,9 +204,9 @@ function displayScreen(screenType) {
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
-        case 'highScore':
-            container.classList.add('highScoreScreen');
-            displayHighScoreScreen();
+        case 'leaderboard':
+            container.classList.add('leaderboardScreen');
+            displayLeaderboardScreen();
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
@@ -205,21 +226,25 @@ displayScreen('titleOverlay');
  * Description: Create the leaderboard which will be dynamically filled later
  */
 export async function initializeLeaderboard(){
-    const container = document.querySelector("#leaderboard-container");
+    const container = document.querySelector("#leaderboardScreen");
 
     const buttonsContainer = document.createElement("div");
+    buttonsContainer.id = "buttonsContainer"; // Assign an ID
 
     //Buttons must be created this way so they can access the updateLeaderboard function
     const dailyButton = document.createElement("button");
     dailyButton.textContent = "Daily";
+    dailyButton.id = "dailyLeaderboardButton"; // Assign an ID
     dailyButton.addEventListener("click", async () => await updateLeaderboard("daily"));
 
     const weeklyButton = document.createElement("button");
     weeklyButton.textContent = "Weekly";
+    weeklyButton.id = "weeklyLeaderboardButton"; // Assign an ID
     weeklyButton.addEventListener("click", async () => await updateLeaderboard("weekly"));
 
     const allTimeButton = document.createElement("button");
     allTimeButton.textContent = "All Time";
+    allTimeButton.id = "allTimeLeaderboardButton"; // Assign an ID
     allTimeButton.addEventListener("click", async () => await updateLeaderboard("allTime"));
 
     buttonsContainer.append(dailyButton, weeklyButton, allTimeButton);
@@ -264,4 +289,4 @@ export async function updateLeaderboard(type){
     });
 }
 
-export { displayText };
+export { displayText, displayScreen };
