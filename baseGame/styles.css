@@ -18,7 +18,7 @@ canvas {
     margin-top: 20px;
 }
 
-#controls button, #startButton, #restartButton, #restartButtonFromLeaderboard, #pauseButton, #resumeButton, #dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, #submitInitialsButton {
+#controls button, #startButton, #leaderboardButton ,#restartButton, #restartButtonFromLeaderboard, #pauseButton, #resumeButton, #dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, #submitInitialsButton {
     padding: 10px 20px 10px 20px;
     font-size: 22px;
     margin: 5px;
@@ -36,6 +36,14 @@ canvas {
     margin: 0;
     position: absolute;
     top: 30%;
+    left: 58%;
+}
+
+#leaderboardButton {
+    padding: 10px 10px 10px 10px;
+    margin: 0;
+    position: absolute;
+    top: 20%;
     left: 58%;
 }
 #restartButton {

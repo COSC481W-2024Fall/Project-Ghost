@@ -178,4 +178,4 @@ async function resetScores(in_category) {
 	}
 	console.log(`Reset ${in_category} scores`);
 }
-export{checkHighScore, nameEntry, addScore, removeScore,getScores, resetScores};
+export{checkHighScore, nameEntry, displayLeaderboard ,addScore, removeScore, getScores, resetScores};
