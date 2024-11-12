@@ -1,6 +1,6 @@
 
 import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
-import { displayText, initializeLeaderboard} from '/baseGame/ui.js';
+import { displayText, displayScreen, initializeLeaderboard} from '/baseGame/ui.js';
 import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
 
 /**
@@ -56,13 +56,14 @@ async function displayLeaderboard(category) {
     document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
 }
 
-// Add event listener for the back button
+// Add event listener for the restartButton From Leaderboard screen
 document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
     document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
     if (!getNameEnter()) {
         resetGame(); // Reset before starting
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
+        displayScreen('game');  // Display the game screen
         startGameLoop();  // Start the game loop
 
         let scoreInput = document.getElementById("scoreInput");

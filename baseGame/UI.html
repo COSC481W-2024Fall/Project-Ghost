@@ -15,11 +15,13 @@
 		<div id="screenContainer">
 			<canvas id="gameCanvas" width="800" height="400"></canvas>
 			<div id="ellipse" class="ellipse" style="display: none;"></div>
-			<div id="titleOverlay" class="titleOverlay" style="display: none;">
-				<button id="startButton">Start</button>
+			<div id="titleOverlay" class="titleOverlay" style="display: none;"></div>
+			<div id="gameScreen" class="gameScreen" style="display: none;">
+				<button id="pauseButton">Pause</button>
 			</div>
-			<div id="gameScreen" class="gameScreen" style="display: none;"></div>
-			<div id="pauseScreen">Game Paused!<br></div>
+			<div id="pauseScreen">Game Paused!<br>
+				<button id="resumeButton">Resume Game</button>
+			</div>
 			<div id="diedScreen">Game Over!<br>Press 'R' or Restart Button!
 				<button id="restartButton">Restart</button>
 			</div>
@@ -41,7 +43,6 @@
 		<div id="controls">
 			<button id="jumpButton">Jump</button>
 			<button id="crouchButton">Crouch</button>
-			<button id="pauseButton">Pause</button>
 		</div>
 
 		<script src="/baseGame/ui.js" type = "module"></script>

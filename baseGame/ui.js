@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 resetGame(); // Reset before starting
                 setPaused(false);  // Unpause the game
                 setGameStarted(true);  // Mark the game as started
+                displayScreen('game');  // Display the game screen
                 startGameLoop();  // Start the game loop
 
                 let scoreInput = document.getElementById("scoreInput");
@@ -120,6 +121,24 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('pauseButton').addEventListener('click', () => {
+        if (!getGameOver() && getGameStarted()) {
+            let pausedState = getPaused();
+            setPaused(!pausedState);
+            console.log("Paused State: ", getPaused());
+            console.log("Game Over State: ", getGameOver());
+            if (!pausedState) {
+                stopGameLoop();  // Stop the game loop if paused
+                document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
+                console.log("Game Paused");
+            } else {
+                console.log("Game Resumed");
+                gameLoop();  // Continue the game loop if unpaused
+                document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
+            }
+        }
+    });
+
+    document.getElementById('resumeButton').addEventListener('click', () => {
         if (!getGameOver() && getGameStarted()) {
             let pausedState = getPaused();
             setPaused(!pausedState);
@@ -265,4 +284,4 @@ export async function updateLeaderboard(type){
     });
 }
 
-export { displayText };
+export { displayText, displayScreen };
