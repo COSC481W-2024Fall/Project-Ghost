@@ -54,6 +54,8 @@ async function displayLeaderboard(category) {
     document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
     document.getElementById('diedWellScreen').style.display = 'none'; // Hide the diedWellScreen
     document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
+    document.getElementById('titleOverlay').style.display = 'none'; // Hide the title screen
+    document.getElementById('ellipse').style.display = 'none'; // Hide the ellipse
 }
 
 // Add event listener for the restartButton From Leaderboard screen

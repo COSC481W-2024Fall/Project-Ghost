@@ -26,9 +26,9 @@ canvas {
     font-family: "Single Day";
     color: white;
     text-align: center;
-    background-color: #3369c6;
+    background-color: #0b60b7;
     border-radius: 10%;
-    border: 2px solid #3369c6;
+    border: 2px solid #0b60b7;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
 }
 
@@ -61,6 +61,8 @@ canvas {
 }
 
 #resumeButton {
+    background-color: #014427;
+    border: 2px solid #014427;
     margin: 0;
     position: absolute;
     top: 3%;
