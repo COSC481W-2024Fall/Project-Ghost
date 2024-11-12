@@ -10,7 +10,7 @@ import {
     canvas, ctx, startGameLoop,gameLoop, stopGameLoop, resetGame, getNameEnter, setNameEnter 
 } from '/baseGame/game.js';
 
-import { addScore, getScores } from '/baseGame/score.js';
+import { displayLeaderboard, addScore, getScores } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.font = `${fontSize}px "Single Day"`;
@@ -154,6 +154,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
             }
         }
+    });
+
+    document.getElementById('leaderboardButton').addEventListener('click', () => {
+        console.log('Leaderboard button clicked');
+        document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
     });
 
 });
