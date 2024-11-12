@@ -18,7 +18,7 @@ canvas {
     margin-top: 20px;
 }
 
-#controls button, #restartButton, #restartButtonFromLeaderboard, #pauseButton, #resumeButton, #dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, #submitInitialsButton {
+#controls button, #startButton, #restartButton, #restartButtonFromLeaderboard, #pauseButton, #resumeButton, #dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, #submitInitialsButton {
     padding: 10px 20px 10px 20px;
     font-size: 22px;
     margin: 5px;
