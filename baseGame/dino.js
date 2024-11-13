@@ -2,12 +2,12 @@ import { canvas, ctx, gravity } from './game.js';
 
 // Load the dino image
 const dinoImage = new Image();
-dinoImage.src = '/assets/dino (1).png';  // Adjust the path if necessary
+dinoImage.src = '/assets/dino.png';  // Adjust the path if necessary
 
 const dino = {
     x: 50,
     y: canvas.height - 50, // Start on the ground
-    width: 60,
+    width: 70,
     height: 100,
     dy: 0,
     jumping: false,
@@ -61,7 +61,7 @@ const dino = {
                 this.height = 25;
                 this.y = canvas.height - this.height;
             } else {
-                this.height = 50;
+                this.height = 80;
                 this.y = canvas.height - this.height;
             }
         }
