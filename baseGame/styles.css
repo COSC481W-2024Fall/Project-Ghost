@@ -69,6 +69,16 @@ canvas {
     left: 40%;
 }
 
+#submitInitialsButton {
+    background-color: #c43a86;
+    border: 2px solid #c43a86;
+}
+
+#initialsInput {
+    border: 3px solid #c43a86;
+    background-color: #febdaf;
+}
+
 .hidden {
     display: none;
 }
@@ -198,7 +208,7 @@ canvas {
     top: 10px;
     width: 800px;
     height: 400px;
-    background-color: #5b3d9c;
+    background-image: url("-leaderboardBackground.jpg");
     background-size: cover;
     border: 2.5px solid black;
     display: none; /* Initially hidden */
@@ -229,8 +239,8 @@ canvas {
 #dailyLeaderboardButton {
     margin: 0;
     position: absolute;
-    top: 15%;
-    left: 75%;
+    top: 13%;
+    left: 90%;
     -ms-transform: translate(+50%, +50%);
     transform: translate(-50%, -50%);
 }
@@ -238,17 +248,18 @@ canvas {
 #weeklyLeaderboardButton {
     margin: 0;
     position: absolute;
-    top: 38%;
-    left: 75%;
+    top: 33%;
+    left: 90%;
     -ms-transform: translate(+50%, +50%);
     transform: translate(-50%, -50%);
 }
 
 #allTimeLeaderboardButton {
+    padding: 10px 9px 10px 9px;
     margin: 0;
     position: absolute;
-    top: 60%;
-    left: 75%;
+    top: 58%;
+    left: 90%;
     -ms-transform: translate(+50%, +50%);
     transform: translate(-50%, -50%);
 }
@@ -257,7 +268,7 @@ canvas {
     margin: 0;
     position: absolute;
     top: 83%;
-    left: 75%;
+    left: 90%;
     -ms-transform: translate(+50%, +50%);
     transform: translate(-50%, -50%);
 } 
