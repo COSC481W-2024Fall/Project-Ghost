@@ -78,7 +78,7 @@ function updateObstacles(deltaTime) {
 
         // Apply flying obstacle movement if it's an air obstacle
         if (obs.isAirObstacle) {
-            obs.y = obs.initialY + Math.sin(obs.angle) * 120;
+            obs.y = obs.initialY + Math.sin(obs.angle) * 20; //change this for sine wave (increase for bigger movement)
             obs.angle += 0.05;
             obs.y += obs.diagonalDirection * 0.5;
         }
