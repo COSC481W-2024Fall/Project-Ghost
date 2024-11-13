@@ -62,7 +62,7 @@ function gameLoop() {
                 gameSpeed += 0.03;
                 obstacleSpawnInterval -= (gameSpeed * 0.3);
             }
-            console.log(gameSpeed, obstacleSpawnInterval);
+          //  console.log(gameSpeed, obstacleSpawnInterval);
         }
         
         
