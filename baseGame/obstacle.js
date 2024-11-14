@@ -19,6 +19,61 @@ groundObstacleImage.onload = () => {
     groundImageLoaded = true;  
 };
 
+class AirObstacle {
+    constructor(_size) {
+        this.imageLoaded = ghostImageLoaded;
+        this.isAirObstacle = true;
+
+        this.width = (this.imageLoaded ? ghostImage.width : 46) * _size;
+        this.height = (this.imageLoaded ? ghostImage.height : 33) * _size;
+        this.size = _size;
+        this.speed = gameSpeed;
+        this.x = canvas.width;
+        this.y = canvas.height - this.height - 120;
+
+        this.initialY = this.y;
+        this.angle = Math.random() * Math.PI * 2;
+        this.diagonalDirection = Math.random() < 0.5 ? 1 : -1;
+
+        this.draw = function(deltaTime) {
+            if (this.imageLoaded) {
+                ctx.drawImage(ghostImage, this.x, this.y, this.width, this.height);
+            } else {
+                ctx.fillStyle = 'red';
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+            this.x -= this.speed * deltaTime;
+            this.angle += 0.05;
+            this.y = this.initialY + Math.sin(this.angle) * 20; //change this for sine wave (increase for bigger movement)
+            this.y += this.diagonalDirection * 0.5;
+        }
+    }
+}
+
+class GroundObstacle {
+    constructor(_size) {
+        this.imageLoaded = groundImageLoaded;
+        this.isAirObstacle = false;
+
+        this.width = (this.imageLoaded ? groundObstacleImage.width : 28) * _size;
+        this.height = (this.imageLoaded ? groundObstacleImage.height : 34) * _size;
+        this.size = _size;
+        this.speed = gameSpeed;
+        this.x = canvas.width;
+        this.y = canvas.height - this.height;
+
+        this.draw = function(deltaTime) {
+            if (this.imageLoaded) {
+                ctx.drawImage(groundObstacleImage, this.x, this.y, this.width, this.height);
+            } else {
+                ctx.fillStyle = 'red';
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+            this.x -= this.speed * deltaTime;
+        }
+    }
+}
+
 function spawnObstacle() {
     let size = Math.random() * 50 + 40;
     let isAirObstacle = Math.random() < 0.5;
