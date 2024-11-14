@@ -2,7 +2,7 @@
 import { canvas, ctx, gravity } from './game.js';
 
 const dinoImage = new Image();
-dinoImage.src = '/assets/dino.png';
+dinoImage.src = '/baseGame/assets/dino.png';
 
 const dino = {
     x: 50,

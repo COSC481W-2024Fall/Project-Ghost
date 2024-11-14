@@ -8,13 +8,13 @@ let groundImageLoaded = false;
 
 // Load images
 const ghostImage = new Image();
-ghostImage.src = '/assets/ghost_2.png';
+ghostImage.src = '/baseGame/assets/ghost_2.png';
 ghostImage.onload = () => {
     ghostImageLoaded = true;  
 };
 
 const groundObstacleImage = new Image();
-groundObstacleImage.src = '/assets/tombstone_1.png';
+groundObstacleImage.src = '/baseGame/assets/tombstone_1.png';
 groundObstacleImage.onload = () => {
     groundImageLoaded = true;  
 };
