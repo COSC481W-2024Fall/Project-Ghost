@@ -3,23 +3,34 @@ canvas {
     display: block;
     margin: 0 auto;
     border: 5px solid black;
-    top:+2px;
-    bottom: +10px;
-    left: -6px;
-    right: -6px;
     width: calc(100% - 5px);
     height: calc(100% - 5px);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    position: relative;
+    top: 2px;
+    bottom: 10px;
+    left: -6px;
+    right: -6px;
 }
 
-/* Style for the game controls */
+/* Game control styles */
 #controls {
     text-align: center;
     margin-top: 20px;
 }
 
-#controls button, #startButton, #leaderboardButton ,#restartButton, #restartButtonFromLeaderboard, #pauseButton, #resumeButton, #dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, #submitInitialsButton {
-    padding: 10px 20px 10px 20px;
+#controls button,
+#startButton,
+#leaderboardButton,
+#restartButton,
+#restartButtonFromLeaderboard,
+#pauseButton,
+#resumeButton,
+#dailyLeaderboardButton,
+#weeklyLeaderboardButton,
+#allTimeLeaderboardButton,
+#submitInitialsButton {
+    padding: 10px 20px;
     font-size: 22px;
     margin: 5px;
     cursor: pointer;
@@ -29,59 +40,34 @@ canvas {
     background-color: #0b60b7;
     border-radius: 10%;
     border: 2px solid #0b60b7;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
 }
 
-#startButton {
-    margin: 0;
+#startButton, #leaderboardButton, #restartButton, #pauseButton, #resumeButton,
+#dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, 
+#restartButtonFromLeaderboard {
     position: absolute;
-    top: 30%;
-    left: 58%;
+    margin: 0;
 }
 
-#leaderboardButton {
-    padding: 10px 10px 10px 10px;
-    margin: 0;
-    position: absolute;
-    top: 20%;
-    left: 58%;
-}
-#restartButton {
-    margin: 0;
-    position: absolute;
-    top: 65%;
-    left: 42%;
-}
-
-#pauseButton {
-    margin: 0;
-    position: absolute;
-    top: 3%;
-    left: 48%;
-}
-
+/* Individual button customizations */
+#startButton { top: 30%; left: 58%; }
+#leaderboardButton { padding: 10px; top: 20%; left: 58%; }
+#restartButton { top: 65%; left: 42%; }
+#pauseButton { top: 3%; left: 48%; }
 #resumeButton {
     background-color: #014427;
-    border: 2px solid #014427;
-    margin: 0;
-    position: absolute;
-    top: 3%;
-    left: 40%;
+    border-color: #014427;
+    top: 3%; left: 40%;
 }
-
 #submitInitialsButton {
     background-color: #c43a86;
-    border: 2px solid #c43a86;
+    border-color: #c43a86;
 }
-
-#initialsInput {
-    border: 3px solid #c43a86;
-    background-color: #febdaf;
-}
-
-.hidden {
-    display: none;
-}
+#dailyLeaderboardButton { top: 13%; left: 90%; transform: translate(-50%, -50%); }
+#weeklyLeaderboardButton { top: 33%; left: 90%; transform: translate(-50%, -50%); }
+#allTimeLeaderboardButton { top: 58%; left: 90%; transform: translate(-50%, -50%); padding: 10px 9px; }
+#restartButtonFromLeaderboard { top: 83%; left: 90%; transform: translate(-50%, -50%); }
 
 /* General container styles */
 #screenContainer {
@@ -96,9 +82,8 @@ canvas {
     font-weight: 400;
     font-style: normal;
 }
-  
 
-/* Screens */
+/* Screens styling */
 .titleOverlay {
     background-color: black;
     color: white;
@@ -106,11 +91,11 @@ canvas {
     background-size: cover;
 }
 
-.ellipse{
+.ellipse {
     margin-left: 175px;
     margin-top: -385px;
-    width: 450px; 
-    height: 140px; 
+    width: 450px;
+    height: 140px;
     background-color: #5b3d9c;
     border-radius: 45%;
 }
@@ -119,100 +104,36 @@ canvas {
     background-color: #87CEEB;
 }
 
-#pauseScreen {
-    position: absolute;
-    top: 10px;
-    width: 800px;
-    height: 400px;
-    border: 2.5px solid black;
-    background-image: url("-pause.jpg");
-    background-size: cover;
-    display: none; /* Initially hidden */
-    justify-content: center;
-    align-items: center;
-    z-index: 10; /* Ensure it's above the game canvas */
-    color: white;
-    text-shadow: -1px 1px 0 #000,
-                         1px 1px 0 #000,
-                         1px -1px 0 #000,
-                         -1px -1px 0 #000;
-    font-size: 40px;
-    text-align: center;
-}
-
-#controlsScreen {
-    position: absolute;
-    top: 10px;
-    width: 800px;
-    height: 400px;
-    border: 2.5px solid black;
-    background-image: url("-pause.jpg");
-    background-size: cover;
-    display: none; /* Initially hidden */
-    justify-content: center;
-    align-items: center;
-    z-index: 10; /* Ensure it's above the game canvas */
-    color: white;
-    text-shadow: -1px 1px 0 #000,
-                         1px 1px 0 #000,
-                         1px -1px 0 #000,
-                         -1px -1px 0 #000;
-    font-size: 40px;
-    text-align: center;
-}
-
-#diedScreen {
-    position: absolute;
-    top: 10px;
-    width: 800px;
-    height: 400px;
-    border: 2.5px solid black;
-    background-image: url("-died.jpg");
-    background-size: cover;
-    display: none; /* Initially hidden */
-    justify-content: center;
-    align-items: center;
-    z-index: 10; /* Ensure it's above the game canvas */
-    color: white;
-    text-shadow: -1px 1px 0 #000,
-                         1px 1px 0 #000,
-                         1px -1px 0 #000,
-                         -1px -1px 0 #000;
-    font-size: 40px;
-    text-align: center;
-}
-
+/* Pause, Controls, Died Screens */
+#pauseScreen,
+#controlsScreen,
+#diedScreen,
 #diedWellScreen {
     position: absolute;
     top: 10px;
     width: 800px;
     height: 400px;
-    background-image: url("-diedWell.jpg");
-    background-size: cover;
     border: 2.5px solid black;
+    background-size: cover;
     display: none; /* Initially hidden */
-    z-index: 10; /* Ensure it's above the game canvas */
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
     color: white;
-    text-shadow: -1px 1px 0 #000,
-                         1px 1px 0 #000,
-                         1px -1px 0 #000,
-                         -1px -1px 0 #000;
+    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
     font-size: 40px;
     text-align: center;
 }
 
-#diedWellScreen #firstLine {
-    margin-top: 10%;
+#pauseScreen { background-image: url("-pause.jpg"); }
+#controlsScreen { background-image: url("-pause.jpg"); }
+#diedScreen { background-image: url("-died.jpg"); }
+#diedWellScreen {
+    background-image: url("-diedWell.jpg");
 }
-
-#diedWellScreen #secondLine {
+#diedWellScreen #firstLine, #diedWellScreen #secondLine, #diedWellScreen #thirdLine {
     margin-top: 3%;
 }
-
-#diedWellScreen #thirdLine {
-    margin-top: 3%;
-}
-
 #diedWellScreen #initialsInput {
     margin-top: 10px;
     padding: 5px;
@@ -220,7 +141,7 @@ canvas {
     text-align: center;
     width: 10%;
     border-radius: 5px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
 }
 
 /* Leaderboard */
@@ -232,66 +153,91 @@ canvas {
     background-image: url("-leaderboardBackground.jpg");
     background-size: cover;
     border: 2.5px solid black;
-    display: none; /* Initially hidden */
-    z-index: 10; /* Ensure it's above the game canvas */
+    display: none;
+    z-index: 10;
     color: white;
-    text-shadow: -1px 1px 0 #000,
-                         1px 1px 0 #000,
-                         1px -1px 0 #000,
-                         -1px -1px 0 #000;
+    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
     font-size: 17px;
 }
 
-#leaderboard th, td{
-    padding: 3px;
-    text-align: center;
-}
-#leaderboard h2{
-    width: 400px;
-    text-align: center;
-    margin: 0, 0, 0, 0;
-    padding: 0, 0, 0, 0;
-}
 #leaderboard {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     width: 50%;
     table-layout: fixed;
 }
 
-#dailyLeaderboardButton {
-    margin: 0;
-    position: absolute;
-    top: 13%;
-    left: 90%;
-    -ms-transform: translate(+50%, +50%);
-    transform: translate(-50%, -50%);
+#leaderboard th, #leaderboard td {
+    padding: 3px;
+    text-align: center;
 }
 
-#weeklyLeaderboardButton {
+#leaderboard h2 {
+    width: 400px;
+    text-align: center;
     margin: 0;
-    position: absolute;
-    top: 33%;
-    left: 90%;
-    -ms-transform: translate(+50%, +50%);
-    transform: translate(-50%, -50%);
+    padding: 0;
 }
 
-#allTimeLeaderboardButton {
-    padding: 10px 9px 10px 9px;
-    margin: 0;
-    position: absolute;
-    top: 58%;
-    left: 90%;
-    -ms-transform: translate(+50%, +50%);
-    transform: translate(-50%, -50%);
+/* Inputs */
+#initialsInput {
+    border: 3px solid #c43a86;
+    background-color: #febdaf;
 }
 
-#restartButtonFromLeaderboard {
-    margin: 0;
-    position: absolute;
-    top: 83%;
-    left: 90%;
-    -ms-transform: translate(+50%, +50%);
-    transform: translate(-50%, -50%);
-} 
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+/* Mobile landscape mode - side buttons for controls */
+@media (max-width: 1280px) {
+    /* Control buttons styling */
+    #controls {
+        position: fixed;
+        top: 50%;
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+
+    /* Jump Button (Left Side) */
+    #jumpButton {
+        position: relative;
+        width: 15vw;
+        height: 15vw;
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #0b60b7;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        margin-left: 5vw;
+    }
+
+    /* Crouch Button (Right Side) */
+    #crouchButton {
+        position: relative;
+        width: 15vw;
+        height: 15vw;
+        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #0b60b7;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        margin-right: 5vw;
+    }
+}
+
+@media (min-width: 1281px) {
+    #controls {
+        display: none;
+    }
+}

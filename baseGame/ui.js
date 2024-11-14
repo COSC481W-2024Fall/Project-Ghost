@@ -50,25 +50,29 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Button event listeners for Play screen
-    document.getElementById('jumpButton').addEventListener('mousedown', () => {
+    document.getElementById('jumpButton').addEventListener('touchstart', (e) => {
         if (!getGameOver()) {
+            e.preventDefault();
             dino.jump(true);
         }
     });
 
-    document.getElementById('jumpButton').addEventListener('mouseup', () => {
+    document.getElementById('jumpButton').addEventListener('touchend', (e) => {
         if (!getGameOver()) {
+            e.preventDefault();
             dino.jump(false);
         }
     });
 
-    document.getElementById('crouchButton').addEventListener('mousedown', () => {
+    document.getElementById('crouchButton').addEventListener('touchstart', (e) => {
         if (!getGameOver()) {
+            e.preventDefault();
             dino.crouch(true);
         }
     });
 
-    document.getElementById('crouchButton').addEventListener('mouseup', () => {
+    document.getElementById('crouchButton').addEventListener('touchend', (e) => {
+        e.preventDefault();
         dino.crouch(false);
     });
 
