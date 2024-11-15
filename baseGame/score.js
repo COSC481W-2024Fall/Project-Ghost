@@ -1,5 +1,5 @@
 
-import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
+import { gameScore, canvas, serverUrl, levelSeed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
 import { displayText, displayScreen, initializeLeaderboard} from '/baseGame/ui.js';
 import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
 
@@ -126,7 +126,7 @@ function addScore(in_user_name, in_score, in_categories) {
 	const data = {
 		user_name: in_user_name,
 		score: in_score,
-		timestamp: level_seed,
+		timestamp: levelSeed,
 		categories: in_categories,
 	}
 	const url = `${serverUrl}scores/add`

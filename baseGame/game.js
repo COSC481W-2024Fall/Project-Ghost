@@ -2,13 +2,13 @@ import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
 import { displayText, initializeLeaderboard } from './ui.js';
 
+const levelSeed = Math.floor(Date.now() / 1000);
+// const levelSeed = 1731636571;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
 //const serverUrl = 'http://localhost:5000/project_ghost/';
-const levelSeed = Math.floor(Date.now() / 1000);
-
 
 // Game settings
 let lastTime = Date.now();
@@ -180,4 +180,4 @@ export function setGameSpeed(speed) {
 }
 
 
-export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, levelSeed as level_seed, gameSpeed, gameLoop, nameEnter, scoreCategories};
+export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, levelSeed, gameSpeed, gameLoop, nameEnter, scoreCategories};
