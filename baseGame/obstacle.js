@@ -37,12 +37,12 @@ class AirObstacle {
     constructor(size) {
         this.imageLoaded = ghostImageLoaded;
 
-        this.width = ((this.imageLoaded ? ghostImage.width : 46) * size) * 0.5;
-        this.height = ((this.imageLoaded ? ghostImage.height : 33) * size) * 0.5;
+        this.width = ((this.imageLoaded ? ghostImage.width : 46) * size) * 0.7;
+        this.height = ((this.imageLoaded ? ghostImage.height : 33) * size) * 0.7;
         this.size = size;
         this.speed = gameSpeed;
         this.x = canvas.width;
-        this.y = canvas.height - this.height - 120;
+        this.y = canvas.height - this.height - 100;
 
         this.initialY = this.y;
         this.angle = rng.newFloat() * Math.PI * 2;
@@ -57,8 +57,8 @@ class AirObstacle {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         this.x -= this.speed * deltaTime;
-        this.angle += 0.01; // speed of vertical movement
-        this.y = this.initialY + Math.sin(this.angle) * 100; //change this for sine wave (increase for bigger movement)
+        this.angle += (0.002 * this.speed); // speed of vertical movement
+        this.y = this.initialY + Math.sin(this.angle) * 80; //change this for sine wave (increase for bigger movement)
         this.y += this.diagonalDirection * 0.5;
     }
 
@@ -84,6 +84,7 @@ class AirObstacle {
             setPaused(true);
             setGameStarted(false);
             checkHighScore();
+            console.log("Level seed:", levelSeed);
         }
     }
 }
@@ -131,6 +132,7 @@ class GroundObstacle {
             setPaused(true);
             setGameStarted(false);
             checkHighScore();
+            console.log("Level seed:", levelSeed);
         }
     }
 }

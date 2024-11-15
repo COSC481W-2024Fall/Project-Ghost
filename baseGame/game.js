@@ -2,8 +2,8 @@ import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
 import { displayText, initializeLeaderboard } from './ui.js';
 
-const levelSeed = Math.floor(Date.now() / 1000);
-// const levelSeed = 1731636571;
+// const levelSeed = Math.floor(Date.now() / 1000);
+const levelSeed = 1731697424;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -59,7 +59,7 @@ function gameLoop() {
             lastGameScoreTime = currentTime;
             if (gameSpeed < 11.9) {
                 gameSpeed += 0.03;
-                obstacleSpawnInterval -= (gameSpeed * 0.3);
+                obstacleSpawnInterval -= (gameSpeed * 0.3); // rate of obstacle spawn increase
             }
           //  console.log(gameSpeed, obstacleSpawnInterval);
         }
