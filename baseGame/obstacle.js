@@ -1,10 +1,12 @@
 import { dino } from '/baseGame/dino.js';
-import { setGameOver, setPaused, setGameStarted, canvas, ctx, gameSpeed } from '/baseGame/game.js';
+import { setGameOver, setPaused, setGameStarted, canvas, ctx, gameSpeed, levelSeed } from '/baseGame/game.js';
 import { checkHighScore } from '/baseGame/score.js';
+import { SeededRandom } from '/baseGame/seededRandom.js';
 
 let obstacles = [];
-let ghostImageLoaded = false;  
-let groundImageLoaded = false;  
+let ghostImageLoaded = false;
+let groundImageLoaded = false;
+let rng = false;
 
 // Load images
 const ghostImage = new Image();
@@ -35,16 +37,16 @@ class AirObstacle {
     constructor(size) {
         this.imageLoaded = ghostImageLoaded;
 
-        this.width = (this.imageLoaded ? ghostImage.width : 46) * size;
-        this.height = (this.imageLoaded ? ghostImage.height : 33) * size;
+        this.width = ((this.imageLoaded ? ghostImage.width : 46) * size) * 0.5;
+        this.height = ((this.imageLoaded ? ghostImage.height : 33) * size) * 0.5;
         this.size = size;
         this.speed = gameSpeed;
         this.x = canvas.width;
         this.y = canvas.height - this.height - 120;
 
         this.initialY = this.y;
-        this.angle = Math.random() * Math.PI * 2;
-        this.diagonalDirection = Math.random() < 0.5 ? 1 : -1;
+        this.angle = rng.newFloat() * Math.PI * 2;
+        this.diagonalDirection = rng.newFloat() < 0.5 ? 1 : -1;
     }
 
     draw(deltaTime) {
@@ -55,8 +57,8 @@ class AirObstacle {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         this.x -= this.speed * deltaTime;
-        this.angle += 0.05;
-        this.y = this.initialY + Math.sin(this.angle) * 20; //change this for sine wave (increase for bigger movement)
+        this.angle += 0.01; // speed of vertical movement
+        this.y = this.initialY + Math.sin(this.angle) * 100; //change this for sine wave (increase for bigger movement)
         this.y += this.diagonalDirection * 0.5;
     }
 
@@ -134,8 +136,11 @@ class GroundObstacle {
 }
 
 function spawnObstacle() {
-    const size = Math.random() + 2;
-    if (Math.random() < 0.5) {
+    if (!rng) {
+        rng = new SeededRandom(levelSeed);
+    }
+    const size = rng.newFloat() + 2;
+    if (rng.newFloat() < 0.5) {
         obstacles.push(new GroundObstacle(size))
     } else {
         obstacles.push(new AirObstacle(size))
