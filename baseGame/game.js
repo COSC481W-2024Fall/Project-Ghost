@@ -1,4 +1,4 @@
-import { spawnObstacle, updateObstacles, detectCollision, obstacles } from './obstacle.js';
+import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
 import { displayText, initializeLeaderboard } from './ui.js';
 
@@ -52,7 +52,6 @@ function gameLoop() {
             lastObstacleSpawnTime = currentTime; // Update the last spawn time
         }
         updateObstacles(deltaTime);
-        detectCollision();
 
         // Add one to the score twice a second, independent of framerate
         if (currentTime - lastGameScoreTime >= 500) {

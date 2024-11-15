@@ -20,13 +20,24 @@ groundObstacleImage.onload = () => {
 };
 
 class AirObstacle {
-    constructor(_size) {
-        this.imageLoaded = ghostImageLoaded;
-        this.isAirObstacle = true;
+    imageLoaded;
+    isAirObstacle = true;
+    width;
+    height;
+    size;
+    speed;
+    x;
+    y;
+    initialY;
+    angle;
+    diagonalDirection;
 
-        this.width = (this.imageLoaded ? ghostImage.width : 46) * _size;
-        this.height = (this.imageLoaded ? ghostImage.height : 33) * _size;
-        this.size = _size;
+    constructor(size) {
+        this.imageLoaded = ghostImageLoaded;
+
+        this.width = (this.imageLoaded ? ghostImage.width : 46) * size;
+        this.height = (this.imageLoaded ? ghostImage.height : 33) * size;
+        this.size = size;
         this.speed = gameSpeed;
         this.x = canvas.width;
         this.y = canvas.height - this.height - 120;
@@ -34,93 +45,100 @@ class AirObstacle {
         this.initialY = this.y;
         this.angle = Math.random() * Math.PI * 2;
         this.diagonalDirection = Math.random() < 0.5 ? 1 : -1;
+    }
 
-        this.draw = function(deltaTime) {
-            if (this.imageLoaded) {
-                ctx.drawImage(ghostImage, this.x, this.y, this.width, this.height);
-            } else {
-                ctx.fillStyle = 'red';
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-            }
-            this.x -= this.speed * deltaTime;
-            this.angle += 0.05;
-            this.y = this.initialY + Math.sin(this.angle) * 20; //change this for sine wave (increase for bigger movement)
-            this.y += this.diagonalDirection * 0.5;
+    draw(deltaTime) {
+        if (this.imageLoaded) {
+            ctx.drawImage(ghostImage, this.x, this.y, this.width, this.height);
+        } else {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+        this.x -= this.speed * deltaTime;
+        this.angle += 0.05;
+        this.y = this.initialY + Math.sin(this.angle) * 20; //change this for sine wave (increase for bigger movement)
+        this.y += this.diagonalDirection * 0.5;
+    }
+
+    detectCollision() {
+        // Circular hitbox for ghost obstacle 
+        const centerX = this.x + this.width / 2;
+        const centerY = this.y + this.height / 2;
+        const radius = Math.min(this.width, this.height) / 2;
+
+        // Calculate the closest point on the dino's rectangular hitbox to the circle's center
+        const closestX = Math.max(dino.hitbox.x, Math.min(centerX, dino.hitbox.x + dino.hitbox.width));
+        const closestY = Math.max(dino.hitbox.y, Math.min(centerY, dino.hitbox.y + dino.hitbox.height));
+
+        // Calculate the distance between the closest point and the circle's center
+        const distanceX = centerX - closestX;
+        const distanceY = centerY - closestY;
+        const distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+        // Check for collision
+        if (distanceSquared < radius * radius) {
+            console.log("Collision detected with ghost");
+            setGameOver(true);
+            setPaused(true);
+            setGameStarted(false);
+            checkHighScore();
         }
     }
 }
 
 class GroundObstacle {
-    constructor(_size) {
-        this.imageLoaded = groundImageLoaded;
-        this.isAirObstacle = false;
+    imageLoaded;
+    isAirObstacle = false;
+    width;
+    height;
+    size;
+    speed;
+    x;
+    y;
 
-        this.width = (this.imageLoaded ? groundObstacleImage.width : 28) * _size;
-        this.height = (this.imageLoaded ? groundObstacleImage.height : 34) * _size;
-        this.size = _size;
+    constructor(size) {
+        this.imageLoaded = groundImageLoaded;
+
+        this.width = (this.imageLoaded ? groundObstacleImage.width : 28) * size;
+        this.height = (this.imageLoaded ? groundObstacleImage.height : 34) * size;
+        this.size = size;
         this.speed = gameSpeed;
         this.x = canvas.width;
         this.y = canvas.height - this.height;
+    }
 
-        this.draw = function(deltaTime) {
-            if (this.imageLoaded) {
-                ctx.drawImage(groundObstacleImage, this.x, this.y, this.width, this.height);
-            } else {
-                ctx.fillStyle = 'red';
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-            }
-            this.x -= this.speed * deltaTime;
+    draw(deltaTime) {
+        if (this.imageLoaded) {
+            ctx.drawImage(groundObstacleImage, this.x, this.y, this.width, this.height);
+        } else {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+        this.x -= this.speed * deltaTime;
+    }
+
+    detectCollision() {
+        if (
+            dino.hitbox.x < this.x + this.width &&
+            dino.hitbox.x + dino.hitbox.width > this.x &&
+            dino.hitbox.y < this.y + this.height &&
+            dino.hitbox.y + dino.hitbox.height > this.y
+        ) {
+            console.log("Collision detected with ground obstacle");
+            setGameOver(true);
+            setPaused(true);
+            setGameStarted(false);
+            checkHighScore();
         }
     }
 }
 
 function spawnObstacle() {
-    let size = Math.random() * 50 + 40;
-    let isAirObstacle = Math.random() < 0.5;
-    let airOrGroundY = isAirObstacle ? canvas.height - size - 120 : canvas.height - size;
-
-    obstacles.push({
-        x: canvas.width,
-        y: airOrGroundY,
-        width: size,
-        height: size,
-        speed: gameSpeed,
-        isAirObstacle,
-        initialY: airOrGroundY, 
-        angle: Math.random() * Math.PI * 2, 
-        diagonalDirection: Math.random() < 0.5 ? 1 : -1 
-    });
-}
-
-// Helper function to draw obstacles
-function drawObstacle(obs) {
-    if (obs.isAirObstacle) {
-        if (ghostImageLoaded) {
-            ctx.drawImage(ghostImage, obs.x, obs.y, obs.width, obs.height);
-        } else {
-            ctx.fillStyle = 'red';
-            ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-        }
-        // Draw the circular hitbox for debugging
-        const centerX = obs.x + obs.width / 2;
-        const centerY = obs.y + obs.height / 2;
-        const radius = Math.min(obs.width, obs.height) / 2;
-
-        // Set the style for the hitbox circle
-        ctx.strokeStyle = 'red'; 
-        ctx.lineWidth = 2; // Make the line width visible
-
-        // Draw the circle
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        ctx.stroke();
+    const size = Math.random() + 2;
+    if (Math.random() < 0.5) {
+        obstacles.push(new GroundObstacle(size))
     } else {
-        if (groundImageLoaded) {
-            ctx.drawImage(groundObstacleImage, obs.x, obs.y, obs.width, obs.height);
-        } else {
-            ctx.fillStyle = 'red';
-            ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-        }
+        obstacles.push(new AirObstacle(size))
     }
 }
 
@@ -128,75 +146,16 @@ function updateObstacles(deltaTime) {
     if (obstacles.length === 0) return;
 
     for (let i = 0; i < obstacles.length; i++) {
-        let obs = obstacles[i];
-        obs.x -= obs.speed * deltaTime;
-
-        // Apply flying obstacle movement if it's an air obstacle
-        if (obs.isAirObstacle) {
-            obs.y = obs.initialY + Math.sin(obs.angle) * 20; //change this for sine wave (increase for bigger movement)
-            obs.angle += 0.05;
-            obs.y += obs.diagonalDirection * 0.5;
-        }
+        const obs = obstacles[i];
+        obs.draw(deltaTime);
+        obs.detectCollision();
 
         // Remove obstacles that move off-screen
         if (obs.x + obs.width < 0) {
             obstacles.splice(i, 1);
             i--;
         }
-
-        // Draw the obstacle
-        drawObstacle(obs);
     }
 }
 
-function detectCollision() {
-    const dinoHitbox = dino.hitbox;
-
-    for (let obs of obstacles) {
-        if (obs.isAirObstacle) {
-
-
-            // Circular hitbox for ghost obstacle 
-            const centerX = obs.x + obs.width / 2;
-            const centerY = obs.y + obs.height / 2;
-            const radius = Math.min(obs.width, obs.height) / 2;
-            
-
-            // Calculate the closest point on the dino's rectangular hitbox to the circle's center
-            const closestX = Math.max(dinoHitbox.x, Math.min(centerX, dinoHitbox.x + dinoHitbox.width));
-            const closestY = Math.max(dinoHitbox.y, Math.min(centerY, dinoHitbox.y + dinoHitbox.height));
-
-            // Calculate the distance between the closest point and the circle's center
-            const distanceX = centerX - closestX;
-            const distanceY = centerY - closestY;
-            const distanceSquared = distanceX * distanceX + distanceY * distanceY;
-
-            // Check for collision
-            if (distanceSquared < radius * radius) {
-                console.log("Collision detected with ghost");
-                setGameOver(true);
-                setPaused(true);
-                setGameStarted(false);
-                checkHighScore();
-            }
-        } else {
-            // Rectangular hitbox for ground obstacles
-            if (
-                dinoHitbox.x < obs.x + obs.width &&
-                dinoHitbox.x + dinoHitbox.width > obs.x &&
-                dinoHitbox.y < obs.y + obs.height &&
-                dinoHitbox.y + dinoHitbox.height > obs.y
-            ) {
-                console.log("Collision detected with ground obstacle");
-                setGameOver(true);
-                setPaused(true);
-                setGameStarted(false);
-                checkHighScore();
-            }
-        }
-    }
-}
-
-
-
-export { spawnObstacle, updateObstacles, detectCollision, obstacles };
+export { spawnObstacle, updateObstacles, obstacles };
