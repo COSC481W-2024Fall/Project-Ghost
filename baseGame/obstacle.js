@@ -22,6 +22,7 @@ groundObstacleImage.onload = () => {
 };
 
 class AirObstacle {
+    static inARow = 0;
     imageLoaded;
     isAirObstacle = true;
     width;
@@ -90,6 +91,7 @@ class AirObstacle {
 }
 
 class GroundObstacle {
+    static inARow = 0;
     imageLoaded;
     isAirObstacle = false;
     width;
@@ -137,16 +139,36 @@ class GroundObstacle {
     }
 }
 
+const obstacleTypes = [AirObstacle, GroundObstacle]
+
 function spawnObstacle() {
     if (!rng) {
         rng = new SeededRandom(levelSeed);
     }
     const size = rng.newFloat() + 2;
-    if (rng.newFloat() < 0.5) {
-        obstacles.push(new GroundObstacle(size))
-    } else {
-        obstacles.push(new AirObstacle(size))
+    const obsIndex = rng.newInt(0, obstacleTypes.length)
+    let ObsType = obstacleTypes[obsIndex];
+
+    while(!checkInARow(ObsType)) {
+        ObsType = obstacleTypes[(obsIndex + 1) % obstacleTypes.length];
+        console.log("in loop")
     }
+
+    obstacles.push(new ObsType(size));
+}
+
+function checkInARow(ObstacleType) {
+    // max of same obstacles that can appear in a row
+    if(ObstacleType.inARow >= 5) return false;
+
+    // Decrease all other obstacle in a rows by one
+    for(let OtherType of obstacleTypes) {
+        if(OtherType === ObstacleType) continue;
+        if(OtherType.inARow > 0) OtherType.inARow -= 1;
+    }
+
+    ObstacleType.inARow += 1;
+    return true;
 }
 
 function updateObstacles(deltaTime) {
@@ -155,7 +177,7 @@ function updateObstacles(deltaTime) {
     for (let i = 0; i < obstacles.length; i++) {
         const obs = obstacles[i];
         obs.draw(deltaTime);
-        obs.detectCollision();
+        // obs.detectCollision();
 
         // Remove obstacles that move off-screen
         if (obs.x + obs.width < 0) {
