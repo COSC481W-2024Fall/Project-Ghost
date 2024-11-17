@@ -106,25 +106,22 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('pauseButton').addEventListener('click', () => {
-        console.log("Paused");
         if (!getGameOver() && getGameStarted()) {
             let pausedState = getPaused();
             setPaused(!pausedState);
-            console.log("Paused State: ", getPaused());
-            console.log("Game Over State: ", getGameOver());
             if (!pausedState) {
                 stopGameLoop();  // Stop the game loop if paused
                 document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
-                console.log("Game Paused");
             } else {
-                console.log("Game Resumed");
                 gameLoop();  // Continue the game loop if unpaused
                 document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
             }
         }
     });
 
-    document.getElementById('resumeButton').addEventListener('click', ResumeGame());
+    document.getElementById('resumeButton').addEventListener('click', () => {
+        ResumeGame();
+    });
 
     document.getElementById('instructionsButton').addEventListener('click', () => {
         displayScreen('instructionsScreen');
@@ -148,14 +145,10 @@ function ResumeGame(){
     if (!getGameOver() && getGameStarted()) {
         let pausedState = getPaused();
         setPaused(!pausedState);
-        console.log("Paused State: ", getPaused());
-        console.log("Game Over State: ", getGameOver());
         if (!pausedState) {
             stopGameLoop();  // Stop the game loop if paused
             document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
-            console.log("Game Paused");
         } else {
-            console.log("Game Resumed");
             gameLoop();  // Continue the game loop if unpaused
             document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
