@@ -14,11 +14,6 @@ canvas {
 }
 
 /* Game control styles */
-#controls {
-    text-align: center;
-    margin-top: 20px;
-}
-
 #controls button,
 #startButton,
 #leaderboardButton,
@@ -29,12 +24,15 @@ canvas {
 #dailyLeaderboardButton,
 #weeklyLeaderboardButton,
 #allTimeLeaderboardButton,
-#submitInitialsButton {
+#submitInitialsButton,
+#controlsButton {
+    position: absolute;
     padding: 10px 20px;
     font-size: 22px;
     margin: 5px;
     cursor: pointer;
     font-family: "Single Day";
+    text-align: center;
     color: white;
     text-align: center;
     background-color: #0b60b7;
@@ -43,16 +41,11 @@ canvas {
     box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
 }
 
-#startButton, #leaderboardButton, #restartButton, #pauseButton, #resumeButton,
-#dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, 
-#restartButtonFromLeaderboard {
-    position: absolute;
-    margin: 0;
-}
-
 /* Individual button customizations */
-#startButton { top: 30%; left: 58%; }
-#leaderboardButton { padding: 10px; top: 20%; left: 58%; }
+#startButton {  top: 175px; left: 47%; } 
+#controlsButton { padding: 10px; top: 250px; left: 46%; }
+#leaderboardButton { padding: 10px; top: 323px; left: 46%; }
+
 #restartButton { top: 65%; left: 42%; }
 #pauseButton { top: 3%; left: 48%; }
 #resumeButton {
