@@ -7,9 +7,9 @@ canvas {
     height: calc(100% - 5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
     position: relative;
-    top: 2px;
+    top: 0px;
     bottom: 10px;
-    left: -6px;
+    left: -5px;
     right: -6px;
 }
 
@@ -124,7 +124,7 @@ canvas {
 #diedWellScreen {
     background-image: url("-diedWell.jpg");
 }
-#diedWellScreen #firstLine, #diedWellScreen #secondLine, #diedWellScreen #thirdLine {
+#diedWellScreen #firstLine, #secondLine, #thirdLine {
     margin-top: 3%;
 }
 #diedWellScreen #initialsInput {
