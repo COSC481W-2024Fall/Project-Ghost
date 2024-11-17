@@ -25,7 +25,8 @@ canvas {
 #weeklyLeaderboardButton,
 #allTimeLeaderboardButton,
 #submitInitialsButton,
-#controlsButton {
+#controlsButton,
+#mainMenuButton{
     position: absolute;
     padding: 10px 20px;
     font-size: 22px;
@@ -45,7 +46,7 @@ canvas {
 #startButton {  top: 175px; left: 47%; } 
 #controlsButton { padding: 10px; top: 250px; left: 46%; }
 #leaderboardButton { padding: 10px; top: 323px; left: 46%; }
-
+#mainMenuButton { top: 15%; left: 42%; }
 #restartButton { top: 65%; left: 42%; }
 #pauseButton { top: 3%; left: 48%; }
 #resumeButton {
@@ -119,7 +120,7 @@ canvas {
 }
 
 #pauseScreen { background-image: url("-pause.jpg"); }
-#controlsScreen { background-image: url("-pause.jpg"); }
+#controlsScreen { background-image: url("-titleOverlay.png"); background-color: #000;}
 #diedScreen { background-image: url("-died.jpg"); }
 #diedWellScreen {
     background-image: url("-diedWell.jpg");

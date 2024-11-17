@@ -177,6 +177,8 @@ function displayScreen(screenType) {
     const ellipse = document.getElementById('ellipse');
     const titleOverlay = document.getElementById('titleOverlay');
     const gameScreen = document.getElementById('gameScreen');
+    const leaderboardScreen = document.getElementById('leaderboardScreen');
+    const controlsScreen = document.getElementById('controlsScreen');
 
     // Clear all existing screen classes
     container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen', 'controlsScreen');
@@ -195,17 +197,18 @@ function displayScreen(screenType) {
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
+        case 'controls':
+            container.classList.add('controlsScreen');
+            displayControlsScreen();
+            controlsScreen.style.display = 'flex';  // Show overlay
+            ellipse.style.display = 'none';  // Hide the ellipse
+            titleOverlay.style.display = 'none';  // Hide Title overlay
+            break;
         case 'leaderboard':
             container.classList.add('leaderboardScreen');
             displayLeaderboardScreen();
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
-            break;
-        case 'controls':
-            container.classList.add('controlsScreen');
-            displayControlsScreen();
-            ellipse.style.display = 'none';
-            titleOverlay.style.display = 'none';
             break;
         default:
             console.log("Unknown screen type");
