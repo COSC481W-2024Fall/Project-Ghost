@@ -6,7 +6,7 @@ import {
     canvas, ctx, startGameLoop,gameLoop, stopGameLoop, resetGame, getNameEnter, setNameEnter 
 } from '/baseGame/game.js';
 
-import { getScores } from '/baseGame/score.js';
+import { getScores, displayLeaderboard } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.font = `${fontSize}px "Single Day"`;
@@ -135,8 +135,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('leaderboardButton').addEventListener('click', () => {
-        console.log('Leaderboard button clicked');
         document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
+        displayScreen('leaderboardScreen');  // Display the leaderboard screen
+        initializeLeaderboard();
+        displayLeaderboard(category);
+        updateLeaderboard();
     });
 
 });
@@ -159,6 +162,14 @@ function displayInstructionsScreen() {
     document.getElementById('instructionsScreen').style.display = 'block';
     document.getElementById('titleOverlay').style.display = 'none';
     document.getElementById('mainMenuButton').style.display = 'block';
+}
+
+function displayLeaderboardScreen() {
+    initializeLeaderboard();
+    displayLeaderboard(category);
+    updateLeaderboard();
+    document.getElementById('leaderboardScreen').style.display = 'block';
+    document.getElementById('titleOverlay').style.display = 'none';
 }
 
 function displayScreen(screenType) {
