@@ -109,12 +109,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById('resumeButton').addEventListener('click', ResumeGame());
 
-    document.getElementById('controlsButton').addEventListener('click', () => displayScreen('controls'));
-    
+    document.getElementById('instructionsButton').addEventListener('click', () => {
+        displayScreen('instructionsScreen');
+        
+    });
+
     document.getElementById('mainMenuButton').addEventListener('click', () => {
         displayScreen('titleOverlay')
         document.getElementById('mainMenuButton').style.display = 'none';
-        document.getElementById('controlsScreen').style.display = 'none';
+        document.getElementById('instructionsScreen').style.display = 'none';
     });
 
     document.getElementById('leaderboardButton').addEventListener('click', () => {
@@ -160,15 +163,9 @@ function ResumeGame(){
     }
 }
 
-function displayControlsScreen() {
-    document.getElementById('controlsScreen').style.display = 'flex';
+function displayInstructionsScreen() {
+    document.getElementById('instructionsScreen').style.display = 'block';
     document.getElementById('titleOverlay').style.display = 'none';
-    displayText("Controls:", 24, 'white', canvas.width / 2.4, canvas.height / 2 - 10);
-    displayText("Press 'T' or Start Button to Start", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 30);
-    displayText("Press 'Space Bar' or Jump Button to Jump", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 60);
-    displayText("Press 'C' or Crouch Button to Crouch", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 90);
-    displayText("Press 'P' or Pause Button to Pause", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 120);
-    displayText("Press 'R' or Restart Button after Game Over", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 150);
     document.getElementById('mainMenuButton').style.display = 'block';
 }
 
@@ -178,10 +175,10 @@ function displayScreen(screenType) {
     const titleOverlay = document.getElementById('titleOverlay');
     const gameScreen = document.getElementById('gameScreen');
     const leaderboardScreen = document.getElementById('leaderboardScreen');
-    const controlsScreen = document.getElementById('controlsScreen');
+    const instructionsScreen = document.getElementById('instructionsScreen');
 
     // Clear all existing screen classes
-    container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen', 'controlsScreen');
+    container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen', 'instructionsScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
@@ -197,10 +194,10 @@ function displayScreen(screenType) {
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
-        case 'controls':
-            container.classList.add('controlsScreen');
-            displayControlsScreen();
-            controlsScreen.style.display = 'flex';  // Show overlay
+        case 'instructionsScreen':
+            container.classList.add('instructionsScreen');
+            displayInstructionsScreen();
+            instructionsScreen.style.display = 'block';  // Show overlay
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
