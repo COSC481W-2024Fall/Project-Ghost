@@ -46,7 +46,7 @@ canvas {
 #startButton {  top: 175px; left: 47%; } 
 #instructionsButton { padding: 10px; top: 250px; left: 46%; }
 #leaderboardButton { padding: 10px; top: 323px; left: 46%; }
-#mainMenuButton { top: 15%; left: 42%; }
+#mainMenuButton { top: 9%; left: 42%; }
 #restartButton { top: 65%; left: 42%; }
 #pauseButton { top: 3%; left: 48%; }
 #resumeButton {
@@ -119,8 +119,8 @@ canvas {
 }
 
 #instructions {
-    font-size: 20px;
-    margin-top: 8vw;
+    font-size: 25px;
+    margin-top: 7vw;
 }
 
 #diedScreen, 
