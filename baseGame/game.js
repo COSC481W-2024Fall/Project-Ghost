@@ -2,8 +2,8 @@ import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
 import { displayText, initializeLeaderboard } from './ui.js';
 
-// const levelSeed = Math.floor(Date.now() / 1000);
-const levelSeed = 1731697424;
+const levelSeed = Math.floor(Date.now() / 1000);
+// const levelSeed = 1731697424;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');

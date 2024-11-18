@@ -177,7 +177,7 @@ function updateObstacles(deltaTime) {
     for (let i = 0; i < obstacles.length; i++) {
         const obs = obstacles[i];
         obs.draw(deltaTime);
-        // obs.detectCollision();
+        obs.detectCollision();
 
         // Remove obstacles that move off-screen
         if (obs.x + obs.width < 0) {
