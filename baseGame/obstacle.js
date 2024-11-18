@@ -34,6 +34,7 @@ class AirObstacle {
     initialY;
     angle;
     diagonalDirection;
+    wave;
 
     constructor(size) {
         this.imageLoaded = ghostImageLoaded;
@@ -46,8 +47,9 @@ class AirObstacle {
         this.y = canvas.height - this.height - 100;
 
         this.initialY = this.y;
-        this.angle = rng.newFloat() * Math.PI * 2;
-        this.diagonalDirection = rng.newFloat() < 0.5 ? 1 : -1;
+        this.angle = rng.newFloat() * 5;
+        this.diagonalDirection = rng.newInt(0, 2) == 1 ? 1 : -1;
+        this.wave = rng.newInt(0, 2) == 1 ? Math.sin : Math.cos;
     }
 
     draw(deltaTime) {
@@ -58,8 +60,8 @@ class AirObstacle {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         this.x -= this.speed * deltaTime;
-        this.angle += (0.002 * this.speed); // speed of vertical movement
-        this.y = this.initialY + Math.sin(this.angle) * 80; //change this for sine wave (increase for bigger movement)
+        this.angle += 0.002 * (this.speed + rng.newInt(0, 2)); // speed of vertical movement
+        this.y = this.initialY + 80 * this.wave(this.angle); //change this for sine wave (increase for bigger movement)
         this.y += this.diagonalDirection * 0.5;
     }
 
