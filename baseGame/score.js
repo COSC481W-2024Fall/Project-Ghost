@@ -1,6 +1,6 @@
 
 import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
-import { displayText, displayScreen, initializeLeaderboard} from '/baseGame/ui.js';
+import { displayText, displayScreen, initializeLeaderboard, updateControlsVisibility} from '/baseGame/ui.js';
 import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
 
 /**
@@ -9,6 +9,7 @@ import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
  * Description: Evaluates the player's score to see if they should be placed on any leaderboard, then enters it to the database
  * Function: checkHighScore
  */
+
 async function checkHighScore() {
     let highString = [];
     document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
@@ -27,6 +28,8 @@ async function checkHighScore() {
 
     if (getNameEnter()) {
         document.getElementById('diedWellScreen').style.display = 'block';  // Show overlay
+        document.getElementById("gameScreen").style.display = "none"; // Hide game screen
+        updateControlsVisibility();
         const playerName = await nameEntry();  // Call nameEntry to get the player's name
         await addScore(playerName, gameScore, highString);
         setNameEnter(false);
@@ -37,6 +40,9 @@ async function checkHighScore() {
     }
     
     document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
+    document.getElementById("gameScreen").style.display = "none";
+    updateControlsVisibility(); // Ensure controls are shown
+
 }
 
 async function displayLeaderboard(category) {
@@ -61,13 +67,14 @@ async function displayLeaderboard(category) {
 // Add event listener for the restartButton From Leaderboard screen
 document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
     document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
+    document.getElementById("gameScreen").style.display = "flex"; // Show game screen
+    updateControlsVisibility(); // Ensure controls are shown
     if (!getNameEnter()) {
         resetGame(); // Reset before starting
         setPaused(false);  // Unpause the game
         setGameStarted(true);  // Mark the game as started
         displayScreen('game');  // Display the game screen
         startGameLoop();  // Start the game loop
-
         let scoreInput = document.getElementById("scoreInput");
         if (scoreInput) {
                 scoreInput.remove();
