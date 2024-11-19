@@ -14,7 +14,6 @@ canvas {
 }
 
 /* Game control styles */
-#controls button,
 #startButton,
 #leaderboardButton,
 #restartButton,
@@ -198,45 +197,46 @@ canvas {
     /* Control buttons styling */
     #controls {
         position: fixed;
-        top: 50%;
-        width: 100vw;
         display: flex;
         justify-content: space-between;
-        transform: translateY(-50%);
+        z-index: 10;
+        width: 100%;
     }
 
     /* Jump Button (Left Side) */
     #jumpButton {
-        position: relative;
-        width: 15vw;
-        height: 15vw;
+        width: 10vw;
+        height: 35vw;
         font-size: 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
         color: white;
+        font-family: "Single Day";
         background-color: #0b60b7;
-        border-radius: 50%;
+        border-radius: 3%;
         border: none;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        margin-left: 5vw;
+        transform: translateY(-100%);
+        margin-left: -1.5vw;
     }
 
     /* Crouch Button (Right Side) */
     #crouchButton {
-        position: relative;
-        width: 15vw;
-        height: 15vw;
-        font-size: 2rem;
+        width: 10vw;
+        height: 35vw;
+        font-size: 1.8rem;
         display: flex;
         justify-content: center;
         align-items: center;
         color: white;
+        font-family: "Single Day";
         background-color: #0b60b7;
-        border-radius: 50%;
+        border-radius: 3%;
         border: none;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        margin-right: 5vw;
+        transform: translateY(-100%);
+        margin-right: 0.5vw;
     }
 }
 
