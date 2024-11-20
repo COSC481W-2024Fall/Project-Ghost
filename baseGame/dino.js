@@ -1,14 +1,16 @@
+// Load the dino image
 import { canvas, ctx, gravity } from './game.js';
 
-// Load the dino image
 const dinoImage = new Image();
-dinoImage.src = '/assets/dino.png';  // Adjust the path if necessary
+dinoImage.src = '/baseGame/assets/dino.png';
 
 const dino = {
     x: 50,
-    y: canvas.height - 50, // Start on the ground
-    width: 70,
-    height: 100,
+    y: canvas.height - 50,
+    width: 70,      // Full width
+    height: 130,    // Full height
+    hitboxWidth: 30,    // Custom hitbox width (adjust as needed)
+    hitboxHeight: 110,  // Custom hitbox height (adjust as needed)
     dy: 0,
     jumping: false,
     jumpHeld: false,
@@ -17,13 +19,18 @@ const dino = {
 
     draw() {
         const height = this.crouching ? this.height / 2 : this.height;
-        const adjustedY = this.crouching ? this.y + this.height / 2 : this.y; 
+        const adjustedY = this.crouching ? this.y + this.height / 2 : this.y;
 
+        // Draw the dino image
         if (dinoImage.complete) {
-            // Draw the dino image, scaling it if crouching
             ctx.drawImage(dinoImage, this.x, adjustedY, this.width, height);
+            
+            // Draw hitbox for visualization (optional, for debugging)
+            ctx.strokeStyle = "red";
+            const hitboxX = this.x + (this.width - this.hitboxWidth) / 2;
+            const hitboxY = adjustedY + (height - this.hitboxHeight) / 2;
+            ctx.strokeRect(hitboxX, hitboxY, this.hitboxWidth, this.hitboxHeight);
         } else {
-            // If image hasn't loaded yet, use a temporary rectangle
             ctx.fillStyle = this.crouching ? 'blue' : 'green';
             ctx.fillRect(this.x, adjustedY, this.width, height);
         }
@@ -31,11 +38,11 @@ const dino = {
 
     update(deltaTime) {
         // Handle Jump input
-        if (this.jumpHeld && !this.jumping && !this.crouching) { 
+        if (this.jumpHeld && !this.jumping && !this.crouching) {
             this.jumping = true;
-            this.dy = -12; 
+            this.dy = -12;
         }
-        
+
         // Apply gravity when jumping
         if (this.jumping) {
             this.dy += gravity * deltaTime;
@@ -48,7 +55,7 @@ const dino = {
                 this.jumping = false;
             }
         }
-        
+
         if (!this.jumping && this.crouchHeld) {
             this.crouching = this.crouchHeld;
         } else {
@@ -61,7 +68,7 @@ const dino = {
                 this.height = 25;
                 this.y = canvas.height - this.height;
             } else {
-                this.height = 80;
+                this.height = 130;
                 this.y = canvas.height - this.height;
             }
         }
@@ -73,6 +80,16 @@ const dino = {
 
     crouch(state) {
         this.crouchHeld = state;
+    },
+
+    // Custom hitbox getters
+    get hitbox() {
+        return {
+            x: this.x + (this.width - this.hitboxWidth) / 2,
+            y: this.y + (this.height - this.hitboxHeight) / 2,
+            width: this.hitboxWidth,
+            height: this.hitboxHeight,
+        };
     }
 };
 
