@@ -202,7 +202,7 @@ canvas {
     /* Jump Button (Left Side) */
     #jumpButton {
         width: 10vw;
-        height: 35vw;
+        height: 39vw;
         font-size: 2rem;
         display: flex;
         justify-content: center;
@@ -214,13 +214,13 @@ canvas {
         border: none;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         transform: translateY(-100%);
-        margin-left: -1.5vw;
+        margin-left: -0.1vw;
     }
 
     /* Crouch Button (Right Side) */
     #crouchButton {
         width: 10vw;
-        height: 35vw;
+        height: 39vw;
         font-size: 1.8rem;
         display: flex;
         justify-content: center;
@@ -232,7 +232,7 @@ canvas {
         border: none;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         transform: translateY(-100%);
-        margin-right: 0.5vw;
+        margin-right: 0.9vw;
     }
 }
 
