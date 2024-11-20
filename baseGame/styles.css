@@ -7,10 +7,6 @@ canvas {
     height: calc(100% - 5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
     position: relative;
-    top: 0px;
-    bottom: 10px;
-    left: -5px;
-    right: -6px;
 }
 
 /* Game control styles */
@@ -103,10 +99,10 @@ canvas {
 #diedScreen,
 #diedWellScreen {
     position: absolute;
-    top: 10px;
+    top: 8px;
     width: 800px;
     height: 400px;
-    border: 2.5px solid black;
+    border: 2px solid black;
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
