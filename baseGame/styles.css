@@ -115,7 +115,8 @@ canvas {
 
 #instructions {
     font-size: 25px;
-    margin-top: 7vw;
+    padding-top: 15%;
+    padding-bottom: 25%;
 }
 
 #diedScreen, 
