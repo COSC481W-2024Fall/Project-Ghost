@@ -4,6 +4,10 @@ import { canvas, ctx, gravity } from './game.js';
 const dinoImage = new Image();
 dinoImage.src = '/baseGame/assets/dino.png';
 
+//Load crouching dino image
+const dinocImage = new Image();
+dinocImage.src = '/baseGame/assets/crouch.gif';
+
 const dino = {
     x: 50,
     y: canvas.height - 50,
