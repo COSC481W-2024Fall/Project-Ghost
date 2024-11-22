@@ -14,7 +14,7 @@ function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.fillText(text, x, y);
 }
 
-// Event listeners
+// All event listeners should be inside a DOMContentLoaded event listener!
 document.addEventListener("DOMContentLoaded", function() {
     // Resize and initial load handlers
     window.addEventListener("resize", updateControlsVisibility);
@@ -213,7 +213,6 @@ function displayScreen(screenType) {
             titleOverlay.style.display = 'block';  // Show Title overlay
             updateControlsVisibility();
             displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
-           
             break;
         case 'game':
             container.classList.add('gameScreen');

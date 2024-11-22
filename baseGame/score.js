@@ -64,25 +64,29 @@ async function displayLeaderboard(category) {
     document.getElementById('ellipse').style.display = 'none'; // Hide the ellipse
 }
 
-// Add event listener for the restartButton From Leaderboard screen
-document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
-    document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
-    document.getElementById("gameScreen").style.display = "flex"; // Show game screen
-    updateControlsVisibility(); // Ensure controls are shown
-    if (!getNameEnter()) {
-        resetGame(); // Reset before starting
-        setPaused(false);  // Unpause the game
-        setGameStarted(true);  // Mark the game as started
-        displayScreen('game');  // Display the game screen
-        startGameLoop();  // Start the game loop
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-                scoreInput.remove();
+// All event listeners should be inside a DOMContentLoaded event listener!
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener for the restartButton From Leaderboard screen
+    document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
+        document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
+        document.getElementById("gameScreen").style.display = "flex"; // Show game screen
+        updateControlsVisibility(); // Ensure controls are shown
+        if (!getNameEnter()) {
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            displayScreen('game');  // Display the game screen
+            startGameLoop();  // Start the game loop
+            let scoreInput = document.getElementById("scoreInput");
+            if (scoreInput) {
+                    scoreInput.remove();
+            }
+        } else {
+            alert("You cannot reset the game while entering your name for the leaderboard.");
         }
-    } else {
-        alert("You cannot reset the game while entering your name for the leaderboard.");
-    }
-    
+        
+    });
+
 });
 
 /**
