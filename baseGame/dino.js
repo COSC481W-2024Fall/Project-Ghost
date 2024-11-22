@@ -6,7 +6,7 @@ dinoImage.src = '/baseGame/assets/dino.png';
 
 //Load crouching dino image
 const dinocImage = new Image();
-dinocImage.src = '/baseGame/assets/crouch.gif';
+dinocImage.src = '/baseGame/assets/crouch.png';
 
 const dino = {
     x: 50,
@@ -25,19 +25,23 @@ const dino = {
         const height = this.crouching ? this.height / 2 : this.height;
         const adjustedY = this.crouching ? this.y + this.height / 2 : this.y;
 
+
+        if (this.crouching) {
         // Draw the dino image
-        if (dinoImage.complete) {
-            ctx.drawImage(dinoImage, this.x, adjustedY, this.width, height);
-            
-            // Draw hitbox for visualization (optional, for debugging)
-            ctx.strokeStyle = "red";
-            const hitboxX = this.x + (this.width - this.hitboxWidth) / 2;
-            const hitboxY = adjustedY + (height - this.hitboxHeight) / 2;
-            ctx.strokeRect(hitboxX, hitboxY, this.hitboxWidth, this.hitboxHeight);
+            if (dinocImage.complete) {
+                ctx.drawImage(dinocImage, this.x, adjustedY, this.width, height);
+            } else {
+                ctx.fillStyle = 'blue';
+                ctx.fillRect(this.x, adjustedY, this.width, height);
+                }
         } else {
-            ctx.fillStyle = this.crouching ? 'blue' : 'green';
-            ctx.fillRect(this.x, adjustedY, this.width, height);
-        }
+            if (dinoImage.complete) {
+                ctx.drawImage(dinoImage, this.x, adjustedY, this.width, height);
+            } else {
+                ctx.fillStyle = 'green'; // Fallback rectangle for standing
+                ctx.fillRect(this.x, adjustedY, this.width, height);
+            }
+        }   
     },
 
     update(deltaTime) {
@@ -69,7 +73,7 @@ const dino = {
         // Adjust height based on crouching status
         if (!this.jumping) {
             if (this.crouching) {
-                this.height = 25;
+                this.height = 50;
                 this.y = canvas.height - this.height;
             } else {
                 this.height = 130;
