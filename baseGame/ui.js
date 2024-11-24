@@ -81,10 +81,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('startButton').addEventListener('click', () => {
-        document.getElementById("gameScreen").style.display = "flex"; // Show game screen
         updateControlsVisibility(); // Ensure controls are shown
         if (!getGameStarted()) {
-            //resetGame(); // Reset before starting
+            resetGame(); // Reset before starting
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
             displayScreen('game');  // Display the game screen
@@ -212,7 +211,6 @@ function displayScreen(screenType) {
             ellipse.style.display = 'block';  // Show the ellipse
             titleOverlay.style.display = 'block';  // Show Title overlay
             updateControlsVisibility();
-            displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
             break;
         case 'game':
             container.classList.add('gameScreen');
@@ -232,7 +230,6 @@ function displayScreen(screenType) {
             displayLeaderboardScreen();
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
-            
             break;
         default:
             console.log("Unknown screen type");

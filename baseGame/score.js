@@ -37,12 +37,11 @@ async function checkHighScore() {
         
         // After adding the score, show the leaderboard
         document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
+    } else {
+        document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
+        document.getElementById("gameScreen").style.display = "none";
+        updateControlsVisibility(); // Ensure controls are hidden
     }
-    
-    document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
-    document.getElementById("gameScreen").style.display = "none";
-    updateControlsVisibility(); // Ensure controls are shown
-
 }
 
 async function displayLeaderboard(category) {
@@ -66,27 +65,16 @@ async function displayLeaderboard(category) {
 
 // All event listeners should be inside a DOMContentLoaded event listener!
 document.addEventListener("DOMContentLoaded", function() {
-    // Add event listener for the restartButton From Leaderboard screen
-    document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
-        document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
-        document.getElementById("gameScreen").style.display = "flex"; // Show game screen
-        updateControlsVisibility(); // Ensure controls are shown
-        if (!getNameEnter()) {
-            resetGame(); // Reset before starting
-            setPaused(false);  // Unpause the game
-            setGameStarted(true);  // Mark the game as started
-            displayScreen('game');  // Display the game screen
-            startGameLoop();  // Start the game loop
-            let scoreInput = document.getElementById("scoreInput");
-            if (scoreInput) {
-                    scoreInput.remove();
-            }
-        } else {
-            alert("You cannot reset the game while entering your name for the leaderboard.");
-        }
+    // Add event listener for the mainMenuButtonFromLeaderboard From Leaderboard screen
+    document.getElementById('mainMenuButtonFromLeaderboard').addEventListener('click', () => {
         
+        
+        
+        document.getElementById("gameScreen").style.display = "none"; // Hide the game screen
+        document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
+        updateControlsVisibility(); // Ensure controls are hidden
+        displayScreen('titleOverlay'); // Show the title screen
     });
-
 });
 
 /**
