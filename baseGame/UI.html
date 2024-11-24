@@ -14,7 +14,9 @@
 	<body>
 		<div id="screenContainer">
 			<canvas id="gameCanvas" width="800" height="400"></canvas>
-			<div id="ellipse" class="ellipse" style="display: none;"></div>
+			<div id="ellipse" class="ellipse" style="display: none;">
+				<div id="textInsideEllipse">Project Ghost!</div>
+			</div>
 			<div id="titleOverlay" class="titleOverlay" style="display: none;">
 				<button id="leaderboardButton">Leaderboard</button>
 				<button id="startButton">Start</button>
@@ -51,7 +53,7 @@
 			</div>
 			<div id="leaderboardScreen" class="leaderboardScreen" style="display: none;">
 				<div id="leaderboardList"></div>
-				<div><button id="restartButtonFromLeaderboard">Restart</button></div>
+				<div><button id="mainMenuButtonFromLeaderboard">Main Menu</button></div>
 				<div><button id="buttonsContainer"></button></div>
 				<table id="leaderboard"></table>
 			</div>
