@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Dino Game</title>
+		<title>Project Ghost!</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
@@ -14,14 +14,25 @@
 	<body>
 		<div id="screenContainer">
 			<canvas id="gameCanvas" width="800" height="400"></canvas>
-			<div id="ellipse" class="ellipse" style="display: none;"></div>
+			<div id="ellipse" class="ellipse" style="display: none;">
+				<div id="textInsideEllipse">Project Ghost!</div>
+			</div>
 			<div id="titleOverlay" class="titleOverlay" style="display: none;">
 				<button id="leaderboardButton">Leaderboard</button>
 				<button id="startButton">Start</button>
-				<button id="controlsButton">Controls</button>
+				<button id="instructionsButton">Instructions</button>
 			</div>
-			<div id="controlsScreen" class='controlsScreen' style="display: none;">
+			<div id="instructionsScreen" class='instructionsScreen' style="display: none;">
 				<button id="mainMenuButton">Main Menu</button>
+				<div id="instructions">
+					Press 'T' or Start Button to Start<br>
+					*Press 'Space Bar' or Jump Button to Jump<br>
+					*Press 'C' or Crouch Button to Crouch<br>
+					Press 'P' or Pause Button to Pause<br>
+					Press 'R' or Restart Button after Game Over<br>
+					*Jump & Crouch Button are touchscreen and only<br>
+					availabile on small screen devices.
+				</div>
 			</div>
 			<div id="gameScreen" class="gameScreen" style="display: none;">
 				<button id="pauseButton">Pause</button>
@@ -42,7 +53,9 @@
 			</div>
 			<div id="leaderboardScreen" class="leaderboardScreen" style="display: none;">
 				<div id="leaderboardList"></div>
-				<div><button id="restartButtonFromLeaderboard">Restart</button></div>
+				<div><button id="mainMenuButtonFromLeaderboard">Main Menu</button></div>
+				<div><button id="buttonsContainer"></button></div>
+				<table id="leaderboard"></table>
 			</div>
 		</div>
 

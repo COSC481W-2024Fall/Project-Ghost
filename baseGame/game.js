@@ -64,7 +64,6 @@ function gameLoop() {
           //  console.log(gameSpeed, obstacleSpawnInterval);
         }
         
-        
         displayText("Score: " + gameScore, 24, 'black', 20, 20);
         frame++;
     }
@@ -97,10 +96,6 @@ function clearObstacles() {
 }
 
 export function resetGame() {
-    if (getNameEnter()) {
-        alert("You cannot reset the game while entering your name for the leaderboard.");
-        return;
-    }
     setGameOver(false);
     setPaused(false); // Ensure game is unpaused on reset
     setFrame(0);
@@ -114,8 +109,7 @@ export function resetGame() {
     if(leaderboard) leaderboard.remove();
     document.getElementById('diedScreen').style.display = 'none';  // Hide overlay
     document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay
-   // document.getElementById('titleScreen').style.display = 'none';  // Hide overlay
-    let element = document.getElementById('titleScreen');  // Replace 'elementID' with the actual ID
+    let element = document.getElementById('titleOverlay');  // Replace 'elementID' with the actual ID
 if (element) {
     element.style.display = 'none';  // Or whatever style manipulation you need
 } else {

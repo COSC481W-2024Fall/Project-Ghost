@@ -6,7 +6,7 @@ import {
     canvas, ctx, startGameLoop,gameLoop, stopGameLoop, resetGame, getNameEnter, setNameEnter 
 } from '/baseGame/game.js';
 
-import { getScores } from '/baseGame/score.js';
+import { getScores, displayLeaderboard } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.font = `${fontSize}px "Single Day"`;
@@ -14,8 +14,12 @@ function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.fillText(text, x, y);
 }
 
+// All event listeners should be inside a DOMContentLoaded event listener!
 document.addEventListener("DOMContentLoaded", function() {
-    // Event listeners
+    // Resize and initial load handlers
+    window.addEventListener("resize", updateControlsVisibility);
+    document.addEventListener("DOMContentLoaded", updateControlsVisibility);
+
     document.addEventListener('keydown', async (e) => {
         if (e.code === 'Space' && !getGameOver()) {
             dino.jump(true);
@@ -77,8 +81,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('startButton').addEventListener('click', () => {
+        updateControlsVisibility(); // Ensure controls are shown
         if (!getGameStarted()) {
-            //resetGame(); // Reset before starting
+            resetGame(); // Reset before starting
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
             displayScreen('game');  // Display the game screen
@@ -87,6 +92,8 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('restartButton').addEventListener('click', () => {
+        document.getElementById("gameScreen").style.display = "flex"; // Show game screen
+        updateControlsVisibility(); // Ensure controls are shown
         if (getGameOver()) {
             if (!getNameEnter()) {
                 resetGame(); // Reset before starting
@@ -105,71 +112,85 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    document.getElementById('pauseButton').addEventListener('click', PauseGame());
+    document.getElementById('pauseButton').addEventListener('click', () => {
+        if (!getGameOver() && getGameStarted()) {
+            let pausedState = getPaused();
+            setPaused(!pausedState);
+            if (!pausedState) {
+                stopGameLoop();  // Stop the game loop if paused
+                document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
+                document.getElementById("gameScreen").style.display = "none"; // Hide game screen
+                updateControlsVisibility();
 
-    document.getElementById('resumeButton').addEventListener('click', ResumeGame());
+            } else {
+                gameLoop();  // Continue the game loop if unpaused
+                document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
+                document.getElementById("gameScreen").style.display = "flex"; // Show game screen
+                updateControlsVisibility();
+            }
+        }
+    });
 
-    document.getElementById('controlsButton').addEventListener('click', () => displayScreen('controls'));
-    
+    document.getElementById('resumeButton').addEventListener('click', () => {
+        ResumeGame();
+        document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
+        document.getElementById("gameScreen").style.display = "flex"; // Show game screen
+        updateControlsVisibility();
+    });
+
+    document.getElementById('instructionsButton').addEventListener('click', () => {
+        displayScreen('instructionsScreen');
+        document.getElementById("gameScreen").style.display = "none"; // Hide game screen
+        updateControlsVisibility(); // Update controls visibility
+        
+    });
+
     document.getElementById('mainMenuButton').addEventListener('click', () => {
         displayScreen('titleOverlay')
         document.getElementById('mainMenuButton').style.display = 'none';
-        document.getElementById('controlsScreen').style.display = 'none';
+        document.getElementById('instructionsScreen').style.display = 'none';
+        document.getElementById("gameScreen").style.display = "none"; // Hide game screen
+        updateControlsVisibility(); // Update controls visibility
     });
 
     document.getElementById('leaderboardButton').addEventListener('click', () => {
-        console.log('Leaderboard button clicked');
+        document.getElementById("gameScreen").style.display = "none"; // Hide game screen
         document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
+        updateControlsVisibility(); // Update controls visibility
+        displayScreen('leaderboardScreen');  // Display the leaderboard screen
+        initializeLeaderboard();
+        displayLeaderboard(category);
+        updateLeaderboard();
     });
 
 });
-
-function PauseGame(){
-    if (!getGameOver() && getGameStarted()) {
-        let pausedState = getPaused();
-        setPaused(!pausedState);
-        console.log("Paused State: ", getPaused());
-        console.log("Game Over State: ", getGameOver());
-        if (!pausedState) {
-            stopGameLoop();  // Stop the game loop if paused
-            document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
-            console.log("Game Paused");
-        } else {
-            console.log("Game Resumed");
-            gameLoop();  // Continue the game loop if unpaused
-            document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
-        }
-    }
-}
 
 function ResumeGame(){
     if (!getGameOver() && getGameStarted()) {
         let pausedState = getPaused();
         setPaused(!pausedState);
-        console.log("Paused State: ", getPaused());
-        console.log("Game Over State: ", getGameOver());
         if (!pausedState) {
             stopGameLoop();  // Stop the game loop if paused
             document.getElementById('pauseScreen').style.display = 'flex';  // Show overlay
-            console.log("Game Paused");
         } else {
-            console.log("Game Resumed");
             gameLoop();  // Continue the game loop if unpaused
             document.getElementById('pauseScreen').style.display = 'none';  // Hide overlay
         }
     }
 }
 
-function displayControlsScreen() {
-    document.getElementById('controlsScreen').style.display = 'flex';
+function displayInstructionsScreen() {
+    document.getElementById('instructionsScreen').style.display = 'block';
     document.getElementById('titleOverlay').style.display = 'none';
-    displayText("Controls:", 24, 'white', canvas.width / 2.4, canvas.height / 2 - 10);
-    displayText("Press 'T' or Start Button to Start", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 30);
-    displayText("Press 'Space Bar' or Jump Button to Jump", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 60);
-    displayText("Press 'C' or Crouch Button to Crouch", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 90);
-    displayText("Press 'P' or Pause Button to Pause", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 120);
-    displayText("Press 'R' or Restart Button after Game Over", 20, 'white', canvas.width / 4.0, canvas.height / 2 + 150);
     document.getElementById('mainMenuButton').style.display = 'block';
+}
+
+function displayLeaderboardScreen() {
+    initializeLeaderboard();
+    displayLeaderboard(category);
+    updateLeaderboard();
+    document.getElementById('leaderboardScreen').style.display = 'block';
+    document.getElementById('titleOverlay').style.display = 'none';
 }
 
 function displayScreen(screenType) {
@@ -177,9 +198,11 @@ function displayScreen(screenType) {
     const ellipse = document.getElementById('ellipse');
     const titleOverlay = document.getElementById('titleOverlay');
     const gameScreen = document.getElementById('gameScreen');
+    const leaderboardScreen = document.getElementById('leaderboardScreen');
+    const instructionsScreen = document.getElementById('instructionsScreen');
 
     // Clear all existing screen classes
-    container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen', 'controlsScreen');
+    container.classList.remove('gameScreen', 'titleOverlay', 'leaderboardScreen', 'instructionsScreen');
 
     // Add the appropriate screen class based on screenType
     switch(screenType) {
@@ -187,11 +210,18 @@ function displayScreen(screenType) {
             container.classList.add('titleOverlay');
             ellipse.style.display = 'block';  // Show the ellipse
             titleOverlay.style.display = 'block';  // Show Title overlay
-            displayText("Project Ghost!", 68, 'white', canvas.width / 3.9, canvas.height / 2 - 100);
+            updateControlsVisibility();
             break;
         case 'game':
             container.classList.add('gameScreen');
             gameScreen.style.display = 'flex';  // Show overlay
+            ellipse.style.display = 'none';  // Hide the ellipse
+            titleOverlay.style.display = 'none';  // Hide Title overlay
+            break;
+        case 'instructionsScreen':
+            container.classList.add('instructionsScreen');
+            displayInstructionsScreen();
+            instructionsScreen.style.display = 'block';  // Show overlay
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
             break;
@@ -200,12 +230,6 @@ function displayScreen(screenType) {
             displayLeaderboardScreen();
             ellipse.style.display = 'none';  // Hide the ellipse
             titleOverlay.style.display = 'none';  // Hide Title overlay
-            break;
-        case 'controls':
-            container.classList.add('controlsScreen');
-            displayControlsScreen();
-            ellipse.style.display = 'none';
-            titleOverlay.style.display = 'none';
             break;
         default:
             console.log("Unknown screen type");
@@ -217,6 +241,15 @@ function displayScreen(screenType) {
 
 // On start use this screen
 displayScreen('titleOverlay');
+
+// Function to check screen size and active screen
+function updateControlsVisibility() {
+    const isSmallScreen = window.innerWidth <= 1280;
+    const gameScreenVisible = document.getElementById("gameScreen").style.display === "flex";
+
+    // Show controls only if it's a small screen and the game screen is visible
+    controls.style.display = isSmallScreen && gameScreenVisible ? "flex" : "none";
+}
 
 /**
  * Author: Connor Spears
@@ -287,4 +320,4 @@ export async function updateLeaderboard(type){
     });
 }
 
-export { displayText, displayScreen };
+export { displayText, displayScreen, updateControlsVisibility };

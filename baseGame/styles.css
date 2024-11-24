@@ -7,34 +7,28 @@ canvas {
     height: calc(100% - 5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
     position: relative;
-    top: 2px;
-    bottom: 10px;
-    left: -6px;
-    right: -6px;
 }
 
 /* Game control styles */
-#controls {
-    text-align: center;
-    margin-top: 20px;
-}
-
-#controls button,
 #startButton,
 #leaderboardButton,
 #restartButton,
-#restartButtonFromLeaderboard,
+#mainMenuButtonFromLeaderboard,
 #pauseButton,
 #resumeButton,
 #dailyLeaderboardButton,
 #weeklyLeaderboardButton,
 #allTimeLeaderboardButton,
-#submitInitialsButton {
+#submitInitialsButton,
+#instructionsButton,
+#mainMenuButton{
+    position: absolute;
     padding: 10px 20px;
     font-size: 22px;
     margin: 5px;
     cursor: pointer;
     font-family: "Single Day";
+    text-align: center;
     color: white;
     text-align: center;
     background-color: #0b60b7;
@@ -43,16 +37,11 @@ canvas {
     box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
 }
 
-#startButton, #leaderboardButton, #restartButton, #pauseButton, #resumeButton,
-#dailyLeaderboardButton, #weeklyLeaderboardButton, #allTimeLeaderboardButton, 
-#restartButtonFromLeaderboard {
-    position: absolute;
-    margin: 0;
-}
-
-/* Individual button customizations */
-#startButton { top: 30%; left: 58%; }
-#leaderboardButton { padding: 10px; top: 20%; left: 58%; }
+/* Individual button customizations mostly for location or size*/
+#startButton {  top: 175px; left: 45%; } 
+#instructionsButton { padding: 10px; top: 250px; left: 42.5%; }
+#leaderboardButton { padding: 10px; top: 323px; left: 43%; }
+#mainMenuButton { top: 9%; left: 42%; }
 #restartButton { top: 65%; left: 42%; }
 #pauseButton { top: 3%; left: 48%; }
 #resumeButton {
@@ -67,7 +56,7 @@ canvas {
 #dailyLeaderboardButton { top: 13%; left: 90%; transform: translate(-50%, -50%); }
 #weeklyLeaderboardButton { top: 33%; left: 90%; transform: translate(-50%, -50%); }
 #allTimeLeaderboardButton { top: 58%; left: 90%; transform: translate(-50%, -50%); padding: 10px 9px; }
-#restartButtonFromLeaderboard { top: 83%; left: 90%; transform: translate(-50%, -50%); }
+#mainMenuButtonFromLeaderboard { top: 83%; left: 90%; transform: translate(-50%, -50%); }
 
 /* General container styles */
 #screenContainer {
@@ -84,20 +73,23 @@ canvas {
 }
 
 /* Screens styling */
-.titleOverlay {
-    background-color: black;
-    color: white;
-    background-image: url("-titleOverlay.png");
-    background-size: cover;
-}
-
-.ellipse {
+#ellipse {
+    position: absolute;
+    font-size: 68px;
     margin-left: 175px;
     margin-top: -385px;
     width: 450px;
     height: 140px;
     background-color: #5b3d9c;
     border-radius: 45%;
+    z-index: 11;
+}
+
+#textInsideEllipse {
+    color: white;
+    font-size: 68px;
+    text-align: center;
+    padding-top: 20px;
 }
 
 .gameScreen {
@@ -105,15 +97,16 @@ canvas {
 }
 
 /* Pause, Controls, Died Screens */
+#titleOverlay,
 #pauseScreen,
-#controlsScreen,
+#instructionsScreen,
 #diedScreen,
 #diedWellScreen {
     position: absolute;
-    top: 10px;
+    top: 8px;
     width: 800px;
     height: 400px;
-    border: 2.5px solid black;
+    border: 2px solid black;
     background-size: cover;
     display: none; /* Initially hidden */
     justify-content: center;
@@ -121,17 +114,29 @@ canvas {
     z-index: 10;
     color: white;
     text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
-    font-size: 40px;
     text-align: center;
 }
 
+#instructions {
+    font-size: 25px;
+    padding-top: 15%;
+    padding-bottom: 25%;
+}
+
+#diedScreen, 
+#diedWellScreen, 
+#pauseScreen {
+    font-size: 40px;
+}
+
+#titleOverlay { background-image: url("-titleOverlay.png"); background-size: cover; background-color: #000; }
 #pauseScreen { background-image: url("-pause.jpg"); }
-#controlsScreen { background-image: url("-pause.jpg"); }
+#instructionsScreen { background-image: url("-titleOverlay.png"); background-color: #000;}
 #diedScreen { background-image: url("-died.jpg"); }
 #diedWellScreen {
     background-image: url("-diedWell.jpg");
 }
-#diedWellScreen #firstLine, #diedWellScreen #secondLine, #diedWellScreen #thirdLine {
+#diedWellScreen #firstLine, #secondLine, #thirdLine {
     margin-top: 3%;
 }
 #diedWellScreen #initialsInput {
@@ -194,45 +199,46 @@ canvas {
     /* Control buttons styling */
     #controls {
         position: fixed;
-        top: 50%;
-        width: 100vw;
         display: flex;
         justify-content: space-between;
-        transform: translateY(-50%);
+        z-index: 10;
+        width: 100%;
     }
 
     /* Jump Button (Left Side) */
     #jumpButton {
-        position: relative;
-        width: 15vw;
-        height: 15vw;
+        width: 10vw;
+        height: 39vw;
         font-size: 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
         color: white;
+        font-family: "Single Day";
         background-color: #0b60b7;
-        border-radius: 50%;
+        border-radius: 3%;
         border: none;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        margin-left: 5vw;
+        transform: translateY(-100%);
+        margin-left: -0.1vw;
     }
 
     /* Crouch Button (Right Side) */
     #crouchButton {
-        position: relative;
-        width: 15vw;
-        height: 15vw;
-        font-size: 2rem;
+        width: 10vw;
+        height: 39vw;
+        font-size: 1.8rem;
         display: flex;
         justify-content: center;
         align-items: center;
         color: white;
+        font-family: "Single Day";
         background-color: #0b60b7;
-        border-radius: 50%;
+        border-radius: 3%;
         border: none;
         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        margin-right: 5vw;
+        transform: translateY(-100%);
+        margin-right: 0.9vw;
     }
 }
 

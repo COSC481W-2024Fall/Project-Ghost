@@ -1,4 +1,3 @@
-
 import { gameScore, canvas, serverUrl, levelSeed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
 import { displayText, displayScreen, initializeLeaderboard} from '/baseGame/ui.js';
 import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
@@ -9,6 +8,7 @@ import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
  * Description: Evaluates the player's score to see if they should be placed on any leaderboard, then enters it to the database
  * Function: checkHighScore
  */
+
 async function checkHighScore() {
     let highString = [];
     document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
@@ -27,6 +27,8 @@ async function checkHighScore() {
 
     if (getNameEnter()) {
         document.getElementById('diedWellScreen').style.display = 'block';  // Show overlay
+        document.getElementById("gameScreen").style.display = "none"; // Hide game screen
+        updateControlsVisibility();
         const playerName = await nameEntry();  // Call nameEntry to get the player's name
         await addScore(playerName, gameScore, highString);
         setNameEnter(false);
@@ -34,9 +36,11 @@ async function checkHighScore() {
         
         // After adding the score, show the leaderboard
         document.getElementById('leaderboardScreen').style.display = 'block'; // Show the leaderboard screen
+    } else {
+        document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
+        document.getElementById("gameScreen").style.display = "none";
+        updateControlsVisibility(); // Ensure controls are hidden
     }
-    
-    document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
 }
 
 async function displayLeaderboard(category) {
@@ -58,24 +62,18 @@ async function displayLeaderboard(category) {
     document.getElementById('ellipse').style.display = 'none'; // Hide the ellipse
 }
 
-// Add event listener for the restartButton From Leaderboard screen
-document.getElementById('restartButtonFromLeaderboard').addEventListener('click', () => {
-    document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
-    if (!getNameEnter()) {
-        resetGame(); // Reset before starting
-        setPaused(false);  // Unpause the game
-        setGameStarted(true);  // Mark the game as started
-        displayScreen('game');  // Display the game screen
-        startGameLoop();  // Start the game loop
-
-        let scoreInput = document.getElementById("scoreInput");
-        if (scoreInput) {
-                scoreInput.remove();
-        }
-    } else {
-        alert("You cannot reset the game while entering your name for the leaderboard.");
-    }
-    
+// All event listeners should be inside a DOMContentLoaded event listener!
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener for the mainMenuButtonFromLeaderboard From Leaderboard screen
+    document.getElementById('mainMenuButtonFromLeaderboard').addEventListener('click', () => {
+        
+        
+        
+        document.getElementById("gameScreen").style.display = "none"; // Hide the game screen
+        document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
+        updateControlsVisibility(); // Ensure controls are hidden
+        displayScreen('titleOverlay'); // Show the title screen
+    });
 });
 
 /**
