@@ -1,14 +1,14 @@
-import { spawnObstacle, updateObstacles, detectCollision, obstacles } from './obstacle.js';
+import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
 import { displayText, initializeLeaderboard } from './ui.js';
 
+const levelSeed = Math.floor(Date.now() / 1000);
+// const levelSeed = 1731697424;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
 //const serverUrl = 'http://localhost:5000/project_ghost/';
-const levelSeed = Math.floor(Date.now() / 1000);
-
 
 // Game settings
 let lastTime = Date.now();
@@ -52,7 +52,6 @@ function gameLoop() {
             lastObstacleSpawnTime = currentTime; // Update the last spawn time
         }
         updateObstacles(deltaTime);
-        detectCollision();
 
         // Add one to the score twice a second, independent of framerate
         if (currentTime - lastGameScoreTime >= 500) {
@@ -60,7 +59,7 @@ function gameLoop() {
             lastGameScoreTime = currentTime;
             if (gameSpeed < 11.9) {
                 gameSpeed += 0.03;
-                obstacleSpawnInterval -= (gameSpeed * 0.3);
+                obstacleSpawnInterval -= (gameSpeed * 0.3); // rate of obstacle spawn increase
             }
           //  console.log(gameSpeed, obstacleSpawnInterval);
         }
@@ -175,4 +174,4 @@ export function setGameSpeed(speed) {
 }
 
 
-export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, levelSeed as level_seed, gameSpeed, gameLoop, nameEnter, scoreCategories};
+export{ gameStarted, isGameOver, isPaused, gameScore, canvas, ctx, frame, gravity, serverUrl, levelSeed, gameSpeed, gameLoop, nameEnter, scoreCategories};
