@@ -26,20 +26,16 @@
 				<button id="mainMenuButton">Main Menu</button>
 				<div id="instructions">
 					Press 'T' or Start Button to Start<br>
-					*Press 'Space Bar' or Jump Button to Jump<br>
-					*Press 'C' or Crouch Button to Crouch<br>
-					Press 'P' or Pause Button to Pause<br>
+					*Press 'Space Bar' to Jump<br>
+					*Press 'C' to Crouch<br>
+					Press 'Escape' to Pause<br>
 					Press 'R' or Restart Button after Game Over<br>
 					*Jump & Crouch Button are touchscreen and only<br>
 					availabile on small screen devices.
 				</div>
 			</div>
-			<div id="gameScreen" class="gameScreen" style="display: none;">
-				<button id="pauseButton">Pause</button>
-			</div>
-			<div id="pauseScreen">Game Paused!<br>
-				<button id="resumeButton">Resume Game</button>
-			</div>
+			<div id="gameScreen" class="gameScreen" style="display: none;"></div>
+			<div id="pauseScreen">Game Paused!<br></div>
 			<div id="diedScreen">Game Over!<br>Press 'R' or Restart Button!
 				<button id="restartButton">Restart</button>
 			</div>
@@ -61,8 +57,9 @@
 
 		<!-- Game controls (buttons) -->
 		<div id="controls">
-			<button id="jumpButton">Jump</button>
-			<button id="crouchButton">Crouch</button>
+			<div id="leftControlZone" class="controlZone" data-action="jump"></div>
+			<div id="middleControlZone" class="controlZone" data-action="pause"></div>
+			<div id="rightControlZone" class="controlZone" data-action="crouch"></div>
 		</div>
 
 		<script src="/baseGame/ui.js" type = "module"></script>

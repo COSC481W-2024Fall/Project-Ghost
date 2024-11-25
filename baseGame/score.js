@@ -1,7 +1,6 @@
 
-import { gameScore, canvas, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
-import { displayText, displayScreen, initializeLeaderboard, updateControlsVisibility} from '/baseGame/ui.js';
-import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
+import { gameScore, serverUrl, level_seed, getNameEnter, setNameEnter, scoreCategories } from '/baseGame/game.js';
+import { displayScreen, initializeLeaderboard} from '/baseGame/ui.js';
 
 /**
  * Author: Connor Spears
@@ -13,6 +12,7 @@ import { resetGame, setPaused, setGameStarted, startGameLoop } from './game.js';
 async function checkHighScore() {
     let highString = [];
     document.getElementById('gameScreen').style.display = 'none'; // Hide the game screen
+    document.getElementById('controls').style.display = 'none';
 
     for (const category of scoreCategories) {
         const currentCategory = await getScores(category);
@@ -29,7 +29,6 @@ async function checkHighScore() {
     if (getNameEnter()) {
         document.getElementById('diedWellScreen').style.display = 'block';  // Show overlay
         document.getElementById("gameScreen").style.display = "none"; // Hide game screen
-        updateControlsVisibility();
         const playerName = await nameEntry();  // Call nameEntry to get the player's name
         await addScore(playerName, gameScore, highString);
         setNameEnter(false);
@@ -40,7 +39,6 @@ async function checkHighScore() {
     } else {
         document.getElementById('diedScreen').style.display = 'flex';  // Show overlay
         document.getElementById("gameScreen").style.display = "none";
-        updateControlsVisibility(); // Ensure controls are hidden
     }
 }
 
@@ -67,12 +65,8 @@ async function displayLeaderboard(category) {
 document.addEventListener("DOMContentLoaded", function() {
     // Add event listener for the mainMenuButtonFromLeaderboard From Leaderboard screen
     document.getElementById('mainMenuButtonFromLeaderboard').addEventListener('click', () => {
-        
-        
-        
         document.getElementById("gameScreen").style.display = "none"; // Hide the game screen
         document.getElementById('leaderboardScreen').style.display = 'none'; // Hide leaderboard
-        updateControlsVisibility(); // Ensure controls are hidden
         displayScreen('titleOverlay'); // Show the title screen
     });
 });
@@ -105,20 +99,26 @@ function nameEntry() {
             }
         });
 
-        submitButton.onclick = function(event) {
-            event.preventDefault();
-            const playerName = inputElement.value;
-            if (playerName.trim().length === 3) {
-                resolve(playerName.toUpperCase());  // Convert to uppercase before resolving
-                inputElement.value = ''; // Clear the input field after submission
-                document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay after submission
-            } else {
-                alert("Please enter a valid name.");
+        submitButton.onclick = (event) => nameSubmission(event, resolve, inputElement);
+        inputElement.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter'){
+                nameSubmission(event, resolve, inputElement);
             }
-        };
+        });
     });
 }
 
+function nameSubmission(event, resolve, inputElement){
+    event.preventDefault();
+    const playerName = inputElement.value;
+    if (playerName.trim().length === 3) {
+        resolve(playerName.toUpperCase());  // Convert to uppercase before resolving
+        inputElement.value = ''; // Clear the input field after submission
+        document.getElementById('diedWellScreen').style.display = 'none';  // Hide overlay after submission
+    } else {
+        alert("Please enter a valid name.");
+    }
+}
 
 // Adding a score to the database
 function addScore(in_user_name, in_score, in_categories) {

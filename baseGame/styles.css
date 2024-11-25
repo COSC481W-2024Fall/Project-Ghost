@@ -197,48 +197,46 @@ canvas {
 /* Mobile landscape mode - side buttons for controls */
 @media (max-width: 1280px) {
     /* Control buttons styling */
-    #controls {
+    .controlZone{
         position: fixed;
-        display: flex;
-        justify-content: space-between;
+        top: 0;
+        bottom: 0;
         z-index: 10;
-        width: 100%;
+        background-color: transparent;
+        cursor: pointer;
     }
 
-    /* Jump Button (Left Side) */
-    #jumpButton {
-        width: 10vw;
-        height: 39vw;
-        font-size: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-family: "Single Day";
-        background-color: #0b60b7;
-        border-radius: 3%;
-        border: none;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        transform: translateY(-100%);
-        margin-left: -0.1vw;
+    #leftControlZone {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 40%;
+        height: 100%;
     }
-
-    /* Crouch Button (Right Side) */
-    #crouchButton {
-        width: 10vw;
-        height: 39vw;
-        font-size: 1.8rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-family: "Single Day";
-        background-color: #0b60b7;
-        border-radius: 3%;
-        border: none;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        transform: translateY(-100%);
-        margin-right: 0.9vw;
+    
+    #middleControlZone {
+        position: absolute;
+        left: 40%;
+        width: 20%;
+        top: 0;
+        height: 100%;
+    }
+    
+    #rightControlZone {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 40%;
+        height: 100%;
+    }
+    
+    #leftControlZone, 
+    #middleControlZone, 
+    #rightControlZone {
+        pointer-events: auto;
+    }
+    #pauseButton {
+        display: none;
     }
 }
 
