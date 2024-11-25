@@ -1,6 +1,6 @@
 import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
-import { displayText, initializeLeaderboard } from './ui.js';
+import { displayText } from './ui.js';
 
 const levelSeed = Math.floor(Date.now() / 1000);
 // const levelSeed = 1731697424;
@@ -31,7 +31,6 @@ let isLoopRunning = false;
 let lastObstacleSpawnTime = 0;
 let obstacleSpawnInterval = 1.2 * 1000; // Adjust this to control the spawn frequency in milliseconds
 
-let thing = 0
 function gameLoop() {
     // Calculate delta time in seconds
     const currentTime = Date.now();

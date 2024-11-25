@@ -26,18 +26,14 @@
 				<button id="mainMenuButton">Main Menu</button>
 				<div id="instructions">
 					Start: 'T' or Start Button<br>
-					Jump: Space Bar, Jump Button or Jump *Zone*<br>
+					Jump: Space Bar, Jump *Zone*<br>
 					Crouch:  HOLD 'C' or Crouch *Zone*<br>
 					Pause: 'P' or Pause *Zone*<br>
 					Restart: 'R' after Game Over
 				</div>
 			</div>
-			<div id="gameScreen" class="gameScreen" style="display: none;">
-				<button id="pauseButton">Pause</button>
-			</div>
-			<div id="pauseScreen">Game Paused!<br>
-				<button id="resumeButton">Resume Game</button>
-			</div>
+			<div id="gameScreen" class="gameScreen" style="display: none;"></div>
+			<div id="pauseScreen">Game Paused!<br></div>
 			<div id="diedScreen">Game Over!<br>Press 'R' or Restart Button!
 				<button id="restartButton">Restart</button>
 			</div>
@@ -59,8 +55,9 @@
 
 		<!-- Game controls (buttons) -->
 		<div id="controls">
-			<button id="jumpButton">Jump</button>
-			<button id="crouchButton">Crouch</button>
+			<div id="leftControlZone" class="controlZone" data-action="jump"></div>
+			<div id="middleControlZone" class="controlZone" data-action="pause"></div>
+			<div id="rightControlZone" class="controlZone" data-action="crouch"></div>
 		</div>
 
 		<script src="/baseGame/ui.js" type = "module"></script>
