@@ -20,8 +20,7 @@ canvas {
 #weeklyLeaderboardButton,
 #allTimeLeaderboardButton,
 #submitInitialsButton,
-#instructionsButton,
-#mainMenuButton{
+#instructionsButton {
     position: absolute;
     padding: 10px 20px;
     font-size: 22px;
@@ -35,6 +34,22 @@ canvas {
     border-radius: 10%;
     border: 2px solid #0b60b7;
     box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
+}
+
+#mainMenuButton {
+    position: absolute;
+    padding: 10px 20px;
+    font-size: 22px;
+    margin: 5px;
+    cursor: pointer;
+    font-family: "Single Day";
+    text-align: center;
+    color: white;
+    text-align: center;
+    border-radius: 10%;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
+    background-color: #2d70b4;
+    border: 2px solid #2d70b4;
 }
 
 /* Individual button customizations mostly for location or size*/
@@ -119,7 +134,7 @@ canvas {
 
 #instructions {
     font-size: 25px;
-    padding-top: 10%;
+    padding-top: 15%;
     padding-bottom: 0%;
 }
 
