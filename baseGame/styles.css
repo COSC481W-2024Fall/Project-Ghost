@@ -41,7 +41,7 @@ canvas {
 #startButton {  top: 175px; left: 45%; } 
 #instructionsButton { padding: 10px; top: 250px; left: 42.5%; }
 #leaderboardButton { padding: 10px; top: 323px; left: 43%; }
-#mainMenuButton { top: 9%; left: 42%; }
+#mainMenuButton { top: 3%; left: 41%; }
 #restartButton { top: 65%; left: 42%; }
 #pauseButton { top: 3%; left: 48%; }
 #resumeButton {
@@ -113,14 +113,14 @@ canvas {
     align-items: center;
     z-index: 10;
     color: white;
-    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+    text-shadow: -1px 1px 0 black, 1px 1px 0 black, 1px -1px 0 white, -1px -1px 0 black;
     text-align: center;
 }
 
 #instructions {
     font-size: 25px;
-    padding-top: 15%;
-    padding-bottom: 25%;
+    padding-top: 10%;
+    padding-bottom: 0%;
 }
 
 #diedScreen, 
@@ -130,9 +130,14 @@ canvas {
 }
 
 #titleOverlay { background-image: url("-titleOverlay.png"); background-size: cover; background-color: #000; }
-#pauseScreen { background-image: url("-pause.jpg"); }
-#instructionsScreen { background-image: url("-titleOverlay.png"); background-color: #000;}
 #diedScreen { background-image: url("-died.jpg"); }
+#pauseScreen { background-image: url("-pause.jpg"); }
+#instructionsScreen { 
+    background-image: url("-Instructions2.png"); 
+    color: black; 
+    text-shadow: -1px 1px 0 white, 1px 1px 0 #000, 1px -1px 0 white, -1px -1px 0 white;
+}
+
 #diedWellScreen {
     background-image: url("-diedWell.jpg");
 }
