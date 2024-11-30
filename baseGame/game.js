@@ -63,7 +63,7 @@ function gameLoop() {
           //  console.log(gameSpeed, obstacleSpawnInterval);
         }
         
-        displayText("Score: " + gameScore, 24, 'black', 20, 20);
+        displayText("Score: " + gameScore, 24, 'white', 20, 20);
         frame++;
     }
     

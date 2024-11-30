@@ -10,6 +10,9 @@ import { getScores, displayLeaderboard } from '/baseGame/score.js';
 
 function displayText(text, fontSize = 20, color = 'black', x = 0, y = 0) {
     ctx.font = `${fontSize}px "Single Day"`;
+    ctx.lineWidth = 4;  
+    ctx.strokeStyle = 'black';  
+    ctx.strokeText(text, x, y); //border for text on game screen
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 }
