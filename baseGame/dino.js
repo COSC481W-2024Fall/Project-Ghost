@@ -4,7 +4,7 @@ import { canvas, ctx, gravity } from './game.js';
 const dinoImage = new Image();
 dinoImage.src = '/baseGame/assets/dino.png';
 
-//Load crouching dino image
+// Load crouching dino image
 const dinocImage = new Image();
 dinocImage.src = '/baseGame/assets/crouch.png';
 
@@ -25,15 +25,14 @@ const dino = {
         const height = this.crouching ? this.height / 2 : this.height;
         const adjustedY = this.crouching ? this.y + this.height / 2 : this.y;
 
-
-        if (this.crouching) {
         // Draw the dino image
+        if (this.crouching) {
             if (dinocImage.complete) {
                 ctx.drawImage(dinocImage, this.x, adjustedY, this.width, height);
             } else {
                 ctx.fillStyle = 'blue';
                 ctx.fillRect(this.x, adjustedY, this.width, height);
-                }
+            }
         } else {
             if (dinoImage.complete) {
                 ctx.drawImage(dinoImage, this.x, adjustedY, this.width, height);
@@ -41,7 +40,7 @@ const dino = {
                 ctx.fillStyle = 'green'; // Fallback rectangle for standing
                 ctx.fillRect(this.x, adjustedY, this.width, height);
             }
-        }   
+        }
     },
 
     update(deltaTime) {
@@ -73,7 +72,7 @@ const dino = {
         // Adjust height based on crouching status
         if (!this.jumping) {
             if (this.crouching) {
-                this.height = 50;
+                this.height = 70;
                 this.y = canvas.height - this.height;
             } else {
                 this.height = 130;
@@ -92,9 +91,12 @@ const dino = {
 
     // Custom hitbox getters
     get hitbox() {
+        // adjuster for hitbox when crouching
+        const hitboxY = this.crouching ? this.y + 50 : this.y;
+
         return {
             x: this.x + (this.width - this.hitboxWidth) / 2,
-            y: this.y + (this.height - this.hitboxHeight) / 2,
+            y: hitboxY + (this.height - this.hitboxHeight) / 2,
             width: this.hitboxWidth,
             height: this.hitboxHeight,
         };
