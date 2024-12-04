@@ -10,6 +10,12 @@ const ctx = canvas.getContext('2d');
 const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
 //const serverUrl = 'http://localhost:5000/project_ghost/';
 
+
+// Add background music
+const backgroundMusic = new Audio('/baseGame/sounds/game-level-music.mp3');
+backgroundMusic.loop = true; // Loop the music for continuous play
+backgroundMusic.volume = 0.5; // Set volume (0.0 to 1.0)
+
 // Game settings
 let lastTime = Date.now();
 let gameSpeed = 5;
@@ -78,6 +84,9 @@ function gameLoop() {
 
 export function startGameLoop() {
     if (!isLoopRunning) {
+        if (!backgroundMusic.playing) {
+            backgroundMusic.play().catch((error) => console.warn("Music playback error:", error));
+        }
         isLoopRunning = true;
         frame = 0;           // Reset frame counter when starting
         gameScore = 0; 
@@ -88,6 +97,7 @@ export function startGameLoop() {
 
 export function stopGameLoop() {
     isLoopRunning = false;
+    backgroundMusic.pause(); // Pause the music
     setPaused(true);
 }
 function clearObstacles() {
@@ -123,6 +133,13 @@ export function getGameOver() {
 }
 export function setGameOver(state) {
     isGameOver = state;
+
+    if (isGameOver) {
+        if (backgroundMusic) {
+            backgroundMusic.pause(); // Pause the music
+            backgroundMusic.currentTime = 0; // Reset to the beginning
+        }
+    }
 }
 export function getPaused() {
     return isPaused;
