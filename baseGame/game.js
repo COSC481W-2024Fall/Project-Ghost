@@ -1,6 +1,7 @@
 import { spawnObstacle, updateObstacles, obstacles } from './obstacle.js';
 import { dino } from './dino.js';
 import { displayText } from './ui.js';
+import { BackgroundManager } from './background.js';
 
 const levelSeed = Math.floor(Date.now() / 1000);
 // const levelSeed = 1731697424;
@@ -29,7 +30,7 @@ let lastGameScoreTime = 0;
 let nameEnter = false;
 const scoreCategories = ["daily", "weekly", "allTime"];
 
-
+const backgroundManager = new BackgroundManager(canvas);
 
 // Game loop
 let frame = 0;
@@ -46,6 +47,9 @@ function gameLoop() {
     
     if (!isGameOver && !isPaused) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Move the background to the left
+        backgroundManager.updateBackground(gameSpeed, deltaTime);
 
         // Dino logic
         dino.update(deltaTime);
