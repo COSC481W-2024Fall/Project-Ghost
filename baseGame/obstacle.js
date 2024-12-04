@@ -121,24 +121,41 @@ class GroundObstacle {
             ctx.fillStyle = 'red';
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
+    
         this.x -= this.speed * deltaTime;
-    }
+    }  
 
     detectCollision() {
-        if (
-            dino.hitbox.x < this.x + this.width &&
-            dino.hitbox.x + dino.hitbox.width > this.x &&
-            dino.hitbox.y < this.y + this.height &&
-            dino.hitbox.y + dino.hitbox.height > this.y
-        ) {
-            console.log("Collision detected with ground obstacle");
-            setGameOver(true);
-            setPaused(true);
-            setGameStarted(false);
-            checkHighScore();
-            console.log("Level seed:", levelSeed);
-        }
+    // Adjust the hitbox dimensions to fit the visible part of the tombstone
+    const hitboxXOffset = this.width * 0.2; // Adjust as needed for alignment
+    const hitboxYOffset = this.height * 0.1; // Adjust as needed for alignment
+    const hitboxWidth = this.width * 0.6;   // Width of the filled area
+    const hitboxHeight = this.height * 0.8; // Height of the filled area
+
+    // Define the adjusted hitbox
+    const tombstoneHitbox = {
+        x: this.x + hitboxXOffset,
+        y: this.y + hitboxYOffset,
+        width: hitboxWidth,
+        height: hitboxHeight,
+    };
+
+    // Check for collision with the dino
+    if (
+        dino.hitbox.x < tombstoneHitbox.x + tombstoneHitbox.width &&
+        dino.hitbox.x + dino.hitbox.width > tombstoneHitbox.x &&
+        dino.hitbox.y < tombstoneHitbox.y + tombstoneHitbox.height &&
+        dino.hitbox.y + dino.hitbox.height > tombstoneHitbox.y
+    ) {
+        console.log("Collision detected with ground obstacle");
+        setGameOver(true);
+        setPaused(true);
+        setGameStarted(false);
+        checkHighScore();
+        console.log("Level seed:", levelSeed);
     }
+}
+
 }
 
 const obstacleTypes = [AirObstacle, GroundObstacle]

@@ -12,9 +12,9 @@ const dino = {
     x: 50,
     y: canvas.height - 50,
     width: 70,      // Full width
-    height: 130,    // Full height
+    height: 100,    // Full height
     hitboxWidth: 30,    // Custom hitbox width (adjust as needed)
-    hitboxHeight: 110,  // Custom hitbox height (adjust as needed)
+    hitboxHeight: 100,  // Custom hitbox height (adjust as needed)
     dy: 0,
     jumping: false,
     jumpHeld: false,
@@ -22,9 +22,9 @@ const dino = {
     crouchHeld: false,
 
     draw() {
-        const height = this.crouching ? this.height / 2 : this.height;
-        const adjustedY = this.crouching ? this.y + this.height / 2 : this.y;
-
+        const height = this.crouching ? 89.3 : this.height;
+        const adjustedY = this.crouching ? 400 - 89.3 : this.y;
+    
         // Draw the dino image
         if (this.crouching) {
             if (dinocImage.complete) {
@@ -41,6 +41,7 @@ const dino = {
                 ctx.fillRect(this.x, adjustedY, this.width, height);
             }
         }
+    
     },
 
     update(deltaTime) {
@@ -72,10 +73,10 @@ const dino = {
         // Adjust height based on crouching status
         if (!this.jumping) {
             if (this.crouching) {
-                this.height = 70;
+                this.height = 89.3;
                 this.y = canvas.height - this.height;
             } else {
-                this.height = 130;
+                this.height = 100;
                 this.y = canvas.height - this.height;
             }
         }
@@ -92,7 +93,7 @@ const dino = {
     // Custom hitbox getters
     get hitbox() {
         // adjuster for hitbox when crouching
-        const hitboxY = this.crouching ? this.y + 50 : this.y;
+        const hitboxY = this.crouching ? 400 - 55 : this.y;
 
         return {
             x: this.x + (this.width - this.hitboxWidth) / 2,
