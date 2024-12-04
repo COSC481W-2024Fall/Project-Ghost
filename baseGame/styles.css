@@ -108,7 +108,6 @@ canvas {
 }
 
 .gameScreen {
-    background-image: url('/baseGame/assets/sideScrollerBackground.png'); /* Replace with your image path */
     background-size: cover; /* Ensures the image covers the whole area of the game screen */
     background-position: center; /* Centers the background image */
     background-repeat: no-repeat; /* Prevents the image from repeating */
