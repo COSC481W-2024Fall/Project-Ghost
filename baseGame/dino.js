@@ -8,6 +8,10 @@ dinoImage.src = '/baseGame/assets/dino.png';
 const dinocImage = new Image();
 dinocImage.src = '/baseGame/assets/crouch.png';
 
+// Load jump sound
+const jumpSound = new Audio('/baseGame/sounds/jump.mp3'); // Replace with the actual path to your jump sound
+jumpSound.volume = 0.3; // Adjust volume as needed
+
 const dino = {
     x: 50,
     y: canvas.height - 50,
@@ -48,6 +52,8 @@ const dino = {
         if (this.jumpHeld && !this.jumping && !this.crouching) {
             this.jumping = true;
             this.dy = -12;
+            jumpSound.currentTime = 0; // Reset sound to the start
+            jumpSound.play().catch(err => console.error('Jump sound play failed:', err)); // Play the jump sound
         }
 
         // Apply gravity when jumping
