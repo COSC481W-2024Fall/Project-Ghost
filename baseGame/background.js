@@ -1,11 +1,10 @@
 class Background {
 	draw() {
 		if (this.is_loaded) {
-			const scaledWidth = this.image.width / this.ratio;
-			const scaledHeight = this.canvas.height;
+			const scaledWidth = this.width;
 			this.ctx.drawImage(
 				this.image, this.x, 0,
-				scaledWidth, scaledHeight,
+				scaledWidth, this.canvas.height,
 			);
 		}
 	}
@@ -17,7 +16,6 @@ class Background {
 	x = 0;
 	speed = 0.5;
 	width;
-	ratio;
 	
 	constructor(canvas, path) {
 		this.canvas = canvas;
@@ -25,11 +23,10 @@ class Background {
 		this.image = new Image();
 		this.image.src = path;
 		this.image.onload = () => {
-			console.log("loaded")
 			this.is_loaded = true;
-			this.ratio = this.image.height / this.canvas.height;
-			this.width = this.image.width / this.ratio;
-		}
+			const ratio = (this.image.height / canvas.height) || 1;
+			this.width = (this.image.width / ratio) || canvas.width;
+		};
 	}
 }
 
@@ -38,6 +35,9 @@ export class BackgroundManager {
 		let xOffset = 0;
 		for (let i = 0; i < this.renderQueue.length; i += 1) {
 			const image = this.renderQueue[i];
+			if (!image.is_loaded) {
+				continue;
+			}
 			if (i === 0) {
 				image.x -= gameSpeed * deltaTime * image.speed;
 			} else {
@@ -59,10 +59,9 @@ export class BackgroundManager {
 		this.canvas = canvas;
 		this.renderQueue.push(
 			new Background(canvas, '/baseGame/assets/sideScrollerBackground.png')
-		)
+		);
 		this.renderQueue.push(
 			new Background(canvas, '/baseGame/assets/sideScrollerBackgroundFlipped.png')
-			// new Background(canvas, "/baseGame/assets/range.png")
-		)
+		);
 	}
 }
