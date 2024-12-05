@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
-from database import tables # import our database handling code
+from database import tables, LevelSeed # import our database handling code
 import time, os
 
 app = Flask(__name__, static_folder='../baseGame', template_folder='../baseGame')
