@@ -114,6 +114,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    document.getElementById('restartButtonDiedScreen').addEventListener('click', () => {
+        document.getElementById("gameScreen").style.display = "flex"; // Show game screen
+        if (getGameOver()) {
+            if (!getNameEnter()) {
+                resetGame(); // Reset before starting
+                setPaused(false);  // Unpause the game
+                setGameStarted(true);  // Mark the game as started
+                displayScreen('game');  // Display the game screen
+                startGameLoop();  // Start the game loop
+
+                let scoreInput = document.getElementById("scoreInput");
+                if (scoreInput) {
+                    scoreInput.remove();
+                }
+            }
+        }
+    });
+
     document.getElementById('instructionsButton').addEventListener('click', () => {
         displayScreen('instructionsScreen');
         document.getElementById("gameScreen").style.display = "none"; // Hide game screen
