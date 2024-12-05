@@ -97,38 +97,22 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('restartButton').addEventListener('click', () => {
         document.getElementById("gameScreen").style.display = "flex"; // Show game screen
         if (getGameOver()) {
-            if (!getNameEnter()) {
-                resetGame(); // Reset before starting
-                setPaused(false);  // Unpause the game
-                setGameStarted(true);  // Mark the game as started
-                displayScreen('game');  // Display the game screen
-                startGameLoop();  // Start the game loop
-
-                let scoreInput = document.getElementById("scoreInput");
-                if (scoreInput) {
-                    scoreInput.remove();
-                }
-            } else {
-                alert("You cannot reset the game while entering your name for the leaderboard.");
-            }
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            displayScreen('game');  // Display the game screen
+            startGameLoop();  // Start the game loop
         }
     });
 
     document.getElementById('restartButtonDiedScreen').addEventListener('click', () => {
         document.getElementById("gameScreen").style.display = "flex"; // Show game screen
         if (getGameOver()) {
-            if (!getNameEnter()) {
-                resetGame(); // Reset before starting
-                setPaused(false);  // Unpause the game
-                setGameStarted(true);  // Mark the game as started
-                displayScreen('game');  // Display the game screen
-                startGameLoop();  // Start the game loop
-
-                let scoreInput = document.getElementById("scoreInput");
-                if (scoreInput) {
-                    scoreInput.remove();
-                }
-            }
+            resetGame(); // Reset before starting
+            setPaused(false);  // Unpause the game
+            setGameStarted(true);  // Mark the game as started
+            displayScreen('game');  // Display the game screen
+            startGameLoop();  // Start the game loop
         }
     });
 

@@ -48,7 +48,12 @@ canvas {
     border: 2px solid #2d70b4;
 }
 #restartButton { top: 65%; left: 42%; }
-#restartButtonDiedScreen { top: 65%; left: 42%; }
+#restartButtonDiedScreen { 
+    top: 65%; 
+    left: 47%; 
+    background-color: #c43a86;
+    border-color: #c43a86;
+}
 #pauseButton { top: 3%; left: 48%; }
 #resumeButton {
     background-color: #014427;
@@ -58,6 +63,7 @@ canvas {
 #submitInitialsButton {
     background-color: #c43a86;
     border-color: #c43a86;
+    padding: 7px 10px;
 }
 #dailyLeaderboardButton { top: 13%; left: 90%; transform: translate(-50%, -50%); }
 #weeklyLeaderboardButton { top: 33%; left: 90%; transform: translate(-50%, -50%); }
