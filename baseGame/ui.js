@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
             dino.jump(true);
         } else if (e.code === 'KeyC' && !getGameOver()) {
             dino.crouch(true);
-        } else  if (e.code === 'KeyT' && !getGameStarted()) {
+        } else  if (e.code === 'KeyT' && !getGameStarted() && !nameEntry()) {
             setPaused(false);  // Unpause the game
             setGameStarted(true);  // Mark the game as started
             displayScreen('game');  // Display the game screen
