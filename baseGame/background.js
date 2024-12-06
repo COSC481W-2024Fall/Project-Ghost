@@ -33,6 +33,7 @@ class Background {
 export class BackgroundManager {
 	updateBackground(gameSpeed, deltaTime) {
 		let xOffset = 0;
+		let pushes = 0;
 		for (let i = 0; i < this.renderQueue.length; i += 1) {
 			const image = this.renderQueue[i];
 			if (!image.is_loaded) {
@@ -47,7 +48,14 @@ export class BackgroundManager {
 			xOffset = image.x + image.width - 1;
 			if (xOffset <= 0) {
 				this.renderQueue.push(this.renderQueue.shift());
+				pushes += 1;
 				i -= 1;
+			}
+			if (pushes > this.renderQueue.length) {
+				console.log("quit from push");
+				console.log(xOffset);
+				image.x = 0;
+				return;
 			}
 		}
 	}
