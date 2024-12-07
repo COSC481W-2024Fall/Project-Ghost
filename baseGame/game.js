@@ -15,7 +15,7 @@ const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
 // Add background music
 const backgroundMusic = new Audio('/baseGame/sounds/game-level-music.mp3');
 backgroundMusic.loop = true; // Loop the music for continuous play
-backgroundMusic.volume = 0.05; // Set volume (0.0 to 1.0)
+backgroundMusic.volume = 0.2; // Set volume (0.0 to 1.0)
 
 // Game settings
 let lastTime = Date.now();
