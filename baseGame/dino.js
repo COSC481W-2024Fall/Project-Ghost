@@ -10,7 +10,7 @@ dinocImage.src = '/baseGame/assets/crouch.png';
 
 // Load jump sound
 const jumpSound = new Audio('/baseGame/sounds/jump.mp3'); // Replace with the actual path to your jump sound
-jumpSound.volume = 0.3; // Adjust volume as needed
+jumpSound.volume = 0.01; // Adjust volume as needed
 
 const dino = {
     x: 50,
