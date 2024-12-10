@@ -221,9 +221,6 @@ function displayScreen(screenType) {
     }
 }
 
-// On start use this screen
-displayScreen('titleOverlay');
-
 /**
  * Author: Connor Spears
  * Date: 10/26/2024
@@ -292,5 +289,25 @@ export async function updateLeaderboard(type){
         `;
     });
 }
+
+function checkOrientation() {
+    const alertBox = document.getElementById("landscape-alert");
+    if(window.innerWidth < window.innerHeight){
+        alertBox.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    } else {
+        alertBox.style.display = "none";
+        document.body.style.overflow = "";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // On start use this screen
+    displayScreen('titleOverlay');
+
+    checkOrientation();
+
+    window.addEventListener("resize", checkOrientation);
+});
 
 export { displayText, displayScreen};
