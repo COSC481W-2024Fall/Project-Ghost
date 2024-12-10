@@ -1,3 +1,11 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
 /* Canvas styling */
 canvas {
     display: block;
@@ -211,6 +219,36 @@ canvas {
 /* Utility classes */
 .hidden {
     display: none;
+}
+
+#landscape-alert{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background-color: rgb(81, 35, 169);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+#landscape-alert .overlay {
+    text-align: center;
+}
+
+#landscape-alert h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: "Single Day", cursive;
+}
+
+#landscape-alert p {
+    font-size: 1.25rem;
+    font-family: "Single Day", cursive;
 }
 
 /* Mobile landscape mode - side buttons for controls */
