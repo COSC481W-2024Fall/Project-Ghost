@@ -85,7 +85,7 @@ def add_score():
 				raise Exception("Input seed does not match daily seed")
 
 			# Ensure the user name is no longer than 3 characters
-			if data["user_name"].length > 3:
+			if len(data["user_name"]) > 3:
 				raise Exception("User name is too long. Must be 3 or less letters")
 
 			# Ensure the score entered is an int
