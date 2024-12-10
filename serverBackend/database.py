@@ -42,7 +42,7 @@ tables = {
 def auto_reset():
 	max_retries = 5
 	retry_count = 0
-	today = datetime.datetime.today()
+	today = today = datetime.datetime.now(datetime.UTC)
 	timestamp = int(today.replace(hour=0, minute=0, second=0, microsecond=0).timestamp())
 	while retry_count < max_retries:
 		try:
