@@ -75,7 +75,16 @@ def add_score():
 		
 	# Insert the new score into the databases
 	try:
+		
+		# Get the daily seed, to ensure this score matches
+		seed = LevelSeed.select().first().seed
+		
 		for category in data['categories']:
+			# Ensure the seed (timestamp) matches the daily seed
+			in_timestamp = data["timestamp"]
+			if in_timestamp != seed:
+				raise Exception("Input seed does not match daily seed")
+
 			# Determine the table to add to
 			table = tables[category]
 			
