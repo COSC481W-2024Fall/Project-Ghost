@@ -81,9 +81,24 @@ def add_score():
 		
 		for category in data['categories']:
 			# Ensure the seed (timestamp) matches the daily seed
-			in_timestamp = data["timestamp"]
-			if in_timestamp != seed:
+			if data["timestamp"] != seed:
 				raise Exception("Input seed does not match daily seed")
+
+			# Ensure the user name is no longer than 3 characters
+			if data["user_name"].length > 3:
+				raise Exception("User name is too long. Must be 3 or less letters")
+
+			# Ensure the score entered is an int
+			if type(data["score"]) != int:
+				raise Exception("Scores must be a positive integer")
+
+			# Ensure the scores is not negative
+			if data["score"] < 0:
+				raise Exception("Scores must be a positive integer")
+
+			# Ensure the score is no bigger than SQLite's max int size
+			if data["score"] > ((2**63)-1):
+				raise Exception("Scores cannot be larger than '(2^63)-1'")
 
 			# Determine the table to add to
 			table = tables[category]
