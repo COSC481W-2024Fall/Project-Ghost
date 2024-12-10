@@ -3,13 +3,15 @@ import { dino } from './dino.js';
 import { displayText } from './ui.js';
 import { BackgroundManager } from './background.js';
 
-const levelSeed = Math.floor(Date.now() / 1000);
+const now = new Date();
+const startOfDayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+const levelSeed = Math.floor(startOfDayUTC / 1000);
 // const levelSeed = 1731697424;
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
-//const serverUrl = 'http://localhost:5000/project_ghost/';
+// const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
+const serverUrl = 'http://localhost:5000/project_ghost/';
 
 
 // Add background music
