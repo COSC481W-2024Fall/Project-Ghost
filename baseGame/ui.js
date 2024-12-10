@@ -293,9 +293,15 @@ export async function updateLeaderboard(type){
 function checkOrientation() {
     const alertBox = document.getElementById("landscape-alert");
     if(window.innerWidth < window.innerHeight){
+        if(getGameStarted() && !getPaused()){
+            PauseGame();
+        }
         alertBox.style.display = "flex";
         document.body.style.overflow = "hidden";
     } else {
+        if(getGameStarted() && getPaused()){
+            PauseGame();
+        }
         alertBox.style.display = "none";
         document.body.style.overflow = "";
     }
