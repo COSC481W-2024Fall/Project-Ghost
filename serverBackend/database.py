@@ -42,8 +42,8 @@ tables = {
 def auto_reset():
 	max_retries = 5
 	retry_count = 0
-	today = today = datetime.datetime.utcnow()
-	timestamp = int(today.replace(hour=0, minute=0, second=0, microsecond=0).timestamp())
+	today = datetime.datetime.utcnow()
+	timestamp = int(today.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=datetime.timezone.utc).timestamp())
 	while retry_count < max_retries:
 		try:
 			if today.weekday() == 0: # Monday
