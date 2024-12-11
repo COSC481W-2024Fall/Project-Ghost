@@ -60,7 +60,7 @@ class AirObstacle {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
         this.x -= this.speed * deltaTime;
-        this.angle += 0.002 * (this.speed + rng.newInt(0, 2)); // speed of vertical movement
+        this.angle += 0.002 * (this.speed + 1); // speed of vertical movement
         this.y = this.initialY + 80 * this.wave(this.angle); //change this for sine wave (increase for bigger movement)
         this.y += this.diagonalDirection * 0.5;
     }
