@@ -10,8 +10,8 @@ const levelSeed = Math.floor(startOfDayUTC / 1000);
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-// const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
-const serverUrl = 'http://localhost:5000/project_ghost/';
+const serverUrl = 'http://45.83.107.132:5000/project_ghost/';
+// const serverUrl = 'http://localhost:5000/project_ghost/';
 
 
 // Add background music
