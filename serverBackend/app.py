@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
-from database import tables # import our database handling code
+from database import tables, LevelSeed # import our database handling code
 import time, os
 
 app = Flask(__name__, static_folder='../baseGame', template_folder='../baseGame')
@@ -75,7 +75,31 @@ def add_score():
 		
 	# Insert the new score into the databases
 	try:
+		
+		# Get the daily seed, to ensure this score matches
+		seed = LevelSeed.select().first().seed
+		
 		for category in data['categories']:
+			# Ensure the seed (timestamp) matches the daily seed
+			if data["timestamp"] != seed:
+				raise Exception("Input seed does not match daily seed")
+
+			# Ensure the user name is no longer than 3 characters
+			if len(data["user_name"]) > 3:
+				raise Exception("User name is too long. Must be 3 or less letters")
+
+			# Ensure the score entered is an int
+			if type(data["score"]) != int:
+				raise Exception("Scores must be a positive integer")
+
+			# Ensure the scores is not negative
+			if data["score"] < 0:
+				raise Exception("Scores must be a positive integer")
+
+			# Ensure the score is no bigger than SQLite's max int size
+			if data["score"] > ((2**63)-1):
+				raise Exception("Scores cannot be larger than '(2^63)-1'")
+
 			# Determine the table to add to
 			table = tables[category]
 			

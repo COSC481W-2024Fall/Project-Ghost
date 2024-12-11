@@ -22,8 +22,15 @@ class WeeklyScores(Scores):
 class AllTime(Scores):
 	pass
 	
+class LevelSeed(Model):
+	seed = IntegerField()
+	
+	class Meta:
+		database = db
+		abstract = True
+		
 db.connect()
-db.create_tables([DailyScores, WeeklyScores, AllTime]) # only creates tables when they don't exist
+db.create_tables([DailyScores, WeeklyScores, AllTime, LevelSeed]) # only creates tables when they don't exist
 
 # Map the string name of the table to the table. This will be used in the HTTP requests
 tables = {
@@ -35,13 +42,16 @@ tables = {
 def auto_reset():
 	max_retries = 5
 	retry_count = 0
-	today = datetime.datetime.today()
+	today = today = datetime.datetime.now(datetime.UTC)
+	timestamp = int(today.replace(hour=0, minute=0, second=0, microsecond=0).timestamp())
 	while retry_count < max_retries:
 		try:
 			if today.weekday() == 0: # Monday
 				WeeklyScores.delete().execute()
 				
 			DailyScores.delete().execute()
+			LevelSeed.delete().execute()
+			LevelSeed.create(seed=timestamp)
 			break
 			
 		except OperationalError as oe:
